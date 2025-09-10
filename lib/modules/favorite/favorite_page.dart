@@ -26,7 +26,7 @@ class FavoritePage extends StatelessWidget {
         itemCount: list.length,
         itemBuilder: (c, i) => PostTile(
           post: list[i],
-          onTap: () => Get.to(() => PostDetailPage(post: list[i])),
+          onTap: () => Get.to(() => PostDetailPage(postId: list[i].id)),
         ),
       );
     });

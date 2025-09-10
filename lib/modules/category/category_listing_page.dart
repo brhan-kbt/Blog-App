@@ -19,7 +19,7 @@ class CategoryListingPage extends StatelessWidget {
 
   void _openPost(Post post, BlogStore store) {
     store.addView(post.id); // ✅ increment views on backend
-    Get.to(() => PostDetailPage(post: post));
+    Get.to(() => PostDetailPage(postId: post.id));
   }
 
   @override

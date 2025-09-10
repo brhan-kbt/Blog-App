@@ -21,7 +21,7 @@ class AppPages {
       name: Routes.postDetail,
       page: () {
         final post = Get.arguments as Post;
-        return PostDetailPage(post: post);
+        return PostDetailPage(postId: post.id);
       },
     ),
 

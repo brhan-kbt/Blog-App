@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qubee/core/config/api_config.dart';
 import 'package:qubee/widgets/post_options_sheet.dart';
 import '../core/theme/app_palette.dart';
 import '../models/post.dart';
@@ -73,7 +74,8 @@ class PostTile extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                       child: post.image != null && post.image!.isNotEmpty
                           ? Image.network(
-                              post.image!,
+                              "${ApiConfig.imageUrl}${post.image!}",
+                              // post.image!,
                               width: 96, // ~pixel look from screenshot
                               height: 72, // 4:3-ish
                               fit: BoxFit.cover,

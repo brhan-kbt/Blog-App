@@ -57,6 +57,7 @@ class Shell extends StatefulWidget {
 
 class _ShellState extends State<Shell> with WidgetsBindingObserver {
   int index = 0;
+  final store = Get.find<BlogStore>();
   final pages = const [RecentPage(), CategoryPage(), FavoritePage()];
   final titles = const ['Qubee', 'Category', 'Favorite'];
 
@@ -65,7 +66,7 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this); // 👈 listen for app resume
+    WidgetsBinding.instance.addObserver(this);
     _checkFirstLaunch();
   }
 
@@ -78,13 +79,12 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      _checkNotificationStatus(); // 👈 re-check permission safely
+      _checkNotificationStatus();
     }
   }
 
   Future<void> _checkFirstLaunch() async {
     final isFirstLaunch = box.read("isFirstLaunch") ?? true;
-
     if (isFirstLaunch) {
       await _checkNotificationStatus();
       await box.write("isFirstLaunch", false);
@@ -94,30 +94,31 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
   Future<void> _checkNotificationStatus() async {
     try {
       final status = await Permission.notification.status;
-
-      if (!mounted) return; // 👈 avoid crash on disposed widget
-
+      if (!mounted) return;
       if (status.isGranted) {
         debugPrint("✅ Notifications allowed");
       } else {
         debugPrint("❌ Notifications disabled");
-        // Don't call setState here unless you really need UI update
-        // Instead show safe feedback like:
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          if (!mounted) return;
-          // ScaffoldMessenger.of(context).showSnackBar(
-          //   const SnackBar(content: Text("Notifications are disabled.")),
-          // );
-        });
       }
     } catch (e, st) {
       debugPrint("⚠️ Error checking notifications: $e\n$st");
     }
   }
 
+  /// 🔹 Refresh depending on active tab
+  Future<void> _onRefresh() async {
+    if (index == 0 || index == 2) {
+      // Refresh posts for Recent or Favorite
+      await store.fetchPosts();
+    }
+    if (index == 1) {
+      // Refresh categories for Category page
+      await store.fetchCategories();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final store = Get.find<BlogStore>();
     final theme = Theme.of(context);
     final palette =
         theme.extension<AppPalette>() ?? AppPalette.fromTheme(theme);
@@ -133,7 +134,12 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
               onChanged: (q) => store.query.value = q,
             ),
             const SizedBox(height: 8),
-            Expanded(child: pages[index]),
+            Expanded(
+              child: RefreshIndicator(
+                onRefresh: _onRefresh,
+                child: pages[index],
+              ),
+            ),
           ],
         ),
       ),

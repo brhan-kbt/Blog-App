@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 class PrivacyPolicyPage extends StatelessWidget {
-  const PrivacyPolicyPage({super.key});
+  final String content;
+  const PrivacyPolicyPage({super.key, required this.content});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Privacy Policy")),
-      body: const Padding(
-        padding: EdgeInsets.all(16),
-        child: Text(
-          "Your privacy policy content goes here...",
-          style: TextStyle(fontSize: 14, height: 1.5),
-        ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
+        child: Html(data: content),
       ),
     );
   }

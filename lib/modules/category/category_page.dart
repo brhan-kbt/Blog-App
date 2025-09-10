@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:qubee/core/config/api_config.dart';
 import 'package:qubee/core/theme/app_palette.dart';
 import 'package:qubee/models/category.dart';
 import 'package:qubee/widgets/shimmer_widgets.dart';
@@ -78,7 +79,10 @@ class CategoryPage extends StatelessWidget {
                   child: cat.image != null && cat.image!.isNotEmpty
                       ? ClipRRect(
                           borderRadius: BorderRadius.circular(18),
-                          child: Image.network(cat.image!, fit: BoxFit.cover),
+                          child: Image.network(
+                            "${ApiConfig.imageUrl}${cat.image!}",
+                            fit: BoxFit.cover,
+                          ),
                         )
                       : Icon(
                           Icons.folder_outlined,

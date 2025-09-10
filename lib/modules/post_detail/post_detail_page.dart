@@ -1,33 +1,67 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:qubee/core/config/api_config.dart';
+import 'package:qubee/widgets/post_detail_shimmer.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../core/state/blog_store.dart';
 import '../../models/post.dart';
 import '../../widgets/post_tile.dart';
+import 'package:flutter_html/flutter_html.dart';
 
-class PostDetailPage extends StatelessWidget {
-  final Post post;
-  const PostDetailPage({super.key, required this.post});
+class PostDetailPage extends StatefulWidget {
+  final int postId;
+  const PostDetailPage({super.key, required this.postId});
+
+  @override
+  State<PostDetailPage> createState() => _PostDetailPageState();
+}
+
+class _PostDetailPageState extends State<PostDetailPage> {
+  final store = Get.find<BlogStore>();
+
+  Post? post;
+  List<Post> suggested = [];
+  bool loading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchPost();
+  }
+
+  Future<void> _fetchPost() async {
+    final result = await store.fetchPostWithSuggested(widget.postId);
+    setState(() {
+      post = result['post'];
+      suggested = result['suggested'];
+      loading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    if (loading) {
+      return const Scaffold(body: PostDetailShimmer());
+    }
 
-    final store = Get.find<BlogStore>();
-    final suggested = store
-        .byCategory(post.category.id)
-        .where((p) => p.id != post.id)
-        .take(6)
-        .toList();
+    if (post == null) {
+      return const Scaffold(body: Center(child: Text("Post not found")));
+    }
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('News'),
+        // back button
+        // leading: IconButton(
+        //   icon: const Icon(Icons.arrow_back),
+        //   onPressed: () => Get.to(() => const RecentPage()),
+        // ),
         actions: [
           IconButton(
-            onPressed: () => store.toggleFavorite(post.id),
+            onPressed: () => store.toggleFavorite(post!.id),
             icon: Obx(
               () => Icon(
-                store.favorites.contains(post.id)
+                store.favorites.contains(post!.id)
                     ? Icons.favorite
                     : Icons.favorite_border,
               ),
@@ -39,16 +73,14 @@ class PostDetailPage extends StatelessWidget {
         children: [
           AspectRatio(
             aspectRatio: 16 / 9,
-            child: post.image != null && post.image!.isNotEmpty
-                ? Image.network(post.image!, fit: BoxFit.cover)
+            child: post!.image != null && post!.image!.isNotEmpty
+                ? Image.network(
+                    "${ApiConfig.imageUrl}${post!.image!}",
+                    fit: BoxFit.cover,
+                  )
                 : Container(
                     color: Colors.grey,
-                    child: const Center(
-                      child: Text(
-                        'No Image',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
+                    child: const Center(child: Text('No Image')),
                   ),
           ),
           Padding(
@@ -57,7 +89,7 @@ class PostDetailPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  post.title,
+                  post!.title,
                   style: const TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.w800,
@@ -68,33 +100,71 @@ class PostDetailPage extends StatelessWidget {
                   children: [
                     const Icon(Icons.access_time, size: 16),
                     const SizedBox(width: 6),
-                    Text(
-                      '${post.prettyDate}  •  ${post.viewsStr} views',
-                      style: TextStyle(
-                        color: Brightness.light == theme.brightness
-                            ? Colors.black54
-                            : Colors.white54,
-                      ),
-                    ),
+                    Text('${post!.prettyDate} • ${post!.viewsStr} views'),
                   ],
                 ),
                 const SizedBox(height: 16),
-                Text(post.body, style: const TextStyle(height: 1.5)),
+                Html(data: post!.body),
                 const SizedBox(height: 24),
-                const Text(
-                  'Suggested',
-                  style: TextStyle(fontWeight: FontWeight.w800, fontSize: 18),
+
+                // i want a button Get it Here
+                const SizedBox(height: 8),
+                ElevatedButton.icon(
+                  label: const Text(
+                    "Get it Here",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                  ),
+
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor:
+                        Brightness.light == Theme.of(context).brightness
+                        ? Colors.black
+                        : Colors.white,
+                    foregroundColor:
+                        Brightness.light == Theme.of(context).brightness
+                        ? Colors.white
+                        : Colors.black,
+
+                    minimumSize: const Size(double.infinity, 50),
+
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  onPressed: () async {
+                    // WHEN CLICKED REDIRECT TO LINK
+
+                    debugPrint(post!.link!);
+                    final uri = Uri.parse(post!.link!);
+                    if (await canLaunchUrl(uri)) {
+                      await launchUrl(
+                        uri,
+                        mode: LaunchMode.externalApplication,
+                      );
+                    }
+                  },
                 ),
+                const SizedBox(height: 24),
+
+                if (suggested.isNotEmpty)
+                  const Text(
+                    'Suggested',
+                    style: TextStyle(fontWeight: FontWeight.w800, fontSize: 18),
+                  ),
               ],
             ),
           ),
           ...suggested.map(
-            (p) => Padding(
-              padding: const EdgeInsets.only(bottom: 8),
-              child: PostTile(
-                post: p,
-                onTap: () => Get.to(() => PostDetailPage(post: p)),
-              ),
+            (p) => PostTile(
+              post: p,
+              onTap: () {
+                print("Post tapped: ${p.id}");
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => PostDetailPage(postId: p.id),
+                  ),
+                );
+              },
             ),
           ),
           const SizedBox(height: 24),

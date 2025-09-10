@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:qubee/models/app_Setting.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/post.dart';
 import '../../models/category.dart';
@@ -18,6 +19,9 @@ class BlogStore extends GetxController {
   final checkLoadingPosts = true.obs;
   final isLoadingCategories = false.obs;
   final isSearching = false.obs;
+  final isLoadingSettings = false.obs;
+
+  final settings = Rxn<AppSettings>();
 
   // recent searches (persisted)
   final recentSearches = <String>[].obs;
@@ -32,6 +36,7 @@ class BlogStore extends GetxController {
 
     fetchPosts();
     fetchCategories();
+    loadSettings(); // load settings at startup
   }
 
   List<Post> get filtered =>
@@ -42,6 +47,28 @@ class BlogStore extends GetxController {
 
   List<Post> get favoritePosts =>
       filtered.where((p) => favorites.contains(p.id)).toList();
+
+  Future<void> loadSettings() async {
+    try {
+      isLoadingSettings.value = true;
+      settings.value = await fetchSettings();
+    } catch (e) {
+      debugPrint("Error loading settings: $e");
+    } finally {
+      isLoadingSettings.value = false;
+    }
+  }
+
+  static Future<AppSettings> fetchSettings() async {
+    final response = await http.get(Uri.parse(ApiConfig.settings));
+
+    if (response.statusCode == 200) {
+      final json = jsonDecode(response.body);
+      return AppSettings.fromJson(json);
+    } else {
+      throw Exception("Failed to load settings");
+    }
+  }
 
   void toggleFavorite(int id) {
     if (favorites.contains(id)) {
@@ -94,6 +121,28 @@ class BlogStore extends GetxController {
   Future<void> clearRecentSearches() async {
     recentSearches.clear();
     await _saveRecentSearches();
+  }
+
+  Future<Map<String, dynamic>> fetchPostWithSuggested(int id) async {
+    try {
+      final resp = await http.get(Uri.parse(ApiConfig.post(id)));
+
+      if (resp.statusCode == 200) {
+        final jsonBody = json.decode(resp.body);
+        final data = jsonBody['data'];
+
+        final post = Post.fromJson(Map<String, dynamic>.from(data['post']));
+        final suggested = (data['suggested'] as List)
+            .map((e) => Post.fromJson(Map<String, dynamic>.from(e)))
+            .toList();
+
+        debugPrint("Post: ${Uri.parse(ApiConfig.post(id))}");
+        return {'post': post, 'suggested': suggested};
+      }
+    } catch (e) {
+      debugPrint("Error fetching post: $e");
+    }
+    return {'post': null, 'suggested': []};
   }
 
   // ------------------- Networking -------------------

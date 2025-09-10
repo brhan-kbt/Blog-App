@@ -177,7 +177,7 @@ class _SearchPageState extends State<SearchPage> {
             final p = _results[i];
             return PostTile(
               post: p,
-              onTap: () => Get.to(() => PostDetailPage(post: p)),
+              onTap: () => Get.to(() => PostDetailPage(postId: p.id)),
               onMore: () => Get.toNamed(Routes.postDetail, arguments: p),
             );
           },

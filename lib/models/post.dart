@@ -10,6 +10,7 @@ class Post {
   final String? image;
   final int views;
   final int likes;
+  final String? link;
   final DateTime createdAt;
   final Category category;
   final UserRef user;
@@ -20,6 +21,7 @@ class Post {
     this.subtitle,
     required this.body,
     this.image,
+    this.link,
     required this.views,
     required this.likes,
     required this.createdAt,
@@ -34,6 +36,7 @@ class Post {
       subtitle: json['subtitle'],
       body: json['body'] ?? '',
       image: json['image'],
+      link: json['link'],
       views: json['views'] ?? 0,
       likes: json['likes'] ?? 0,
       createdAt: DateTime.parse(json['created_at']),
@@ -49,6 +52,7 @@ class Post {
       'subtitle': subtitle,
       'body': body,
       'image': image,
+      'link': link,
       'views': views,
       'likes': likes,
       'created_at': createdAt.toIso8601String(),

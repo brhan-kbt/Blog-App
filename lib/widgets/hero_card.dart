@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qubee/core/config/api_config.dart';
 import 'package:qubee/widgets/post_options_sheet.dart';
 import '../core/theme/app_palette.dart';
 import '../models/post.dart';
@@ -43,11 +44,18 @@ class HeroCard extends StatelessWidget {
               AspectRatio(
                 aspectRatio: 16 / 7,
                 child: post.image != null && post.image!.isNotEmpty
-                    ? Image.network(post.image!, fit: BoxFit.cover)
+                    ? Image.network(
+                        "${ApiConfig.imageUrl}${post.image!}",
+                        fit: BoxFit.cover,
+                      )
                     : Container(
                         color: Colors.grey.shade300,
                         child: const Center(
-                          child: Icon(Icons.image, size: 40, color: Colors.grey),
+                          child: Icon(
+                            Icons.image,
+                            size: 40,
+                            color: Colors.grey,
+                          ),
                         ),
                       ),
               ),
@@ -89,8 +97,9 @@ class HeroCard extends StatelessWidget {
                     Text(post.prettyDate, style: metaStyle),
                     const Spacer(),
                     IconButton(
-                      onPressed: () =>
-                          onMore != null ? onMore!() : showPostOptionsSheet(context, post),
+                      onPressed: () => onMore != null
+                          ? onMore!()
+                          : showPostOptionsSheet(context, post),
                       icon: Icon(Icons.more_vert, color: iconColor),
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(

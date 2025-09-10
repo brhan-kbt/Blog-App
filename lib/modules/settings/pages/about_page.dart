@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 class AboutPage extends StatelessWidget {
-  const AboutPage({super.key});
+  final String content;
+
+  const AboutPage({super.key, required this.content});
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +38,8 @@ class AboutPage extends StatelessWidget {
               ],
             ),
             SizedBox(height: 16),
-            Text(
-              "Qubee App\nVersion 1.0.0\n\nMade with Flutter & GetX.",
-              style: TextStyle(fontSize: 14, height: 1.5),
-            ),
+            // Text(content, style: TextStyle(fontSize: 14, height: 1.5)),
+            Html(data: content),
           ],
         ),
       ),

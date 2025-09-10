@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 class PublisherInfoPage extends StatelessWidget {
-  const PublisherInfoPage({super.key});
+  final String content;
+  const PublisherInfoPage({super.key, required this.content});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Publisher Info")),
-      body: const Padding(
-        padding: EdgeInsets.all(16),
-        child: Text("Publisher name, contact details, and description."),
+      appBar: AppBar(title: const Text("About Us")),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Html(data: content),
       ),
     );
   }

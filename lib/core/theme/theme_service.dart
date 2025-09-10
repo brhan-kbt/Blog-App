@@ -8,28 +8,34 @@ class ThemeService extends GetxService {
   late final GetStorage _box;
 
   Future<void> init() async {
-    await GetStorage.init();
     _box = GetStorage();
 
-    final storedMode = _box.read(_key);
+    final storedMode = _box.read<String>(_key);
+    debugPrint("Stored theme from box: $storedMode");
+
     switch (storedMode) {
-      case 'light':
-        mode.value = ThemeMode.light;
-        break;
       case 'dark':
         mode.value = ThemeMode.dark;
         break;
+      case 'system':
+        mode.value = ThemeMode.system;
+        break;
+      case 'light':
       default:
         mode.value = ThemeMode.light;
     }
 
+    debugPrint("✅ Applying theme: ${mode.value}");
     Get.changeThemeMode(mode.value);
   }
 
   Future<void> set(ThemeMode m) async {
     mode.value = m;
     Get.changeThemeMode(m);
-    await _box.write(_key, m.toString().split('.').last);
+
+    final value = m.toString().split('.').last; // "light" | "dark" | "system"
+    debugPrint("💾 Saving theme: $value");
+    await _box.write(_key, value);
   }
 
   bool get isDark =>
