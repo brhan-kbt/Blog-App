@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 class ThemeService extends GetxService {
-  final mode = ThemeMode.system.obs;
+  final mode = ThemeMode.light.obs;
   static const _key = 'theme_mode';
   late final GetStorage _box;
 
@@ -20,7 +20,7 @@ class ThemeService extends GetxService {
         mode.value = ThemeMode.dark;
         break;
       default:
-        mode.value = ThemeMode.system;
+        mode.value = ThemeMode.light;
     }
 
     Get.changeThemeMode(mode.value);
