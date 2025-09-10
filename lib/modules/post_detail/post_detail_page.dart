@@ -7,6 +7,9 @@ import '../../core/state/blog_store.dart';
 import '../../models/post.dart';
 import '../../widgets/post_tile.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:qubee/core/ads/ad_service.dart';
+import 'package:qubee/widgets/banner_ad_widget.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class PostDetailPage extends StatefulWidget {
   final int postId;
@@ -27,6 +30,8 @@ class _PostDetailPageState extends State<PostDetailPage> {
   void initState() {
     super.initState();
     _fetchPost();
+    // Randomly show interstitial or rewarded (or none) on open
+    AdService.instance.showRandomOpenAd();
   }
 
   Future<void> _fetchPost() async {
@@ -67,6 +72,16 @@ class _PostDetailPageState extends State<PostDetailPage> {
               ),
             ),
           ),
+
+          IconButton(
+            onPressed: () => {
+              setState(() {
+                loading = true;
+              }),
+              _fetchPost(),
+            },
+            icon: const Icon(Icons.refresh_outlined),
+          ),
         ],
       ),
       body: ListView(
@@ -83,73 +98,90 @@ class _PostDetailPageState extends State<PostDetailPage> {
                     child: const Center(child: Text('No Image')),
                   ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(16),
+          Container(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  post!.title,
-                  style: const TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.w800,
+                Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Column(
+                    children: [
+                      Text(
+                        post!.title,
+                        style: const TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Row(
+                        children: [
+                          const Icon(Icons.access_time, size: 16),
+                          const SizedBox(width: 6),
+                          Text('${post!.prettyDate} • ${post!.viewsStr} views'),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      Html(data: post!.body),
+                      // i want a button Get it Here
+                      const SizedBox(height: 8),
+                      ElevatedButton.icon(
+                        label: const Text(
+                          "Get it Here",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              Brightness.light == Theme.of(context).brightness
+                              ? Colors.black
+                              : Colors.white,
+                          foregroundColor:
+                              Brightness.light == Theme.of(context).brightness
+                              ? Colors.white
+                              : Colors.black,
+
+                          minimumSize: const Size(double.infinity, 50),
+
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        onPressed: () async {
+                          // WHEN CLICKED REDIRECT TO LINK
+
+                          debugPrint(post!.link!);
+                          final uri = Uri.parse(post!.link!);
+                          if (await canLaunchUrl(uri)) {
+                            await launchUrl(
+                              uri,
+                              mode: LaunchMode.externalApplication,
+                            );
+                          }
+                        },
+                      ),
+
+                      const SizedBox(height: 16),
+                    ],
                   ),
                 ),
-                const SizedBox(height: 8),
-                Row(
-                  children: [
-                    const Icon(Icons.access_time, size: 16),
-                    const SizedBox(width: 6),
-                    Text('${post!.prettyDate} • ${post!.viewsStr} views'),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                Html(data: post!.body),
-                const SizedBox(height: 24),
-
-                // i want a button Get it Here
-                const SizedBox(height: 8),
-                ElevatedButton.icon(
-                  label: const Text(
-                    "Get it Here",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                  ),
-
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor:
-                        Brightness.light == Theme.of(context).brightness
-                        ? Colors.black
-                        : Colors.white,
-                    foregroundColor:
-                        Brightness.light == Theme.of(context).brightness
-                        ? Colors.white
-                        : Colors.black,
-
-                    minimumSize: const Size(double.infinity, 50),
-
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  onPressed: () async {
-                    // WHEN CLICKED REDIRECT TO LINK
-
-                    debugPrint(post!.link!);
-                    final uri = Uri.parse(post!.link!);
-                    if (await canLaunchUrl(uri)) {
-                      await launchUrl(
-                        uri,
-                        mode: LaunchMode.externalApplication,
-                      );
-                    }
-                  },
-                ),
+                // Large banner below the button
+                const BannerAdWidget(size: AdSize(width: 380, height: 280)),
                 const SizedBox(height: 24),
 
                 if (suggested.isNotEmpty)
-                  const Text(
-                    'Suggested',
-                    style: TextStyle(fontWeight: FontWeight.w800, fontSize: 18),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: const Text(
+                      'Suggested',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w800,
+                        fontSize: 18,
+                      ),
+                    ),
                   ),
               ],
             ),
@@ -170,6 +202,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
           const SizedBox(height: 24),
         ],
       ),
+      bottomNavigationBar: const SafeArea(child: BannerAdWidget()),
     );
   }
 }

@@ -7,6 +7,8 @@ import '../../widgets/post_tile.dart';
 import '../../widgets/hero_card.dart';
 import '../../widgets/post_options_sheet.dart';
 import '../post_detail/post_detail_page.dart';
+import '../../widgets/banner_ad_widget.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class RecentPage extends StatelessWidget {
   const RecentPage({super.key});
@@ -51,13 +53,22 @@ class RecentPage extends StatelessWidget {
             onTap: () => _openPost(top, store),
             onMore: () => showPostOptionsSheet(context, top),
           ),
-          ...rest.map(
-            (p) => PostTile(
-              post: p,
-              onTap: () => _openPost(p, store),
-              onMore: () => showPostOptionsSheet(context, p),
-            ),
-          ),
+          ...List.generate(rest.length, (index) {
+            final p = rest[index];
+            final widgets = <Widget>[
+              PostTile(
+                post: p,
+                onTap: () => _openPost(p, store),
+                onMore: () => showPostOptionsSheet(context, p),
+              ),
+            ];
+            if ((index + 1) % 3 == 0) {
+              widgets.add(
+                const BannerAdWidget(size: AdSize(width: 370, height: 100)),
+              );
+            }
+            return Column(children: widgets);
+          }),
         ],
       );
     });

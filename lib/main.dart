@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import 'package:qubee/core/theme/app_palette.dart';
@@ -12,6 +15,8 @@ import 'modules/category/category_page.dart';
 import 'modules/favorite/favorite_page.dart';
 import 'modules/recent/recent_page.dart';
 import 'widgets/search_header.dart';
+import 'core/ads/ad_service.dart';
+import 'widgets/banner_ad_widget.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,6 +28,12 @@ Future<void> main() async {
   await themeSvc.init();
 
   Get.put(BlogStore(), permanent: true);
+
+  // Initialize Google Mobile Ads
+  await MobileAds.instance.initialize();
+  await AdService.instance.initialize();
+
+  AdService.instance.loadAppOpenAd();
 
   runApp(const QubeeApp());
 }
@@ -77,9 +88,16 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
   }
 
   @override
+  // void didChangeAppLifecycleState(AppLifecycleState state) {
+  //   if (state == AppLifecycleState.resumed) {
+  //     _checkNotificationStatus();
+  //     // Show custom app resume ad dialog
+  //     AdService.instance.showAppResumeAd(context);
+  //   }
+  // }
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      _checkNotificationStatus();
+      AdService.instance.showAppOpenAd();
     }
   }
 
@@ -120,6 +138,10 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final choice = Random().nextInt(2); // 0 none, 1 interstitial, 2 rewarded
+
+    print("Random choice: $choice");
+
     final palette =
         theme.extension<AppPalette>() ?? AppPalette.fromTheme(theme);
 
@@ -140,6 +162,10 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
                 child: pages[index],
               ),
             ),
+            // Bottom banner ad on all pages (slightly smaller than inline)
+            const SizedBox(height: 8),
+            if (choice == 1)
+              const BannerAdWidget(size: AdSize(width: 370, height: 70)),
           ],
         ),
       ),
