@@ -59,6 +59,9 @@ class BlogStore extends GetxController {
     }
   }
 
+
+
+
   static Future<AppSettings> fetchSettings() async {
     final response = await http.get(Uri.parse(ApiConfig.settings));
 
