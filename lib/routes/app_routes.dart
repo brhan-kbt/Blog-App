@@ -1,5 +1,6 @@
 abstract class Routes {
-  static const shell = '/';
+  static const splash = '/';
+  static const home = '/home';
   static const recent = '/recent';
   static const category = '/category';
   static const favorite = '/favorite';

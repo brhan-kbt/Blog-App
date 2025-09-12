@@ -31,6 +31,8 @@ class ThemeService extends GetxService {
 
   Future<void> set(ThemeMode m) async {
     mode.value = m;
+    debugPrint("💾 Saving theme 1: $m");
+
     Get.changeThemeMode(m);
 
     final value = m.toString().split('.').last; // "light" | "dark" | "system"

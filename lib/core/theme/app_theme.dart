@@ -10,7 +10,7 @@ class AppTheme {
       colorSchemeSeed: const Color.fromARGB(255, 1, 0, 3),
       scaffoldBackgroundColor: brightness == Brightness.light
           ? const Color(0xFFF7F8FC)
-          : const Color.fromARGB(255, 4, 2, 15),
+          : const Color(0xFF04020F),
       textTheme: GoogleFonts.poppinsTextTheme(
         brightness == Brightness.dark ? ThemeData.dark().textTheme : null,
       ),

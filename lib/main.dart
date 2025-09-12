@@ -8,6 +8,8 @@ import 'package:permission_handler/permission_handler.dart';
 
 import 'package:milki_tech/core/theme/app_palette.dart';
 import 'package:milki_tech/core/theme/theme_service.dart';
+import 'package:milki_tech/core/services/connectivity_service.dart';
+import 'package:milki_tech/core/services/performance_service.dart';
 import 'package:milki_tech/routes/app_pages.dart';
 import 'core/state/blog_store.dart';
 import 'core/theme/app_theme.dart';
@@ -21,21 +23,40 @@ import 'widgets/banner_ad_widget.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize GetStorage
-  await GetStorage.init();
-
-  final themeSvc = Get.put(ThemeService(), permanent: true);
-  await themeSvc.init();
-
-  Get.put(BlogStore(), permanent: true);
-
-  // Initialize Google Mobile Ads
-  await MobileAds.instance.initialize();
-  await AdService.instance.initialize();
-
-  AdService.instance.loadAppOpenAd();
+  // Initialize core services in parallel for better performance
+  await Future.wait([
+    GetStorage.init(),
+    _initializeThemeService(),
+    _initializeBlogStore(),
+    _initializeAds(),
+    _initializePerformanceService(),
+  ]);
 
   runApp(const MilkiApp());
+}
+
+Future<void> _initializeThemeService() async {
+  final themeSvc = Get.put(ThemeService(), permanent: true);
+  await themeSvc.init();
+}
+
+Future<void> _initializeBlogStore() async {
+  Get.put(BlogStore(), permanent: true);
+}
+
+Future<void> _initializeAds() async {
+  try {
+    await MobileAds.instance.initialize();
+    await AdService.instance.initialize();
+    AdService.instance.loadAppOpenAd();
+  } catch (e) {
+    debugPrint('Error initializing ads: $e');
+    // Continue app initialization even if ads fail
+  }
+}
+
+Future<void> _initializePerformanceService() async {
+  Get.put(PerformanceService(), permanent: true);
 }
 
 class MilkiApp extends StatelessWidget {
@@ -52,7 +73,7 @@ class MilkiApp extends StatelessWidget {
         theme: AppTheme.light,
         darkTheme: AppTheme.dark,
         themeMode: themeSvc.mode.value,
-        home: const Shell(),
+        initialRoute: AppPages.initial,
         getPages: AppPages.routes,
       ),
     );
@@ -69,15 +90,22 @@ class Shell extends StatefulWidget {
 class _ShellState extends State<Shell> with WidgetsBindingObserver {
   int index = 0;
   final store = Get.find<BlogStore>();
-  final pages = const [RecentPage(), CategoryPage(), FavoritePage()];
+  final connectivityService = Get.find<ConnectivityService>();
   final titles = const ['Milki', 'Category', 'Favorite'];
 
   final box = GetStorage();
+
+  // Lazy loading for pages
+  late final List<Widget> pages;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+
+    // Initialize pages lazily
+    pages = [const RecentPage(), const CategoryPage(), const FavoritePage()];
+
     _checkFirstLaunch();
   }
 
@@ -125,13 +153,35 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
 
   /// 🔹 Refresh depending on active tab
   Future<void> _onRefresh() async {
-    if (index == 0 || index == 2) {
-      // Refresh posts for Recent or Favorite
-      await store.fetchPosts();
+    // Check connectivity before refreshing
+    if (!connectivityService.isConnected) {
+      Get.snackbar(
+        'No Internet',
+        'Please check your internet connection',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red.withOpacity(0.8),
+        colorText: Colors.white,
+      );
+      return;
     }
-    if (index == 1) {
-      // Refresh categories for Category page
-      await store.fetchCategories();
+
+    try {
+      if (index == 0 || index == 2) {
+        // Refresh posts for Recent or Favorite
+        await store.fetchPosts();
+      }
+      if (index == 1) {
+        // Refresh categories for Category page
+        await store.fetchCategories();
+      }
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        'Failed to refresh data: ${e.toString()}',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red.withOpacity(0.8),
+        colorText: Colors.white,
+      );
     }
   }
 
@@ -150,6 +200,29 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
         bottom: false,
         child: Column(
           children: [
+            // Connectivity indicator
+            Obx(
+              () => AnimatedContainer(
+                duration: const Duration(milliseconds: 300),
+                height: connectivityService.isConnected ? 0 : 30,
+                child: connectivityService.isConnected
+                    ? const SizedBox.shrink()
+                    : Container(
+                        width: double.infinity,
+                        color: Colors.red,
+                        child: const Center(
+                          child: Text(
+                            'No Internet Connection',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ),
+              ),
+            ),
             const SizedBox(height: 8),
             SearchHeader(
               title: "Search ... ",
