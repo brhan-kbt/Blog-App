@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:qubee/core/config/api_config.dart';
-import 'package:qubee/widgets/post_detail_shimmer.dart';
+import 'package:milki_tech/core/config/api_config.dart';
+import 'package:milki_tech/widgets/post_detail_shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../core/state/blog_store.dart';
 import '../../models/post.dart';
 import '../../widgets/post_tile.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:qubee/core/ads/ad_service.dart';
-import 'package:qubee/widgets/banner_ad_widget.dart';
+import 'package:milki_tech/core/ads/ad_service.dart';
+import 'package:milki_tech/widgets/banner_ad_widget.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class PostDetailPage extends StatefulWidget {
@@ -202,7 +202,9 @@ class _PostDetailPageState extends State<PostDetailPage> {
           const SizedBox(height: 24),
         ],
       ),
-      bottomNavigationBar: const SafeArea(child: BannerAdWidget()),
+      bottomNavigationBar: const SafeArea(
+        child: BannerAdWidget(size: AdSize(width: 370, height: 70)),
+      ),
     );
   }
 }

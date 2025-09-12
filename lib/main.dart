@@ -6,9 +6,9 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import 'package:qubee/core/theme/app_palette.dart';
-import 'package:qubee/core/theme/theme_service.dart';
-import 'package:qubee/routes/app_pages.dart';
+import 'package:milki_tech/core/theme/app_palette.dart';
+import 'package:milki_tech/core/theme/theme_service.dart';
+import 'package:milki_tech/routes/app_pages.dart';
 import 'core/state/blog_store.dart';
 import 'core/theme/app_theme.dart';
 import 'modules/category/category_page.dart';
@@ -35,11 +35,11 @@ Future<void> main() async {
 
   AdService.instance.loadAppOpenAd();
 
-  runApp(const QubeeApp());
+  runApp(const MilkiApp());
 }
 
-class QubeeApp extends StatelessWidget {
-  const QubeeApp({super.key});
+class MilkiApp extends StatelessWidget {
+  const MilkiApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +47,7 @@ class QubeeApp extends StatelessWidget {
 
     return Obx(
       () => GetMaterialApp(
-        title: 'Qubee',
+        title: 'Milki Tech',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.light,
         darkTheme: AppTheme.dark,
@@ -70,7 +70,7 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
   int index = 0;
   final store = Get.find<BlogStore>();
   final pages = const [RecentPage(), CategoryPage(), FavoritePage()];
-  final titles = const ['Qubee', 'Category', 'Favorite'];
+  final titles = const ['Milki', 'Category', 'Favorite'];
 
   final box = GetStorage();
 

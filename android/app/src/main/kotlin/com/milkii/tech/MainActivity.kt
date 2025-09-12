@@ -1,4 +1,4 @@
-package com.example.qubee
+package com.milki.tech
 
 import io.flutter.embedding.android.FlutterActivity
 

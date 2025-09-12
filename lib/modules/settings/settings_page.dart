@@ -4,12 +4,12 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:qubee/core/theme/app_palette.dart';
-import 'package:qubee/core/theme/theme_service.dart';
-import 'package:qubee/modules/settings/pages/about_page.dart';
-import 'package:qubee/modules/settings/pages/privacy_policy_page.dart';
-import 'package:qubee/modules/settings/pages/publisher_info_page.dart';
-import 'package:qubee/modules/settings/pages/text_size_page.dart';
+import 'package:milki_tech/core/theme/app_palette.dart';
+import 'package:milki_tech/core/theme/theme_service.dart';
+import 'package:milki_tech/modules/settings/pages/about_page.dart';
+import 'package:milki_tech/modules/settings/pages/privacy_policy_page.dart';
+import 'package:milki_tech/modules/settings/pages/publisher_info_page.dart';
+import 'package:milki_tech/modules/settings/pages/text_size_page.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:app_settings/app_settings.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -183,7 +183,7 @@ class SettingsPage extends StatelessWidget {
                         inAppReview.requestReview();
                       } else {
                         inAppReview.openStoreListing(
-                          appStoreId: "com.example.qubee", // TODO: replace
+                          appStoreId: "com.milki.tech", // TODO: replace
                         );
                       }
                     },
@@ -192,7 +192,7 @@ class SettingsPage extends StatelessWidget {
                     title: 'Share to Friends',
                     onTap: () {
                       Share.share(
-                        "Check out Qubee App: https://play.google.com/store/apps/details?id=com.example.qubee",
+                        "Check out Milki App: https://play.google.com/store/apps/details?id=com.milki.tech",
                       );
                     },
                   ),

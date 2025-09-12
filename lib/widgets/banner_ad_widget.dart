@@ -48,7 +48,7 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
       decoration: BoxDecoration(
         color: Brightness.light == Theme.of(context).brightness
             ? const Color.fromARGB(255, 220, 255, 234)
-            : Color.fromARGB(255, 207, 255, 209),
+            : Color.fromARGB(255, 13, 23, 13),
         borderRadius: BorderRadius.circular(10),
       ),
       alignment: Alignment.centerLeft,

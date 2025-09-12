@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:qubee/widgets/shimmer_widgets.dart';
+import 'package:milki_tech/widgets/shimmer_widgets.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../core/state/blog_store.dart';
 import '../../models/post.dart';

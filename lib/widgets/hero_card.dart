@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:qubee/core/config/api_config.dart';
-import 'package:qubee/widgets/post_options_sheet.dart';
+import 'package:milki_tech/core/config/api_config.dart';
+import 'package:milki_tech/widgets/post_options_sheet.dart';
 import '../core/theme/app_palette.dart';
 import '../models/post.dart';
 

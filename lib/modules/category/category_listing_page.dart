@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:qubee/models/post.dart';
-import 'package:qubee/widgets/hero_card.dart';
-import 'package:qubee/widgets/post_options_sheet.dart';
-import 'package:qubee/widgets/shimmer_widgets.dart';
+import 'package:milki_tech/models/post.dart';
+import 'package:milki_tech/widgets/hero_card.dart';
+import 'package:milki_tech/widgets/post_options_sheet.dart';
+import 'package:milki_tech/widgets/shimmer_widgets.dart';
 import '../../core/state/blog_store.dart';
 import '../../widgets/post_tile.dart';
 import '../post_detail/post_detail_page.dart';

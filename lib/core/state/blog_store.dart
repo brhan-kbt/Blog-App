@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:qubee/models/app_Setting.dart';
+import 'package:milki_tech/models/app_Setting.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/post.dart';
 import '../../models/category.dart';
@@ -58,9 +58,6 @@ class BlogStore extends GetxController {
       isLoadingSettings.value = false;
     }
   }
-
-
-
 
   static Future<AppSettings> fetchSettings() async {
     final response = await http.get(Uri.parse(ApiConfig.settings));
