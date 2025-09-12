@@ -18,7 +18,7 @@ class PushNotificationPage extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             const Text(
-              "To enable or disable push notifications for Milki App, "
+              "To enable or disable push notifications for Ethio Insight  App, "
               "please use your phone’s system settings.",
             ),
             const SizedBox(height: 24),

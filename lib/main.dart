@@ -6,11 +6,11 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import 'package:milki_tech/core/theme/app_palette.dart';
-import 'package:milki_tech/core/theme/theme_service.dart';
-import 'package:milki_tech/core/services/connectivity_service.dart';
-import 'package:milki_tech/core/services/performance_service.dart';
-import 'package:milki_tech/routes/app_pages.dart';
+import 'package:news/core/theme/app_palette.dart';
+import 'package:news/core/theme/theme_service.dart';
+import 'package:news/core/services/connectivity_service.dart';
+import 'package:news/core/services/performance_service.dart';
+import 'package:news/routes/app_pages.dart';
 import 'core/state/blog_store.dart';
 import 'core/theme/app_theme.dart';
 import 'modules/category/category_page.dart';
@@ -36,7 +36,7 @@ Future<void> main() async {
     _initializePerformanceService(),
   ]);
 
-  runApp(const MilkiApp());
+  runApp(const EthioInsightApp());
 }
 
 Future<void> _initializeThemeService() async {
@@ -70,8 +70,8 @@ Future<void> _initializePerformanceService() async {
   Get.put(PerformanceService(), permanent: true);
 }
 
-class MilkiApp extends StatelessWidget {
-  const MilkiApp({super.key});
+class EthioInsightApp extends StatelessWidget {
+  const EthioInsightApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -79,12 +79,12 @@ class MilkiApp extends StatelessWidget {
 
     return Obx(() {
       debugPrint(
-        "🎨 MilkiApp - Building with theme mode: ${themeSvc.mode.value}",
+        "🎨 EthioInsightApp - Building with theme mode: ${themeSvc.mode.value}",
       );
-      debugPrint("🎨 MilkiApp - IsDark: ${themeSvc.isDark}");
+      debugPrint("🎨 EthioInsightApp - IsDark: ${themeSvc.isDark}");
 
       return GetMaterialApp(
-        title: 'Milki Tech',
+        title: 'Ethio Insight',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.light,
         darkTheme: AppTheme.dark,
@@ -107,7 +107,7 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
   int index = 0;
   final store = Get.find<BlogStore>();
   final connectivityService = Get.find<ConnectivityService>();
-  final titles = const ['Milki', 'Category', 'Favorite'];
+  final titles = const ['Recent', 'Category', 'Favorite'];
 
   final box = GetStorage();
 
@@ -253,8 +253,8 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
             ),
             // Bottom banner ad on all pages (slightly smaller than inline)
             const SizedBox(height: 8),
-            if (choice == 1 || choice == 2)
-              const BannerAdWidget(size: AdSize(width: 370, height: 70)),
+            // if (choice == 1 || choice == 2)
+            const BannerAdWidget(size: AdSize(width: 370, height: 70)),
           ],
         ),
       ),

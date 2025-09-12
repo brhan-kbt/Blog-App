@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:milki_tech/core/config/api_config.dart';
-import 'package:milki_tech/widgets/post_options_sheet.dart';
+import 'package:news/core/config/api_config.dart';
+import 'package:news/widgets/post_options_sheet.dart';
 import '../core/theme/app_palette.dart';
 import '../models/post.dart';
 

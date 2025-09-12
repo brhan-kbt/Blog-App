@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:milki_tech/core/services/connectivity_service.dart';
-import 'package:milki_tech/core/state/blog_store.dart';
-import 'package:milki_tech/core/theme/app_palette.dart';
-import 'package:milki_tech/core/theme/theme_service.dart';
+import 'package:news/core/services/connectivity_service.dart';
+import 'package:news/core/state/blog_store.dart';
+import 'package:news/core/theme/app_palette.dart';
+import 'package:news/core/theme/theme_service.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -172,7 +172,7 @@ class _SplashScreenState extends State<SplashScreen>
 
                 // App Name
                 Text(
-                  'Milki Tech',
+                  'Ethio Insight',
                   style: theme.textTheme.headlineMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                     fontSize: 32,

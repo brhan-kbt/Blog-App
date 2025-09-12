@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:milki_tech/core/theme/app_palette.dart';
+import 'package:news/core/theme/app_palette.dart';
 import 'package:share_plus/share_plus.dart';
 import '../core/state/blog_store.dart';
 import '../models/post.dart';
@@ -85,7 +85,7 @@ Future<void> showPostOptionsSheet(BuildContext context, Post post) async {
                 HapticFeedback.selectionClick();
                 Navigator.pop(ctx);
                 final text =
-                    '${post.title}\n${post.subtitle}\n\nRead more in Milki Tech.';
+                    '${post.title}\n${post.subtitle}\n\nRead more in Ethio Insight  Tech.';
                 await Share.share(text);
               },
             ),

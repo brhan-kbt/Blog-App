@@ -1,4 +1,4 @@
-# qubee
+# Ethio Insight 
 
 A new Flutter project.
 
