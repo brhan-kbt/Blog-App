@@ -23,10 +23,14 @@ import 'widgets/banner_ad_widget.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize core services in parallel for better performance
+  // Initialize GetStorage first (required for theme service)
+  await GetStorage.init();
+
+  // Initialize theme service first to ensure proper theme loading
+  await _initializeThemeService();
+
+  // Initialize other services in parallel
   await Future.wait([
-    GetStorage.init(),
-    _initializeThemeService(),
     _initializeBlogStore(),
     _initializeAds(),
     _initializePerformanceService(),
@@ -38,6 +42,13 @@ Future<void> main() async {
 Future<void> _initializeThemeService() async {
   final themeSvc = Get.put(ThemeService(), permanent: true);
   await themeSvc.init();
+
+  // Small delay to ensure theme is properly applied
+  await Future.delayed(const Duration(milliseconds: 100));
+
+  debugPrint(
+    "🎨 ThemeService - Initialization complete. Mode: ${themeSvc.mode.value}, IsDark: ${themeSvc.isDark}",
+  );
 }
 
 Future<void> _initializeBlogStore() async {
@@ -66,8 +77,13 @@ class MilkiApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeSvc = Get.find<ThemeService>();
 
-    return Obx(
-      () => GetMaterialApp(
+    return Obx(() {
+      debugPrint(
+        "🎨 MilkiApp - Building with theme mode: ${themeSvc.mode.value}",
+      );
+      debugPrint("🎨 MilkiApp - IsDark: ${themeSvc.isDark}");
+
+      return GetMaterialApp(
         title: 'Milki Tech',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.light,
@@ -75,8 +91,8 @@ class MilkiApp extends StatelessWidget {
         themeMode: themeSvc.mode.value,
         initialRoute: AppPages.initial,
         getPages: AppPages.routes,
-      ),
-    );
+      );
+    });
   }
 }
 
@@ -188,7 +204,7 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final choice = Random().nextInt(2); // 0 none, 1 interstitial, 2 rewarded
+    final choice = Random().nextInt(3); // 0 none, 1 interstitial, 2 rewarded
 
     print("Random choice: $choice");
 
@@ -237,7 +253,7 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
             ),
             // Bottom banner ad on all pages (slightly smaller than inline)
             const SizedBox(height: 8),
-            if (choice == 1)
+            if (choice == 1 || choice == 2)
               const BannerAdWidget(size: AdSize(width: 370, height: 70)),
           ],
         ),

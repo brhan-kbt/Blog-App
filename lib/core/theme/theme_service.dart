@@ -11,21 +11,25 @@ class ThemeService extends GetxService {
     _box = GetStorage();
 
     final storedMode = _box.read<String>(_key);
-    debugPrint("Stored theme from box: $storedMode");
+    debugPrint("🎨 ThemeService - Stored theme from box: $storedMode");
 
     switch (storedMode) {
       case 'dark':
         mode.value = ThemeMode.dark;
+        debugPrint("🎨 ThemeService - Setting DARK mode");
         break;
       case 'system':
         mode.value = ThemeMode.system;
+        debugPrint("🎨 ThemeService - Setting SYSTEM mode");
         break;
       case 'light':
       default:
         mode.value = ThemeMode.light;
+        debugPrint("🎨 ThemeService - Setting LIGHT mode (default)");
     }
 
-    debugPrint("✅ Applying theme: ${mode.value}");
+    debugPrint("🎨 ThemeService - Final theme mode: ${mode.value}");
+    debugPrint("🎨 ThemeService - IsDark: $isDark");
     Get.changeThemeMode(mode.value);
   }
 
@@ -40,7 +44,13 @@ class ThemeService extends GetxService {
     await _box.write(_key, value);
   }
 
-  bool get isDark =>
-      mode.value == ThemeMode.dark ||
-      (mode.value == ThemeMode.system && Get.isDarkMode);
+  bool get isDark {
+    final result =
+        mode.value == ThemeMode.dark ||
+        (mode.value == ThemeMode.system && Get.isDarkMode);
+    debugPrint(
+      "🎨 ThemeService - isDark getter: mode=${mode.value}, Get.isDarkMode=${Get.isDarkMode}, result=$result",
+    );
+    return result;
+  }
 }
