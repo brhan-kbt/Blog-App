@@ -10,6 +10,8 @@ import 'package:news/core/theme/app_palette.dart';
 import 'package:news/core/theme/theme_service.dart';
 import 'package:news/core/services/connectivity_service.dart';
 import 'package:news/core/services/performance_service.dart';
+import 'package:news/core/services/version_check_service.dart';
+import 'package:news/core/services/version_check_controller.dart';
 import 'package:news/routes/app_pages.dart';
 import 'core/state/blog_store.dart';
 import 'core/theme/app_theme.dart';
@@ -19,6 +21,7 @@ import 'modules/recent/recent_page.dart';
 import 'widgets/search_header.dart';
 import 'core/ads/ad_service.dart';
 import 'widgets/banner_ad_widget.dart';
+import 'widgets/update_dialog.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,6 +37,7 @@ Future<void> main() async {
     _initializeBlogStore(),
     _initializeAds(),
     _initializePerformanceService(),
+    _initializeVersionCheckService(),
   ]);
 
   runApp(const EthioInsightApp());
@@ -68,6 +72,11 @@ Future<void> _initializeAds() async {
 
 Future<void> _initializePerformanceService() async {
   Get.put(PerformanceService(), permanent: true);
+}
+
+Future<void> _initializeVersionCheckService() async {
+  Get.put(VersionCheckService(), permanent: true);
+  Get.put(VersionCheckController(), permanent: true);
 }
 
 class EthioInsightApp extends StatelessWidget {
@@ -107,6 +116,7 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
   int index = 0;
   final store = Get.find<BlogStore>();
   final connectivityService = Get.find<ConnectivityService>();
+  final versionCheckService = Get.find<VersionCheckService>();
   final titles = const ['Recent', 'Category', 'Favorite'];
 
   final box = GetStorage();
@@ -123,6 +133,7 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
     pages = [const RecentPage(), const CategoryPage(), const FavoritePage()];
 
     _checkFirstLaunch();
+    _checkForAppUpdate();
   }
 
   @override
@@ -165,6 +176,46 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
     } catch (e, st) {
       debugPrint("⚠️ Error checking notifications: $e\n$st");
     }
+  }
+
+  Future<void> _checkForAppUpdate() async {
+    try {
+      // Check connectivity first
+      if (!connectivityService.isConnected) {
+        debugPrint("📱 Skipping version check - no internet connection");
+        return;
+      }
+
+      // Add a small delay to ensure the app is fully loaded
+      await Future.delayed(const Duration(seconds: 2));
+
+      if (!mounted) return;
+
+      final versionResponse = await versionCheckService.checkForUpdate();
+
+      if (versionResponse != null && versionResponse.data.needsUpdate) {
+        debugPrint("🔄 App update available - showing update dialog");
+
+        // Show update dialog
+        _showUpdateDialog(versionResponse.data);
+      } else {
+        debugPrint("✅ App is up to date");
+      }
+    } catch (e, st) {
+      debugPrint("⚠️ Error checking for app update: $e\n$st");
+      // Don't show error to user, just log it
+    }
+  }
+
+  void _showUpdateDialog(versionData) {
+    if (!mounted) return;
+
+    showDialog(
+      context: context,
+      barrierDismissible:
+          !versionData.forceUpdate, // Prevent dismissing if force update
+      builder: (context) => UpdateDialog(versionData: versionData),
+    );
   }
 
   /// 🔹 Refresh depending on active tab
