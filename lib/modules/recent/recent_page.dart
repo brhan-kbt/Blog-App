@@ -39,7 +39,22 @@ class RecentPage extends StatelessWidget {
       }
 
       if (list.isEmpty) {
-        return const Center(child: Text("No posts available"));
+        // i want a way to refresh the posts here
+        return Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text("Sorry, something went wrong."),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () {
+                  store.fetchPosts();
+                },
+                child: const Text("Refresh"),
+              ),
+            ],
+          ),
+        );
       }
 
       final top = list.first;

@@ -47,7 +47,22 @@ class CategoryListingPage extends StatelessWidget {
         final list = store.byCategory(catId)
           ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
         if (list.isEmpty) {
-          return const Center(child: Text('No posts'));
+          // i want a way to refresh the posts here
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text("Sorry, something went wrong."),
+                const SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () {
+                    store.fetchPosts();
+                  },
+                  child: const Text("Refresh"),
+                ),
+              ],
+            ),
+          );
         }
 
         final top = list.first;

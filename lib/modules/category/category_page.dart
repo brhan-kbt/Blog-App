@@ -33,7 +33,22 @@ class CategoryPage extends StatelessWidget {
       }
 
       if (store.categories.isEmpty) {
-        return const Center(child: Text("No categories available"));
+        // i want a way to refresh the categories here
+        return Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text("Sorry, something went wrong."),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () {
+                  store.fetchCategories();
+                },
+                child: const Text("Refresh"),
+              ),
+            ],
+          ),
+        );
       }
       final q = store.query.value.trim().toLowerCase();
       final List<Category> cats = store.categories;
