@@ -40,7 +40,7 @@ Future<void> main() async {
     _initializeVersionCheckService(),
   ]);
 
-  runApp(const EthioInsightApp());
+  runApp(const AbayTechApp());
 }
 
 Future<void> _initializeThemeService() async {
@@ -79,8 +79,8 @@ Future<void> _initializeVersionCheckService() async {
   Get.put(VersionCheckController(), permanent: true);
 }
 
-class EthioInsightApp extends StatelessWidget {
-  const EthioInsightApp({super.key});
+class AbayTechApp extends StatelessWidget {
+  const AbayTechApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -88,12 +88,12 @@ class EthioInsightApp extends StatelessWidget {
 
     return Obx(() {
       debugPrint(
-        "🎨 EthioInsightApp - Building with theme mode: ${themeSvc.mode.value}",
+        "🎨 AbayTechApp - Building with theme mode: ${themeSvc.mode.value}",
       );
-      debugPrint("🎨 EthioInsightApp - IsDark: ${themeSvc.isDark}");
+      debugPrint("🎨 AbayTechApp - IsDark: ${themeSvc.isDark}");
 
       return GetMaterialApp(
-        title: 'Ethio Insight',
+        title: 'Abay Tech',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.light,
         darkTheme: AppTheme.dark,

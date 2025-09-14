@@ -85,7 +85,7 @@ Future<void> showPostOptionsSheet(BuildContext context, Post post) async {
                 HapticFeedback.selectionClick();
                 Navigator.pop(ctx);
                 final text =
-                    '${post.title}\n${post.subtitle}\n\nRead more in Ethio Insight  Tech.';
+                    '${post.title}\n${post.subtitle}\n\nRead more in Abay Tech  Tech.';
                 await Share.share(text);
               },
             ),

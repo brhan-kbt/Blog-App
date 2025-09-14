@@ -192,7 +192,7 @@ class SettingsPage extends StatelessWidget {
                     title: 'Share to Friends',
                     onTap: () {
                       Share.share(
-                        "Check out Ethio Insight App: https://play.google.com/store/apps/details?id=com.blog.birhanu",
+                        "Check out Abay Tech App: https://play.google.com/store/apps/details?id=com.blog.birhanu",
                       );
                     },
                   ),

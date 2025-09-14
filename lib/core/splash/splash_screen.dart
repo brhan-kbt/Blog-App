@@ -172,7 +172,7 @@ class _SplashScreenState extends State<SplashScreen>
 
                 // App Name
                 Text(
-                  'Ethio Insight',
+                  'Abay Tech',
                   style: theme.textTheme.headlineMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                     fontSize: 32,

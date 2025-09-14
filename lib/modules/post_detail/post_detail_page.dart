@@ -123,11 +123,11 @@ class _PostDetailPageState extends State<PostDetailPage> {
                       ),
                       const SizedBox(height: 16),
                       Html(data: post!.body),
-                      // i want a button Get it Here
+                      // i want a button Get it Now
                       const SizedBox(height: 8),
                       ElevatedButton.icon(
                         label: const Text(
-                          "Get it Here",
+                          "Get it Now!",
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
