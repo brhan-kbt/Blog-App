@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:rivo_tech/core/config/api_config.dart';
-import 'package:rivo_tech/widgets/post_options_sheet.dart';
+import 'package:jira_tips/core/config/api_config.dart';
+import 'package:jira_tips/widgets/post_options_sheet.dart';
 import '../core/theme/app_palette.dart';
 import '../models/post.dart';
 

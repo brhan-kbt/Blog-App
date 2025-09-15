@@ -4,16 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:rivo_tech/widgets/adabtiveBanner.dart';
+import 'package:jira_tips/widgets/adabtiveBanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import 'package:rivo_tech/core/theme/app_palette.dart';
-import 'package:rivo_tech/core/theme/theme_service.dart';
-import 'package:rivo_tech/core/services/connectivity_service.dart';
-import 'package:rivo_tech/core/services/performance_service.dart';
-import 'package:rivo_tech/core/services/version_check_service.dart';
-import 'package:rivo_tech/core/services/version_check_controller.dart';
-import 'package:rivo_tech/routes/app_pages.dart';
+import 'package:jira_tips/core/theme/app_palette.dart';
+import 'package:jira_tips/core/theme/theme_service.dart';
+import 'package:jira_tips/core/services/connectivity_service.dart';
+import 'package:jira_tips/core/services/performance_service.dart';
+import 'package:jira_tips/core/services/version_check_service.dart';
+import 'package:jira_tips/core/services/version_check_controller.dart';
+import 'package:jira_tips/routes/app_pages.dart';
 import 'core/state/blog_store.dart';
 import 'core/theme/app_theme.dart';
 import 'modules/category/category_page.dart';
@@ -40,7 +40,7 @@ Future<void> main() async {
     _initializeVersionCheckService(),
   ]);
 
-  runApp(const RivoTechApp());
+  runApp(const JiraTipsApp());
 }
 
 Future<void> _initializeThemeService() async {
@@ -79,8 +79,8 @@ Future<void> _initializeVersionCheckService() async {
   Get.put(VersionCheckController(), permanent: true);
 }
 
-class RivoTechApp extends StatelessWidget {
-  const RivoTechApp({super.key});
+class JiraTipsApp extends StatelessWidget {
+  const JiraTipsApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -88,12 +88,12 @@ class RivoTechApp extends StatelessWidget {
 
     return Obx(() {
       debugPrint(
-        "🎨 RivoTechApp - Building with theme mode: ${themeSvc.mode.value}",
+        "🎨 JiraTipsApp - Building with theme mode: ${themeSvc.mode.value}",
       );
-      debugPrint("🎨 RivoTechApp - IsDark: ${themeSvc.isDark}");
+      debugPrint("🎨 JiraTipsApp - IsDark: ${themeSvc.isDark}");
 
       return GetMaterialApp(
-        title: 'Rivo Tech',
+        title: 'Jira Tips',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.light,
         darkTheme: AppTheme.dark,

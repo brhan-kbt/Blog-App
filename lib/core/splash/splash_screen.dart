@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rivo_tech/core/services/connectivity_service.dart';
-import 'package:rivo_tech/core/state/blog_store.dart';
-import 'package:rivo_tech/core/theme/theme_service.dart';
+import 'package:jira_tips/core/services/connectivity_service.dart';
+import 'package:jira_tips/core/state/blog_store.dart';
+import 'package:jira_tips/core/theme/theme_service.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -112,14 +112,14 @@ class _SplashScreenState extends State<SplashScreen>
               end: Alignment.bottomRight,
               colors: isDark
                   ? [
-                      const Color.fromARGB(255, 74, 29, 10),
-                      const Color.fromARGB(255, 172, 65, 20),
-                      const Color.fromARGB(255, 107, 35, 4),
+                      const Color.fromARGB(255, 106, 33, 52),
+                      const Color(0xFFe94873),
+                      const Color.fromARGB(255, 131, 41, 65),
                     ]
                   : [
-                      const Color(0xFFff6221),
-                      const Color(0xFFff7a3d),
-                      const Color(0xFFff8f59),
+                      const Color.fromARGB(255, 106, 33, 52),
+                      const Color(0xFFe94873),
+                      const Color.fromARGB(255, 131, 41, 65),
                     ],
             ),
           ),
@@ -169,7 +169,7 @@ class _SplashScreenState extends State<SplashScreen>
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(27),
                             child: Image.asset(
-                              'assets/rivo_tech_logo.png',
+                              'assets/jira_tips_logo.png',
                               fit: BoxFit.contain,
                               errorBuilder: (context, error, stackTrace) {
                                 return Container(
@@ -198,7 +198,7 @@ class _SplashScreenState extends State<SplashScreen>
 
                 // App Name
                 Text(
-                  'Rivo Tech',
+                  'Jira Tips',
                   style: theme.textTheme.headlineMedium?.copyWith(
                     fontWeight: FontWeight.w700,
                     fontSize: 36,

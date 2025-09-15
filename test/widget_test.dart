@@ -8,14 +8,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:rivo_tech/main.dart';
+import 'package:jira_tips/main.dart';
 
 void main() {
   testWidgets('App loads successfully', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const RivoTechApp());
+    await tester.pumpWidget(const JiraTipsApp());
 
     // Verify that the app loads without crashing
-    expect(find.byType(RivoTechApp), findsOneWidget);
+    expect(find.byType(JiraTipsApp), findsOneWidget);
   });
 }
