@@ -21,7 +21,6 @@ import 'modules/favorite/favorite_page.dart';
 import 'modules/recent/recent_page.dart';
 import 'widgets/search_header.dart';
 import 'core/ads/ad_service.dart';
-import 'widgets/banner_ad_widget.dart';
 import 'widgets/update_dialog.dart';
 
 Future<void> main() async {
@@ -144,25 +143,108 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
   }
 
   @override
-  // void didChangeAppLifecycleState(AppLifecycleState state) {
-  //   if (state == AppLifecycleState.resumed) {
-  //     _checkNotificationStatus();
-  //     // Show custom app resume ad dialog
-  //     AdService.instance.showAppResumeAd(context);
-  //   }
-  // }
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      AdService.instance.showAppOpenAd();
+    super.didChangeAppLifecycleState(state);
+
+    switch (state) {
+      case AppLifecycleState.resumed:
+        debugPrint(
+          "📱 App resumed - checking notification status and showing ads",
+        );
+        _handleAppResume();
+        break;
+      case AppLifecycleState.paused:
+        debugPrint("📱 App paused");
+        break;
+      case AppLifecycleState.inactive:
+        debugPrint("📱 App inactive");
+        break;
+      case AppLifecycleState.detached:
+        debugPrint("📱 App detached");
+        break;
+      case AppLifecycleState.hidden:
+        debugPrint("📱 App hidden");
+        break;
+    }
+  }
+
+  Future<void> _handleAppResume() async {
+    try {
+      // Check notification status when returning from settings
+      await _checkNotificationStatus();
+
+      // Show app open ad with error handling
+      try {
+        AdService.instance.showAppOpenAd();
+      } catch (e) {
+        debugPrint("⚠️ Error showing app open ad: $e");
+      }
+    } catch (e) {
+      debugPrint("⚠️ Error handling app resume: $e");
     }
   }
 
   Future<void> _checkFirstLaunch() async {
     final isFirstLaunch = box.read("isFirstLaunch") ?? true;
     if (isFirstLaunch) {
-      await _checkNotificationStatus();
+      await _requestNotificationPermission();
       await box.write("isFirstLaunch", false);
     }
+  }
+
+  Future<void> _requestNotificationPermission() async {
+    try {
+      final status = await Permission.notification.status;
+      if (!mounted) return;
+
+      if (status.isGranted) {
+        debugPrint("✅ Notifications already allowed");
+        return;
+      }
+
+      if (status.isDenied) {
+        debugPrint("📱 Requesting notification permission...");
+        final result = await Permission.notification.request();
+        if (!mounted) return;
+
+        if (result.isGranted) {
+          debugPrint("✅ Notification permission granted");
+          _showNotificationPermissionSnackbar(
+            "Notifications enabled! You'll receive updates about new articles.",
+          );
+        } else if (result.isPermanentlyDenied) {
+          debugPrint("❌ Notification permission permanently denied");
+          _showNotificationPermissionSnackbar(
+            "Notifications are disabled. You can enable them in Settings.",
+          );
+        } else {
+          debugPrint("❌ Notification permission denied");
+          _showNotificationPermissionSnackbar(
+            "Notifications are disabled. You can enable them later in Settings.",
+          );
+        }
+      } else if (status.isPermanentlyDenied) {
+        debugPrint("❌ Notification permission permanently denied");
+        _showNotificationPermissionSnackbar(
+          "Notifications are disabled. You can enable them in Settings.",
+        );
+      }
+    } catch (e, st) {
+      debugPrint("⚠️ Error requesting notifications: $e\n$st");
+    }
+  }
+
+  void _showNotificationPermissionSnackbar(String message) {
+    if (!mounted) return;
+    Get.snackbar(
+      "Notification Settings",
+      message,
+      snackPosition: SnackPosition.BOTTOM,
+      margin: const EdgeInsets.all(16),
+      duration: const Duration(seconds: 4),
+      backgroundColor: Get.isDarkMode ? Colors.grey[800] : Colors.grey[100],
+      colorText: Get.isDarkMode ? Colors.white : Colors.black,
+    );
   }
 
   Future<void> _checkNotificationStatus() async {
