@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:news/models/post.dart';
+import 'package:news/widgets/adabtiveBanner.dart';
 import 'package:news/widgets/hero_card.dart';
 import 'package:news/widgets/post_options_sheet.dart';
 import 'package:news/widgets/shimmer_widgets.dart';
@@ -86,16 +87,14 @@ class CategoryListingPage extends StatelessWidget {
                 ),
               ];
               if ((index + 1) % 3 == 0) {
-                widgets.add(const BannerAdWidget(size: AdSize.largeBanner));
+                widgets.add(const AdaptiveBannerAdWidget());
               }
               return Column(children: widgets);
             }),
           ],
         );
       }),
-      bottomNavigationBar: const SafeArea(
-        child: BannerAdWidget(size: AdSize(width: 370, height: 100)),
-      ),
+      bottomNavigationBar: const SafeArea(child: AdaptiveBannerAdWidget()),
     );
   }
 }

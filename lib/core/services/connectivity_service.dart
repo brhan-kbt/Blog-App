@@ -58,14 +58,19 @@ class ConnectivityService extends GetxService {
 
     Get.dialog(
       AlertDialog(
-        title: const Row(
+        title: const Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.wifi_off, color: Colors.red),
             SizedBox(width: 8),
-            Text('No Internet Connection'),
+            Text(
+              'No Internet Connection',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
           ],
         ),
         content: const Text(
+          textAlign: TextAlign.center,
           'Please check your internet connection and try again.',
         ),
         actions: [

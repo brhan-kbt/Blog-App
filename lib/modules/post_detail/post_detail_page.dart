@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:news/core/config/api_config.dart';
+import 'package:news/widgets/adabtiveBanner.dart';
 import 'package:news/widgets/post_detail_shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../core/state/blog_store.dart';
@@ -103,7 +104,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsets.all(16),
+                  padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 5),
                   child: Column(
                     children: [
                       Text(
@@ -125,46 +126,47 @@ class _PostDetailPageState extends State<PostDetailPage> {
                       Html(data: post!.body),
                       // i want a button Get it Now
                       const SizedBox(height: 8),
-                      ElevatedButton.icon(
-                        label: const Text(
-                          "Get it Now!",
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
+                      if (post!.link != null && post!.link!.isNotEmpty)
+                        ElevatedButton.icon(
+                          label: const Text(
+                            "Get it Now!",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
+
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                Brightness.light == Theme.of(context).brightness
+                                ? Colors.black
+                                : Colors.white,
+                            foregroundColor:
+                                Brightness.light == Theme.of(context).brightness
+                                ? Colors.white
+                                : Colors.black,
+
+                            minimumSize: const Size(double.infinity, 50),
+
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                          onPressed: () async {
+                            // WHEN CLICKED REDIRECT TO LINK
+
+                            debugPrint(post!.link!);
+                            final uri = Uri.parse(post!.link!);
+                            if (await canLaunchUrl(uri)) {
+                              await launchUrl(
+                                uri,
+                                mode: LaunchMode.externalApplication,
+                              );
+                            }
+                          },
                         ),
 
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              Brightness.light == Theme.of(context).brightness
-                              ? Colors.black
-                              : Colors.white,
-                          foregroundColor:
-                              Brightness.light == Theme.of(context).brightness
-                              ? Colors.white
-                              : Colors.black,
-
-                          minimumSize: const Size(double.infinity, 50),
-
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                        onPressed: () async {
-                          // WHEN CLICKED REDIRECT TO LINK
-
-                          debugPrint(post!.link!);
-                          final uri = Uri.parse(post!.link!);
-                          if (await canLaunchUrl(uri)) {
-                            await launchUrl(
-                              uri,
-                              mode: LaunchMode.externalApplication,
-                            );
-                          }
-                        },
-                      ),
-
-                      const SizedBox(height: 16),
+                      // const SizedBox(height: 16),
                     ],
                   ),
                 ),
@@ -202,9 +204,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
           const SizedBox(height: 24),
         ],
       ),
-      bottomNavigationBar: const SafeArea(
-        child: BannerAdWidget(size: AdSize(width: 370, height: 70)),
-      ),
+      bottomNavigationBar: const SafeArea(child: AdaptiveBannerAdWidget()),
     );
   }
 }

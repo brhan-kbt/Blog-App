@@ -183,7 +183,7 @@ class SettingsPage extends StatelessWidget {
                         inAppReview.requestReview();
                       } else {
                         inAppReview.openStoreListing(
-                          appStoreId: "com.blog.birhanu", // TODO: replace
+                          appStoreId: "com.brhan.rivotech", // TODO: replace
                         );
                       }
                     },
@@ -192,7 +192,7 @@ class SettingsPage extends StatelessWidget {
                     title: 'Share to Friends',
                     onTap: () {
                       Share.share(
-                        "Check out Abay Tech App: https://play.google.com/store/apps/details?id=com.blog.birhanu",
+                        "Check out Rivo Tech App: https://play.google.com/store/apps/details?id=com.brhan.rivotech",
                       );
                     },
                   ),

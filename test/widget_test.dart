@@ -13,9 +13,9 @@ import 'package:news/main.dart';
 void main() {
   testWidgets('App loads successfully', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const AbayTechApp());
+    await tester.pumpWidget(const RivoTechApp());
 
     // Verify that the app loads without crashing
-    expect(find.byType(AbayTechApp), findsOneWidget);
+    expect(find.byType(RivoTechApp), findsOneWidget);
   });
 }

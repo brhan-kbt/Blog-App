@@ -77,7 +77,7 @@
 //   ),
 //   Post(
 //     id: 'p6',
-//     title: 'Musk Unveils Tesla’s Revolutionary Robotaxi',
+//     title: 'Musk Unveils Tesla’s Rivolutionary Robotaxi',
 //     subtitle: 'A groundbreaking announcement that captured attention…',
 //     body: 'Robotaxi article body…',
 //     date: DateTime(2024, 10, 21),
@@ -89,7 +89,7 @@
 
 //   Post(
 //     id: 'p6',
-//     title: 'Musk Unveils Tesla’s Revolutionary Robotaxi',
+//     title: 'Musk Unveils Tesla’s Rivolutionary Robotaxi',
 //     subtitle: 'A groundbreaking announcement that captured attention…',
 //     body: 'Robotaxi article body…',
 //     date: DateTime(2024, 10, 21),

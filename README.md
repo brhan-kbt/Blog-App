@@ -1,4 +1,4 @@
-# Abay Tech 
+# Rivo Tech 
 
 A new Flutter project.
 

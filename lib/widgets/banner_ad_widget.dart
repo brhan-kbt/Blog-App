@@ -45,12 +45,12 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
   Widget build(BuildContext context) {
     if (!_loaded || _ad == null) return const SizedBox.shrink();
     return Container(
-      decoration: BoxDecoration(
-        color: Brightness.light == Theme.of(context).brightness
-            ? const Color.fromARGB(255, 220, 255, 234)
-            : Color.fromARGB(255, 13, 23, 13),
-        borderRadius: BorderRadius.circular(10),
-      ),
+      // decoration: BoxDecoration(
+      //   color: Brightness.light == Theme.of(context).brightness
+      //       ? const Color.fromARGB(255, 220, 255, 234)
+      //       : Color.fromARGB(255, 13, 23, 13),
+      //   borderRadius: BorderRadius.circular(10),
+      // ),
       alignment: Alignment.centerLeft,
       margin: widget.margin ?? const EdgeInsets.only(top: 8, bottom: 8),
       width: double.infinity,

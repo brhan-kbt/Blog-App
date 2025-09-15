@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:news/widgets/adabtiveBanner.dart';
 import 'package:news/widgets/shimmer_widgets.dart';
 import '../../core/state/blog_store.dart';
 import '../../models/post.dart';
@@ -78,9 +79,7 @@ class RecentPage extends StatelessWidget {
               ),
             ];
             if ((index + 1) % 3 == 0) {
-              widgets.add(
-                const BannerAdWidget(size: AdSize(width: 370, height: 100)),
-              );
+              widgets.add(const AdaptiveBannerAdWidget());
             }
             return Column(children: widgets);
           }),
