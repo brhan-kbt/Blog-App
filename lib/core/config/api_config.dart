@@ -5,6 +5,7 @@ class ApiConfig {
   // Endpoints
   static String posts = "$baseUrl/posts";
   static String settings = "$baseUrl/settings";
+  static String checkVersion = "$baseUrl/app-config/check-version";
 
   static String post(int id) => "$baseUrl/posts/$id";
   static String categories = "$baseUrl/categories";

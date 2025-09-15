@@ -1,5 +1,5 @@
 import 'package:intl/intl.dart';
-import 'package:milki_tech/models/user_ref.dart';
+import 'package:news/models/user_ref.dart';
 import 'category.dart';
 
 class Post {

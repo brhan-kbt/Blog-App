@@ -1,4 +1,4 @@
-package com.milki.tech
+package com.blog.birhanu
 
 import io.flutter.embedding.android.FlutterActivity
 
