@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:news/core/services/connectivity_service.dart';
-import 'package:news/core/state/blog_store.dart';
-import 'package:news/core/theme/theme_service.dart';
+import 'package:rivo_tech/core/services/connectivity_service.dart';
+import 'package:rivo_tech/core/state/blog_store.dart';
+import 'package:rivo_tech/core/theme/theme_service.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

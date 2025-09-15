@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:news/core/config/api_config.dart';
-import 'package:news/core/theme/app_palette.dart';
-import 'package:news/models/category.dart';
-import 'package:news/widgets/shimmer_widgets.dart';
+import 'package:rivo_tech/core/config/api_config.dart';
+import 'package:rivo_tech/core/theme/app_palette.dart';
+import 'package:rivo_tech/models/category.dart';
+import 'package:rivo_tech/widgets/shimmer_widgets.dart';
 import '../../core/state/blog_store.dart';
 import 'category_listing_page.dart';
 

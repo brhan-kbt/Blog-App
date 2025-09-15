@@ -8,7 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:news/main.dart';
+import 'package:rivo_tech/main.dart';
 
 void main() {
   testWidgets('App loads successfully', (WidgetTester tester) async {

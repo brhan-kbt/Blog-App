@@ -1,5 +1,5 @@
 import 'package:intl/intl.dart';
-import 'package:news/models/user_ref.dart';
+import 'package:rivo_tech/models/user_ref.dart';
 import 'category.dart';
 
 class Post {
