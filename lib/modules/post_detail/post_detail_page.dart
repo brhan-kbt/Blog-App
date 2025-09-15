@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:news/core/config/api_config.dart';
+import 'package:news/core/theme/app_palette.dart';
 import 'package:news/widgets/adabtiveBanner.dart';
 import 'package:news/widgets/post_detail_shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -54,6 +55,8 @@ class _PostDetailPageState extends State<PostDetailPage> {
       return const Scaffold(body: Center(child: Text("Post not found")));
     }
 
+    final theme = Theme.of(context);
+    final palette = theme.extension<AppPalette>()!;
     return Scaffold(
       appBar: AppBar(
         title: const Text('News'),
@@ -128,23 +131,26 @@ class _PostDetailPageState extends State<PostDetailPage> {
                       const SizedBox(height: 8),
                       if (post!.link != null && post!.link!.isNotEmpty)
                         ElevatedButton.icon(
-                          label: const Text(
+                          label: Text(
                             "Get it Now!",
                             style: TextStyle(
                               fontSize: 16,
+                              color: Brightness.light == theme.brightness
+                                  ? Colors.white
+                                  : Colors.white,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
 
                           style: ElevatedButton.styleFrom(
                             backgroundColor:
-                                Brightness.light == Theme.of(context).brightness
-                                ? Colors.black
-                                : Colors.white,
+                                Brightness.light == theme.brightness
+                                ? palette.primary
+                                : palette.primary,
                             foregroundColor:
-                                Brightness.light == Theme.of(context).brightness
-                                ? Colors.white
-                                : Colors.black,
+                                Brightness.light == theme.brightness
+                                ? palette.primary
+                                : palette.primary,
 
                             minimumSize: const Size(double.infinity, 50),
 

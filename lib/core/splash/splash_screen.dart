@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:news/core/services/connectivity_service.dart';
 import 'package:news/core/state/blog_store.dart';
-import 'package:news/core/theme/app_palette.dart';
 import 'package:news/core/theme/theme_service.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -51,9 +50,6 @@ class _SplashScreenState extends State<SplashScreen>
 
   Future<void> _initializeApp() async {
     try {
-      // Ensure theme service is available (it should already be initialized in main.dart)
-      final themeService = Get.find<ThemeService>();
-
       // Initialize connectivity service
       Get.put(ConnectivityService(), permanent: true);
 
@@ -97,8 +93,6 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final palette =
-        theme.extension<AppPalette>() ?? AppPalette.fromTheme(theme);
     final themeService = Get.find<ThemeService>();
 
     return Obx(() {
@@ -108,17 +102,25 @@ class _SplashScreenState extends State<SplashScreen>
       );
 
       return Scaffold(
-        backgroundColor: isDark ? Colors.black87 : Colors.white,
+        backgroundColor: const Color(0xFFff6221),
         body: Container(
           width: double.infinity,
           height: double.infinity,
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
               colors: isDark
-                  ? [Colors.black87, Colors.black87, Colors.black87]
-                  : [Colors.white, Colors.white, Colors.white],
+                  ? [
+                      const Color.fromARGB(255, 74, 29, 10),
+                      const Color.fromARGB(255, 172, 65, 20),
+                      const Color.fromARGB(255, 107, 35, 4),
+                    ]
+                  : [
+                      const Color(0xFFff6221),
+                      const Color(0xFFff7a3d),
+                      const Color(0xFFff8f59),
+                    ],
             ),
           ),
           child: SafeArea(
@@ -134,30 +136,54 @@ class _SplashScreenState extends State<SplashScreen>
                     return Transform.scale(
                       scale: _logoAnimation.value,
                       child: Container(
-                        width: 120,
-                        height: 120,
+                        width: 140,
+                        height: 140,
                         decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 255, 255, 255),
-                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(35),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
-                              blurRadius: 20,
-                              offset: const Offset(0, 10),
+                              color: Colors.black.withOpacity(0.2),
+                              blurRadius: 30,
+                              offset: const Offset(0, 15),
+                              spreadRadius: 5,
+                            ),
+                            BoxShadow(
+                              color: Colors.white.withOpacity(0.1),
+                              blurRadius: 10,
+                              offset: const Offset(0, -5),
+                              spreadRadius: 2,
                             ),
                           ],
                         ),
                         child: Container(
+                          margin: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(27),
+                            border: Border.all(
+                              color: const Color(0xFFff6221).withOpacity(0.1),
+                              width: 2,
+                            ),
+                          ),
                           child: ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
+                            borderRadius: BorderRadius.circular(27),
                             child: Image.asset(
-                              'assets/logo1.png',
+                              'assets/rivo_tech_logo.png',
                               fit: BoxFit.contain,
                               errorBuilder: (context, error, stackTrace) {
-                                return Icon(
-                                  Icons.article_outlined,
-                                  size: 60,
-                                  color: const Color(0xFF04020F),
+                                return Container(
+                                  decoration: BoxDecoration(
+                                    color: const Color(
+                                      0xFFff6221,
+                                    ).withOpacity(0.1),
+                                    borderRadius: BorderRadius.circular(27),
+                                  ),
+                                  child: Icon(
+                                    Icons.article_outlined,
+                                    size: 70,
+                                    color: const Color(0xFFff6221),
+                                  ),
                                 );
                               },
                             ),
@@ -174,23 +200,22 @@ class _SplashScreenState extends State<SplashScreen>
                 Text(
                   'Rivo Tech',
                   style: theme.textTheme.headlineMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 32,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 36,
                     fontFamily: 'Pacifico',
-                    color: isDark
-                        ? const Color.fromARGB(255, 217, 255, 237)
-                        : const Color.fromARGB(221, 0, 44, 25),
+                    color: Colors.white,
+                    shadows: [
+                      Shadow(
+                        color: Colors.black.withOpacity(0.3),
+                        offset: const Offset(0, 2),
+                        blurRadius: 4,
+                      ),
+                    ],
                   ),
                 ),
 
-                const SizedBox(height: 8),
+                const SizedBox(height: 12),
 
-                // Text(
-                //   'Your Tech Blog Companion',
-                //   style: theme.textTheme.bodyMedium?.copyWith(
-                //     color: Colors.white.withOpacity(0.8),
-                //   ),
-                // ),
                 const Spacer(flex: 2),
 
                 // Loading Indicator
@@ -199,27 +224,47 @@ class _SplashScreenState extends State<SplashScreen>
                   builder: (context, child) {
                     return Column(
                       children: [
-                        SizedBox(
-                          width: 40,
-                          height: 40,
-                          child: CircularProgressIndicator(
-                            value: _loadingAnimation.value,
-                            strokeWidth: 3,
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              isDark
-                                  ? Colors.white.withOpacity(0.8)
-                                  : Colors.black87,
+                        Container(
+                          width: 50,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.2),
+                            borderRadius: BorderRadius.circular(25),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.1),
+                                blurRadius: 10,
+                                offset: const Offset(0, 5),
+                              ),
+                            ],
+                          ),
+                          child: SizedBox(
+                            width: 40,
+                            height: 40,
+                            child: CircularProgressIndicator(
+                              value: _loadingAnimation.value,
+                              strokeWidth: 4,
+                              valueColor: const AlwaysStoppedAnimation<Color>(
+                                Colors.white,
+                              ),
+                              backgroundColor: Colors.white.withOpacity(0.3),
                             ),
                           ),
                         ),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 20),
                         Text(
                           'Loading...',
-                          style: theme.textTheme.bodySmall?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: isDark
-                                ? Colors.white.withOpacity(0.7)
-                                : Colors.black87,
+                          style: theme.textTheme.bodyMedium?.copyWith(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                            color: Colors.white,
+                            shadows: [
+                              Shadow(
+                                color: Colors.black.withOpacity(0.3),
+                                offset: const Offset(0, 1),
+                                blurRadius: 2,
+                              ),
+                            ],
                           ),
                         ),
                       ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 @immutable
 class AppPalette extends ThemeExtension<AppPalette> {
+  final Color primary;
   final Color searchBg;
   final Color searchOutline;
   final Color searchIcon;
@@ -10,6 +11,7 @@ class AppPalette extends ThemeExtension<AppPalette> {
   final Color favoriteActive;
 
   const AppPalette({
+    required this.primary,
     required this.searchBg,
     required this.searchOutline,
     required this.searchIcon,
@@ -20,28 +22,31 @@ class AppPalette extends ThemeExtension<AppPalette> {
 
   /// Explicit LIGHT palette (tweak to taste)
   static const AppPalette light = AppPalette(
-    searchBg: Color(0xFFEAF2FF), // soft blue-tint chip
-    searchOutline: Color(0xFFCBD5E1), // slate-300-ish hairline
-    searchIcon: Color(0xFF475569), // slate-600
-    chipBg: Color(0xFFF1F5F9), // slate-50/100
+    primary: Color(0xFFff6221),
+    searchBg: Color.fromARGB(255, 255, 239, 232), // soft blue-tint chip
+    searchOutline: Color.fromARGB(255, 255, 168, 131), // slate-300-ish hairline
+    searchIcon: Color.fromARGB(255, 255, 130, 77), // slate-600
+    chipBg: Color.fromARGB(255, 255, 190, 162), // slate-50/100
     cardBg: Colors.white, // cards, tiles
-    favoriteActive: Color.fromARGB(255, 210, 255, 234), // matches your seed
+    favoriteActive: Color.fromARGB(255, 255, 211, 192), // matches your seed
   );
 
   /// Explicit DARK palette
   static const AppPalette dark = AppPalette(
+    primary: Color(0xFFff6221),
     searchBg: Color(0xFF252733), // muted surface tint
     searchOutline: Color(0xFF3A3C47), // subtle hairline
     searchIcon: Color(0xFFB0B7C3), // soft gray icon/hint
     chipBg: Color(0xFF2E303C),
     cardBg: Color.fromARGB(255, 11, 9, 36),
-    favoriteActive: Color.fromARGB(255, 1, 84, 45), // matches your seed
+    favoriteActive: Color.fromARGB(255, 167, 66, 23), // matches your seed
   );
 
   /// Optional: build from an existing ThemeData (used as a safe fallback)
   static AppPalette fromTheme(ThemeData theme) {
     final s = theme.colorScheme;
     return AppPalette(
+      primary: s.primary,
       searchBg: Color.alphaBlend(s.primary.withOpacity(0.08), s.surface),
       searchOutline: s.outlineVariant.withOpacity(0.30),
       searchIcon: s.onSurfaceVariant,
@@ -53,6 +58,7 @@ class AppPalette extends ThemeExtension<AppPalette> {
 
   @override
   AppPalette copyWith({
+    Color? primary,
     Color? searchBg,
     Color? searchOutline,
     Color? searchIcon,
@@ -61,6 +67,7 @@ class AppPalette extends ThemeExtension<AppPalette> {
     Color? favoriteActive,
   }) {
     return AppPalette(
+      primary: primary ?? this.primary,
       searchBg: searchBg ?? this.searchBg,
       searchOutline: searchOutline ?? this.searchOutline,
       searchIcon: searchIcon ?? this.searchIcon,
@@ -74,6 +81,7 @@ class AppPalette extends ThemeExtension<AppPalette> {
   AppPalette lerp(ThemeExtension<AppPalette>? other, double t) {
     if (other is! AppPalette) return this;
     return AppPalette(
+      primary: Color.lerp(primary, other.primary, t)!,
       searchBg: Color.lerp(searchBg, other.searchBg, t)!,
       searchOutline: Color.lerp(searchOutline, other.searchOutline, t)!,
       searchIcon: Color.lerp(searchIcon, other.searchIcon, t)!,
