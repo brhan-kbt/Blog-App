@@ -1,6 +1,6 @@
 class ApiConfig {
-  static const String baseUrl = "https://jiratips.birhanu.et/api/v1";
-  static const String imageUrl = "https://jiratips.birhanu.et/storage/";
+  static const String baseUrl = "https://gold.birhanu.et/api/v1";
+  static const String imageUrl = "https://gold.birhanu.et/storage/";
 
   // Endpoints
   static String posts = "$baseUrl/posts";

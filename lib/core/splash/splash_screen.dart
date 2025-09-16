@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jira_tips/core/services/connectivity_service.dart';
-import 'package:jira_tips/core/state/blog_store.dart';
-import 'package:jira_tips/core/theme/theme_service.dart';
+import 'package:gold_tech/core/services/connectivity_service.dart';
+import 'package:gold_tech/core/state/blog_store.dart';
+import 'package:gold_tech/core/theme/theme_service.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -102,7 +102,7 @@ class _SplashScreenState extends State<SplashScreen>
       );
 
       return Scaffold(
-        backgroundColor: const Color(0xFFff6221),
+        backgroundColor: const Color(0xffed761c),
         body: Container(
           width: double.infinity,
           height: double.infinity,
@@ -112,14 +112,14 @@ class _SplashScreenState extends State<SplashScreen>
               end: Alignment.bottomRight,
               colors: isDark
                   ? [
-                      const Color.fromARGB(255, 106, 33, 52),
-                      const Color(0xFFe94873),
-                      const Color.fromARGB(255, 131, 41, 65),
+                      const Color.fromARGB(255, 109, 54, 13),
+                      const Color(0xffed761c),
+                      const Color.fromARGB(255, 116, 53, 5),
                     ]
                   : [
-                      const Color.fromARGB(255, 106, 33, 52),
-                      const Color(0xFFe94873),
-                      const Color.fromARGB(255, 131, 41, 65),
+                      const Color.fromARGB(255, 109, 54, 13),
+                      const Color(0xffed761c),
+                      const Color.fromARGB(255, 116, 53, 5),
                     ],
             ),
           ),
@@ -169,7 +169,7 @@ class _SplashScreenState extends State<SplashScreen>
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(27),
                             child: Image.asset(
-                              'assets/jira_tips_logo.png',
+                              'assets/gold_tech_logo.png',
                               fit: BoxFit.contain,
                               errorBuilder: (context, error, stackTrace) {
                                 return Container(
@@ -198,7 +198,7 @@ class _SplashScreenState extends State<SplashScreen>
 
                 // App Name
                 Text(
-                  'Jira Tips',
+                  'Gold Tech',
                   style: theme.textTheme.headlineMedium?.copyWith(
                     fontWeight: FontWeight.w700,
                     fontSize: 36,
