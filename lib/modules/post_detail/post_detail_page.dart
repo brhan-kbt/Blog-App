@@ -59,7 +59,7 @@ class _PostDetailPageState extends State<PostDetailPage> {
     final palette = theme.extension<AppPalette>()!;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('News'),
+        title: Text(post!.title, maxLines: 1, overflow: TextOverflow.ellipsis),
         // back button
         // leading: IconButton(
         //   icon: const Icon(Icons.arrow_back),

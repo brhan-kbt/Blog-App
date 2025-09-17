@@ -8,10 +8,10 @@ import 'package:path_provider/path_provider.dart';
 import 'package:gold_tech/core/theme/app_palette.dart';
 import 'package:gold_tech/core/theme/theme_service.dart';
 import 'package:gold_tech/modules/settings/pages/about_page.dart';
+import 'package:gold_tech/modules/settings/pages/contact_us_page.dart';
 import 'package:gold_tech/modules/settings/pages/privacy_policy_page.dart';
 import 'package:gold_tech/modules/settings/pages/publisher_info_page.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:app_settings/app_settings.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../core/state/blog_store.dart';
 
@@ -152,7 +152,7 @@ class SettingsPage extends StatelessWidget {
 
               _SectionCard(
                 headerTitle: 'Privacy',
-                headerSubtitle: 'Privacy policy, About Us',
+                headerSubtitle: 'Privacy policy, About Us, Contact Us',
                 background: palette.cardBg,
                 children: [
                   _SimpleTile(
@@ -170,6 +170,15 @@ class SettingsPage extends StatelessWidget {
                     onTap: () => Get.to(
                       () => PublisherInfoPage(
                         content: settings.publisher_info ?? "Not available",
+                      ),
+                    ),
+                  ),
+                  _SimpleTile(
+                    title: 'Contact Us',
+                    // subtitle: 'Get in touch with us',
+                    onTap: () => Get.to(
+                      () => ContactUsPage(
+                        content: settings.contactUs ?? "Not available",
                       ),
                     ),
                   ),
