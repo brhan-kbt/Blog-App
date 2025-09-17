@@ -3,6 +3,7 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:in_app_review/in_app_review.dart';
+import 'package:jira_tips/modules/settings/pages/contact_us_page.dart';
 import 'package:jira_tips/modules/settings/pages/push_notification_page.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:jira_tips/core/theme/app_palette.dart';
@@ -152,7 +153,7 @@ class SettingsPage extends StatelessWidget {
 
               _SectionCard(
                 headerTitle: 'Privacy',
-                headerSubtitle: 'Privacy policy, About Us',
+                headerSubtitle: 'Privacy policy, About Us, Contact Us',
                 background: palette.cardBg,
                 children: [
                   _SimpleTile(
@@ -170,6 +171,16 @@ class SettingsPage extends StatelessWidget {
                     onTap: () => Get.to(
                       () => PublisherInfoPage(
                         content: settings.publisher_info ?? "Not available",
+                      ),
+                    ),
+                  ),
+
+                   _SimpleTile(
+                    title: 'Contact Us',
+                    // subtitle: 'Get in touch with us',
+                    onTap: () => Get.to(
+                      () => ContactUsPage(
+                        content: settings.contactUs ?? "Not available",
                       ),
                     ),
                   ),
