@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:gold_tech/core/config/api_config.dart';
-import 'package:gold_tech/core/theme/app_palette.dart';
-import 'package:gold_tech/models/category.dart';
-import 'package:gold_tech/widgets/shimmer_widgets.dart';
+import 'package:jara_tech/core/config/api_config.dart';
+import 'package:jara_tech/core/theme/app_palette.dart';
+import 'package:jara_tech/models/category.dart';
+import 'package:jara_tech/widgets/shimmer_widgets.dart';
 import '../../core/state/blog_store.dart';
 import 'category_listing_page.dart';
 

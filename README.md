@@ -1,4 +1,4 @@
-# Gold Tech 
+# Jara Tech 
 
 A new Flutter project.
 

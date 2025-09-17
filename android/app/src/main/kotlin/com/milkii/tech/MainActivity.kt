@@ -1,4 +1,4 @@
-package com.brhan.goldtech
+package com.brhan.jaratech
 
 import io.flutter.embedding.android.FlutterActivity
 

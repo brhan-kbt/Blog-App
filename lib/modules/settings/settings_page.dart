@@ -3,14 +3,14 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:in_app_review/in_app_review.dart';
-import 'package:gold_tech/modules/settings/pages/push_notification_page.dart';
+import 'package:jara_tech/modules/settings/pages/push_notification_page.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:gold_tech/core/theme/app_palette.dart';
-import 'package:gold_tech/core/theme/theme_service.dart';
-import 'package:gold_tech/modules/settings/pages/about_page.dart';
-import 'package:gold_tech/modules/settings/pages/contact_us_page.dart';
-import 'package:gold_tech/modules/settings/pages/privacy_policy_page.dart';
-import 'package:gold_tech/modules/settings/pages/publisher_info_page.dart';
+import 'package:jara_tech/core/theme/app_palette.dart';
+import 'package:jara_tech/core/theme/theme_service.dart';
+import 'package:jara_tech/modules/settings/pages/about_page.dart';
+import 'package:jara_tech/modules/settings/pages/contact_us_page.dart';
+import 'package:jara_tech/modules/settings/pages/privacy_policy_page.dart';
+import 'package:jara_tech/modules/settings/pages/publisher_info_page.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../core/state/blog_store.dart';
@@ -217,7 +217,7 @@ class SettingsPage extends StatelessWidget {
                         inAppReview.requestReview();
                       } else {
                         inAppReview.openStoreListing(
-                          appStoreId: "com.brhan.goldtech", // TODO: replace
+                          appStoreId: "com.brhan.jaratech", // TODO: replace
                         );
                       }
                     },
@@ -226,7 +226,7 @@ class SettingsPage extends StatelessWidget {
                     title: 'Share to Friends',
                     onTap: () {
                       Share.share(
-                        "Check out Gold Tech App: https://play.google.com/store/apps/details?id=com.brhan.goldtech",
+                        "Check out Jara Tech App: https://play.google.com/store/apps/details?id=com.brhan.jaratech",
                       );
                     },
                   ),
