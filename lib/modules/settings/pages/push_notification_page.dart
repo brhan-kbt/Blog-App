@@ -161,7 +161,7 @@ class _PushNotificationPageState extends State<PushNotificationPage> {
             ),
             const SizedBox(height: 12),
             const Text(
-              "To enable or disable push notifications for Gold Tech App, "
+              "To enable or disable push notifications for Abay Tech App, "
               "please use your phone's system settings or the buttons below.",
             ),
             const SizedBox(height: 24),

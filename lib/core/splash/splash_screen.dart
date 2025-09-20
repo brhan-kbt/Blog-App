@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:gold_tech/core/services/connectivity_service.dart';
-import 'package:gold_tech/core/state/blog_store.dart';
-import 'package:gold_tech/core/theme/theme_service.dart';
+import 'package:news/core/services/connectivity_service.dart';
+import 'package:news/core/state/blog_store.dart';
+import 'package:news/core/theme/theme_service.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -112,14 +112,14 @@ class _SplashScreenState extends State<SplashScreen>
               end: Alignment.bottomRight,
               colors: isDark
                   ? [
-                      const Color.fromARGB(255, 109, 54, 13),
-                      const Color(0xffed761c),
-                      const Color.fromARGB(255, 116, 53, 5),
+                      const Color.fromARGB(255, 21, 105, 29),
+                      const Color.fromARGB(255, 36, 173, 50),
+                      const Color.fromARGB(255, 21, 105, 29),
                     ]
                   : [
-                      const Color.fromARGB(255, 109, 54, 13),
-                      const Color(0xffed761c),
-                      const Color.fromARGB(255, 116, 53, 5),
+                      const Color.fromARGB(255, 21, 105, 29),
+                      const Color.fromARGB(255, 36, 173, 50),
+                      const Color.fromARGB(255, 21, 105, 29),
                     ],
             ),
           ),
@@ -169,7 +169,7 @@ class _SplashScreenState extends State<SplashScreen>
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(27),
                             child: Image.asset(
-                              'assets/gold_tech_logo.png',
+                              'assets/icon.png',
                               fit: BoxFit.contain,
                               errorBuilder: (context, error, stackTrace) {
                                 return Container(
@@ -198,7 +198,7 @@ class _SplashScreenState extends State<SplashScreen>
 
                 // App Name
                 Text(
-                  'Gold Tech',
+                  'Abay Tech',
                   style: theme.textTheme.headlineMedium?.copyWith(
                     fontWeight: FontWeight.w700,
                     fontSize: 36,
