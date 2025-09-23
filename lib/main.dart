@@ -4,16 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:gold_tech/widgets/adabtiveBanner.dart';
+import 'package:abay_tips/widgets/adabtiveBanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import 'package:gold_tech/core/theme/app_palette.dart';
-import 'package:gold_tech/core/theme/theme_service.dart';
-import 'package:gold_tech/core/services/connectivity_service.dart';
-import 'package:gold_tech/core/services/performance_service.dart';
-import 'package:gold_tech/core/services/version_check_service.dart';
-import 'package:gold_tech/core/services/version_check_controller.dart';
-import 'package:gold_tech/routes/app_pages.dart';
+import 'package:abay_tips/core/theme/app_palette.dart';
+import 'package:abay_tips/core/theme/theme_service.dart';
+import 'package:abay_tips/core/services/connectivity_service.dart';
+import 'package:abay_tips/core/services/performance_service.dart';
+import 'package:abay_tips/core/services/version_check_service.dart';
+import 'package:abay_tips/core/services/version_check_controller.dart';
+import 'package:abay_tips/routes/app_pages.dart';
 import 'core/state/blog_store.dart';
 import 'core/theme/app_theme.dart';
 import 'modules/category/category_page.dart';
@@ -40,7 +40,7 @@ Future<void> main() async {
     _initializeVersionCheckService(),
   ]);
 
-  runApp(const GoldTechApp());
+  runApp(const AbayTipsApp());
 }
 
 Future<void> _initializeThemeService() async {
@@ -79,8 +79,8 @@ Future<void> _initializeVersionCheckService() async {
   Get.put(VersionCheckController(), permanent: true);
 }
 
-class GoldTechApp extends StatelessWidget {
-  const GoldTechApp({super.key});
+class AbayTipsApp extends StatelessWidget {
+  const AbayTipsApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -88,12 +88,12 @@ class GoldTechApp extends StatelessWidget {
 
     return Obx(() {
       debugPrint(
-        "🎨 GoldTechApp - Building with theme mode: ${themeSvc.mode.value}",
+        "🎨 AbayTipsApp - Building with theme mode: ${themeSvc.mode.value}",
       );
-      debugPrint("🎨 GoldTechApp - IsDark: ${themeSvc.isDark}");
+      debugPrint("🎨 AbayTipsApp - IsDark: ${themeSvc.isDark}");
 
       return GetMaterialApp(
-        title: 'Gold Tech',
+        title: 'Abay Tips',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.light,
         darkTheme: AppTheme.dark,
@@ -117,7 +117,7 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
   final store = Get.find<BlogStore>();
   final connectivityService = Get.find<ConnectivityService>();
   final versionCheckService = Get.find<VersionCheckService>();
-  final titles = const ['Recent', 'Category', 'Favorite'];
+  final titles = const ['Browse', 'Category', 'Bookmark'];
 
   final box = GetStorage();
 
@@ -352,7 +352,7 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
           children: [
             // Connectivity indicator
             Obx(
-              () => AnimatedContainer( 
+              () => AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
                 height: connectivityService.isConnected ? 0 : 30,
                 child: connectivityService.isConnected
@@ -403,7 +403,7 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
           NavigationDestination(
             icon: Icon(Icons.home_outlined),
             selectedIcon: Icon(Icons.home),
-            label: 'Recent',
+            label: 'Browse',
           ),
           NavigationDestination(
             icon: Icon(Icons.grid_view_rounded),
@@ -413,7 +413,7 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
           NavigationDestination(
             icon: Icon(Icons.favorite_border),
             selectedIcon: Icon(Icons.favorite),
-            label: 'Favorite',
+            label: 'Bookmark',
           ),
         ],
       ),

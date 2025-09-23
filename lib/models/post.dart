@@ -1,5 +1,5 @@
 import 'package:intl/intl.dart';
-import 'package:gold_tech/models/user_ref.dart';
+import 'package:abay_tips/models/user_ref.dart';
 import 'category.dart';
 
 class Post {

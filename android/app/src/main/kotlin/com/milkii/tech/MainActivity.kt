@@ -1,4 +1,4 @@
-package com.brhan.goldtech
+package com.birhanu.quiz
 
 import io.flutter.embedding.android.FlutterActivity
 

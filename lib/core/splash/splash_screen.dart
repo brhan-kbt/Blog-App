@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:gold_tech/core/services/connectivity_service.dart';
-import 'package:gold_tech/core/state/blog_store.dart';
-import 'package:gold_tech/core/theme/theme_service.dart';
+import 'package:abay_tips/core/services/connectivity_service.dart';
+import 'package:abay_tips/core/state/blog_store.dart';
+import 'package:abay_tips/core/theme/theme_service.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -102,7 +102,7 @@ class _SplashScreenState extends State<SplashScreen>
       );
 
       return Scaffold(
-        backgroundColor: const Color(0xffed761c),
+        backgroundColor: const Color(0xfffcc42b),
         body: Container(
           width: double.infinity,
           height: double.infinity,
@@ -112,14 +112,14 @@ class _SplashScreenState extends State<SplashScreen>
               end: Alignment.bottomRight,
               colors: isDark
                   ? [
-                      const Color.fromARGB(255, 109, 54, 13),
-                      const Color(0xffed761c),
-                      const Color.fromARGB(255, 116, 53, 5),
+                      const Color.fromARGB(255, 71, 57, 18),
+                      const Color(0xfffcc42b),
+                      const Color.fromARGB(255, 56, 46, 17),
                     ]
                   : [
-                      const Color.fromARGB(255, 109, 54, 13),
-                      const Color(0xffed761c),
-                      const Color.fromARGB(255, 116, 53, 5),
+                      const Color.fromARGB(255, 71, 57, 18),
+                      const Color(0xfffcc42b),
+                      const Color.fromARGB(255, 56, 46, 17),
                     ],
             ),
           ),
@@ -169,7 +169,7 @@ class _SplashScreenState extends State<SplashScreen>
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(27),
                             child: Image.asset(
-                              'assets/gold_tech_logo.png',
+                              'assets/quiz_tips_logo.png',
                               fit: BoxFit.contain,
                               errorBuilder: (context, error, stackTrace) {
                                 return Container(
@@ -198,7 +198,7 @@ class _SplashScreenState extends State<SplashScreen>
 
                 // App Name
                 Text(
-                  'Gold Tech',
+                  'Abay Tips',
                   style: theme.textTheme.headlineMedium?.copyWith(
                     fontWeight: FontWeight.w700,
                     fontSize: 36,

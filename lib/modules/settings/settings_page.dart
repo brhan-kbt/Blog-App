@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:in_app_review/in_app_review.dart';
-import 'package:gold_tech/modules/settings/pages/push_notification_page.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:gold_tech/core/theme/app_palette.dart';
-import 'package:gold_tech/core/theme/theme_service.dart';
-import 'package:gold_tech/modules/settings/pages/about_page.dart';
-import 'package:gold_tech/modules/settings/pages/contact_us_page.dart';
-import 'package:gold_tech/modules/settings/pages/privacy_policy_page.dart';
-import 'package:gold_tech/modules/settings/pages/publisher_info_page.dart';
+import 'package:abay_tips/core/theme/theme_service.dart';
+import 'package:abay_tips/modules/settings/pages/about_page.dart';
+import 'package:abay_tips/modules/settings/pages/contact_us_page.dart';
+import 'package:abay_tips/modules/settings/pages/privacy_policy_page.dart';
+import 'package:abay_tips/modules/settings/pages/publisher_info_page.dart';
+import 'package:abay_tips/modules/settings/pages/push_notification_page.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:path_provider/path_provider.dart';
 import '../../core/state/blog_store.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -31,17 +29,13 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final store = Get.find<BlogStore>();
-
     final theme = Theme.of(context);
-    final palette =
-        theme.extension<AppPalette>() ?? AppPalette.fromTheme(theme);
     final isDark = Get.isDarkMode;
-    final bg = Theme.of(context).colorScheme.surface;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings'),
-        centerTitle: false,
+        title: const Text("Settings"),
+        centerTitle: true,
         elevation: 0,
       ),
       body: Obx(() {
@@ -54,415 +48,261 @@ class SettingsPage extends StatelessWidget {
           return const Center(child: Text("No settings available"));
         }
 
-        return SafeArea(
-          child: ListView(
-            physics: const BouncingScrollPhysics(),
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-            children: [
-              _SectionCard(
-                initiallyExpanded: true,
-                headerTitle: 'General',
-                headerSubtitle: 'Theme and notifications',
-                background: palette.cardBg,
-                children: [
-                  _SwitchTile(
-                    title: 'Dark Mode',
-                    subtitle: 'Better eyesight and power saving',
-                    value: isDark,
-                    onChanged: (v) {
-                      final themeSvc = Get.find<ThemeService>();
-                      themeSvc.set(v ? ThemeMode.dark : ThemeMode.light);
-                    },
-                  ),
+        return ListView(
+          physics: const BouncingScrollPhysics(),
+          padding: const EdgeInsets.all(16),
+          children: [
+            /// 🔹 General
+            SettingsSection(
+              title: "General",
+              subtitle: "Theme and notifications",
+              children: [
+                SettingsSwitchTile(
+                  icon: Icons.dark_mode_rounded,
+                  title: "Dark Mode",
+                  subtitle: "Better eyesight and power saving",
+                  value: isDark,
+                  onChanged: (v) {
+                    Get.find<ThemeService>().set(
+                      v ? ThemeMode.dark : ThemeMode.light,
+                    );
+                  },
+                ),
+                SettingsTile(
+                  icon: Icons.notifications_active_rounded,
+                  title: "Push Notification",
+                  subtitle: "Manage push notification settings",
+                  onTap: () => Get.to(() => const PushNotificationPage()),
+                ),
+              ],
+            ),
 
-                  _SimpleTile(
-                    title: 'Push Notification',
-                    subtitle: 'Manage push notification settings',
-                    onTap: () async {
-                      Get.to(() => PushNotificationPage());
-                      // try {
-                      //   await Future.delayed(const Duration(milliseconds: 100));
-
-                      //   if (context.mounted) {
-                      //     WidgetsBinding.instance.addPostFrameCallback((_) {
-                      //       try {
-                      //         AppSettings.openAppSettings(
-                      //           type: AppSettingsType.notification,
-                      //         );
-                      //       } catch (e) {
-                      //         debugPrint(
-                      //           "⚠️ Error opening notification settings: $e",
-                      //         );
-                      //         _snack(
-                      //           'Settings',
-                      //           'Could not open notification settings',
-                      //         );
-                      //       }
-                      //     });
-                      //   }
-                      // } catch (e) {
-                      //   debugPrint(
-                      //     "⚠️ Error handling notification settings tap: $e",
-                      //   );
-                      //   _snack(
-                      //     'Settings',
-                      //     'Could not open notification settings',
-                      //   );
-                      // }
-                    },
-                  ),
-                ],
-              ),
-
-              const SizedBox(height: 12),
-
-              _SectionCard(
-                headerTitle: 'Cache',
-                headerSubtitle: 'Clear caches, search history',
-                background: palette.cardBg,
-                children: [
-                  _SimpleTile(
-                    title: 'Clear Cache',
-                    subtitle: 'Free up space',
-                    onTap: () async {
-                      try {
-                        await GetStorage().erase();
-                        imageCache.clear();
-                        imageCache.clearLiveImages();
-                        final tempDir = await getTemporaryDirectory();
-                        if (tempDir.existsSync()) {
-                          tempDir.deleteSync(recursive: true);
-                        }
-                        _snack('Cache', 'Cache cleared successfully');
-                      } catch (e) {
-                        _snack('Cache', 'Failed to clear: $e');
+            /// 🔹 Cache
+            SettingsSection(
+              title: "Cache",
+              subtitle: "Clear caches, search history",
+              children: [
+                SettingsTile(
+                  icon: Icons.cleaning_services_rounded,
+                  title: "Clear Cache",
+                  subtitle: "Free up space",
+                  onTap: () async {
+                    try {
+                      await GetStorage().erase();
+                      imageCache.clear();
+                      imageCache.clearLiveImages();
+                      final tempDir = await getTemporaryDirectory();
+                      if (tempDir.existsSync()) {
+                        tempDir.deleteSync(recursive: true);
                       }
-                    },
-                  ),
-                  _SimpleTile(
-                    title: 'Clear search history',
-                    onTap: () {
-                      store.clearRecentSearches();
-                      _snack('Search', 'Search history cleared');
-                    },
-                  ),
-                ],
-              ),
-              const SizedBox(height: 12),
+                      _snack('Cache', 'Cache cleared successfully');
+                    } catch (e) {
+                      _snack('Cache', 'Failed to clear: $e');
+                    }
+                  },
+                ),
+                SettingsTile(
+                  icon: Icons.history_rounded,
+                  title: "Clear search history",
+                  onTap: () {
+                    store.clearRecentSearches();
+                    _snack('Search', 'Search history cleared');
+                  },
+                ),
+              ],
+            ),
 
-              _SectionCard(
-                headerTitle: 'Privacy',
-                headerSubtitle: 'Privacy policy, About Us, Contact Us',
-                background: palette.cardBg,
-                children: [
-                  _SimpleTile(
-                    title: 'Privacy Policy',
-                    // subtitle: 'Learn more about our privacy policy',
-                    onTap: () => Get.to(
-                      () => PrivacyPolicyPage(
-                        content: settings.privacyPolicy ?? "Not available",
-                      ),
+            /// 🔹 Privacy
+            SettingsSection(
+              title: "Privacy",
+              subtitle: "Policies and company info",
+              children: [
+                SettingsTile(
+                  icon: Icons.privacy_tip_rounded,
+                  title: "Privacy Policy",
+                  onTap: () => Get.to(
+                    () => PrivacyPolicyPage(
+                      content: settings.privacyPolicy ?? "",
                     ),
                   ),
-                  _SimpleTile(
-                    title: 'About Us',
-                    // subtitle: settings.publisher_info ?? "Not available",
-                    onTap: () => Get.to(
-                      () => PublisherInfoPage(
-                        content: settings.publisher_info ?? "Not available",
-                      ),
+                ),
+                SettingsTile(
+                  icon: Icons.info_outline_rounded,
+                  title: "About Us",
+                  onTap: () => Get.to(
+                    () => PublisherInfoPage(
+                      content: settings.publisher_info ?? "",
                     ),
                   ),
-                  _SimpleTile(
-                    title: 'Contact Us',
-                    // subtitle: 'Get in touch with us',
-                    onTap: () => Get.to(
-                      () => ContactUsPage(
-                        content: settings.contactUs ?? "Not available",
-                      ),
-                    ),
+                ),
+                SettingsTile(
+                  icon: Icons.support_agent_rounded,
+                  title: "Contact Us",
+                  onTap: () => Get.to(
+                    () => ContactUsPage(content: settings.contactUs ?? ""),
                   ),
-                ],
-              ),
+                ),
+              ],
+            ),
 
-              const SizedBox(height: 12),
-
-              _SectionCard(
-                headerTitle: 'The App',
-                headerSubtitle: 'Build version, rate, share',
-                background: palette.cardBg,
-                children: [
-                  _SimpleTile(
-                    title: 'About App',
-                    onTap: () => Get.bottomSheet(
-                      AboutPage(content: settings.aboutUs ?? "Not available"),
-                      backgroundColor: Colors.white,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(16.0),
-                          topRight: Radius.circular(16.0),
-                        ),
+            /// 🔹 App Info
+            SettingsSection(
+              title: "The App",
+              subtitle: "Build version, rate, share",
+              children: [
+                SettingsTile(
+                  icon: Icons.apps_rounded,
+                  title: "About App",
+                  onTap: () => Get.bottomSheet(
+                    AboutPage(content: settings.aboutUs ?? "Not available"),
+                    backgroundColor: theme.colorScheme.surface,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(16),
                       ),
                     ),
                   ),
-                  // _SimpleTile(
-                  //   title: 'App Version',
-                  //   subtitle: settings.appVersion ?? "Unknown",
-                  // ),
-                  _SimpleTile(
-                    title: 'Rate Us',
-                    onTap: () async {
-                      final inAppReview = InAppReview.instance;
-                      if (await inAppReview.isAvailable()) {
-                        inAppReview.requestReview();
-                      } else {
-                        inAppReview.openStoreListing(
-                          appStoreId: "com.brhan.goldtech", // TODO: replace
-                        );
-                      }
-                    },
-                  ),
-                  _SimpleTile(
-                    title: 'Share to Friends',
-                    onTap: () {
-                      Share.share(
-                        "Check out Gold Tech App: https://play.google.com/store/apps/details?id=com.brhan.goldtech",
+                ),
+                SettingsTile(
+                  icon: Icons.star_rate_rounded,
+                  title: "Rate Us",
+                  onTap: () async {
+                    final inAppReview = InAppReview.instance;
+                    if (await inAppReview.isAvailable()) {
+                      inAppReview.requestReview();
+                    } else {
+                      inAppReview.openStoreListing(
+                        appStoreId: "com.birhanu.quiz",
                       );
-                    },
-                  ),
-
-                  _SimpleTile(
-                    title: 'More apps',
-                    onTap: () async {
-                      final uri = Uri.parse(
-                        "https://play.google.com/store/apps/dev?id=5407164320419796496",
+                    }
+                  },
+                ),
+                SettingsTile(
+                  icon: Icons.share_rounded,
+                  title: "Share with Friends",
+                  onTap: () {
+                    Share.share(
+                      "Check out Abay Tips App: https://play.google.com/store/apps/details?id=com.birhanu.quiz",
+                    );
+                  },
+                ),
+                SettingsTile(
+                  icon: Icons.apps_outage_rounded,
+                  title: "More Apps",
+                  onTap: () async {
+                    final uri = Uri.parse(
+                      "https://play.google.com/store/apps/dev?id=5407164320419796496",
+                    );
+                    if (await canLaunchUrl(uri)) {
+                      await launchUrl(
+                        uri,
+                        mode: LaunchMode.externalApplication,
                       );
-                      if (await canLaunchUrl(uri)) {
-                        await launchUrl(
-                          uri,
-                          mode: LaunchMode.externalApplication,
-                        );
-                      } else {
-                        throw 'Could not launch $uri';
-                      }
-                    },
-                  ),
-                ],
-              ),
-
-              Container(height: 12, color: bg.withOpacity(0)),
-            ],
-          ),
+                    }
+                  },
+                ),
+              ],
+            ),
+          ],
         );
       }),
     );
   }
 }
 
-/// A polished expandable card that mirrors your screenshots:
-/// - rounded 12
-/// - subtle background
-/// - header title + subtitle
-/// - rotating chevron
-/// - clean dividers between tiles
-class _SectionCard extends StatefulWidget {
-  final String headerTitle;
-  final String? headerSubtitle;
-  final List<Widget> children;
-  final bool initiallyExpanded;
-  final Color? background;
+//
+// 🔹 Custom Widgets
+//
 
-  const _SectionCard({
-    required this.headerTitle,
-    this.headerSubtitle,
+class SettingsSection extends StatelessWidget {
+  final String title;
+  final String subtitle;
+  final List<Widget> children;
+
+  const SettingsSection({
+    super.key,
+    required this.title,
+    required this.subtitle,
     required this.children,
-    this.initiallyExpanded = false,
-    this.background,
   });
 
   @override
-  State<_SectionCard> createState() => _SectionCardState();
-}
-
-class _SectionCardState extends State<_SectionCard>
-    with SingleTickerProviderStateMixin {
-  late bool _expanded;
-  late final AnimationController _ctr = AnimationController(
-    vsync: this,
-    duration: const Duration(milliseconds: 180),
-  );
-  late final Animation<double> _rotate = Tween(
-    begin: 0.0,
-    end: .5,
-  ).animate(CurvedAnimation(parent: _ctr, curve: Curves.easeOut));
-
-  @override
-  void initState() {
-    super.initState();
-    _expanded = widget.initiallyExpanded;
-    if (_expanded) _ctr.value = .5;
-  }
-
-  void _toggle() {
-    setState(() => _expanded = !_expanded);
-    _expanded ? _ctr.forward() : _ctr.reverse();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final subtitleStyle = Theme.of(context).textTheme.bodySmall?.copyWith(
-      color: Theme.of(context).textTheme.bodySmall!.color?.withOpacity(.7),
-    );
-
-    return Material(
-      color: widget.background ?? Theme.of(context).colorScheme.surfaceVariant,
-      borderRadius: BorderRadius.circular(12),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(12),
-        onTap: _toggle,
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 12, 12, 8),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.headerTitle,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 18,
-                          ),
-                        ),
-                        if (widget.headerSubtitle != null) ...[
-                          const SizedBox(height: 4),
-                          Text(widget.headerSubtitle!, style: subtitleStyle),
-                        ],
-                      ],
-                    ),
-                  ),
-                  RotationTransition(
-                    turns: _rotate,
-                    child: const Icon(Icons.expand_more_rounded),
-                  ),
-                ],
-              ),
-
-              // content
-              AnimatedCrossFade(
-                firstChild: const SizedBox.shrink(),
-                secondChild: Padding(
-                  padding: const EdgeInsets.only(top: 8, bottom: 4),
-                  child: _SectionChildren(children: widget.children),
-                ),
-                crossFadeState: _expanded
-                    ? CrossFadeState.showSecond
-                    : CrossFadeState.showFirst,
-                duration: const Duration(milliseconds: 180),
-                sizeCurve: Curves.easeOut,
-              ),
-            ],
+    final theme = Theme.of(context);
+    return Container(
+      margin: const EdgeInsets.only(bottom: 20),
+      decoration: BoxDecoration(
+        color: theme.colorScheme.surface,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: theme.shadowColor.withOpacity(0.05),
+            blurRadius: 6,
+            offset: const Offset(0, 3),
           ),
-        ),
+        ],
       ),
-    );
-  }
-
-  @override
-  void dispose() {
-    _ctr.dispose();
-    super.dispose();
-  }
-}
-
-/// Renders children with slim dividers like your screenshots.
-class _SectionChildren extends StatelessWidget {
-  final List<Widget> children;
-  const _SectionChildren({required this.children});
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(12),
       child: Column(
         children: [
-          for (int i = 0; i < children.length; i++) ...[
-            children[i],
-            if (i != children.length - 1)
-              Divider(
-                height: 1,
-                thickness: 1,
-                indent: 0,
-                endIndent: 0,
-                color: Theme.of(context).dividerColor.withOpacity(.6),
+          ListTile(
+            title: Text(
+              title,
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.w700,
               ),
-          ],
+            ),
+            subtitle: Text(
+              subtitle,
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: theme.hintColor,
+              ),
+            ),
+          ),
+          const Divider(height: 1),
+          ...children,
         ],
       ),
     );
   }
 }
 
-class _SimpleTile extends StatelessWidget {
+class SettingsTile extends StatelessWidget {
+  final IconData icon;
   final String title;
   final String? subtitle;
   final VoidCallback? onTap;
 
-  const _SimpleTile({required this.title, this.subtitle, this.onTap});
+  const SettingsTile({
+    super.key,
+    required this.icon,
+    required this.title,
+    this.subtitle,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return ListTile(
-      dense: false,
-      contentPadding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-
-      // ✅ Title rendered as HTML
-      title: Html(
-        data: title,
-        style: {
-          "body": Style(
-            margin: Margins.zero,
-            padding: HtmlPaddings.zero,
-            fontSize: FontSize(16),
-            fontWeight: FontWeight.w600,
-            color: Theme.of(context).textTheme.bodyLarge?.color,
-          ),
-        },
-      ),
-
-      // ✅ Subtitle rendered as HTML if available
-      subtitle: subtitle == null
-          ? null
-          : Html(
-              data: subtitle!,
-              style: {
-                "body": Style(
-                  margin: Margins.zero,
-                  padding: HtmlPaddings.zero,
-                  fontSize: FontSize(14),
-                  color: Theme.of(context).textTheme.bodyMedium?.color,
-                ),
-              },
-            ),
-
+      leading: Icon(icon, color: theme.colorScheme.primary),
+      title: Text(title, style: theme.textTheme.bodyLarge),
+      subtitle: subtitle == null ? null : Text(subtitle!),
+      trailing: const Icon(Icons.chevron_right_rounded),
       onTap: onTap,
-      visualDensity: const VisualDensity(vertical: -1),
-      trailing: onTap == null ? null : const Icon(Icons.chevron_right),
     );
   }
 }
 
-class _SwitchTile extends StatelessWidget {
+class SettingsSwitchTile extends StatelessWidget {
+  final IconData icon;
   final String title;
-
   final String? subtitle;
   final bool value;
   final ValueChanged<bool> onChanged;
 
-  const _SwitchTile({
+  const SettingsSwitchTile({
+    super.key,
+    required this.icon,
     required this.title,
     this.subtitle,
     required this.value,
@@ -471,19 +311,13 @@ class _SwitchTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final titleStyle = const TextStyle(
-      fontWeight: FontWeight.w600,
-      fontSize: 16,
-    );
-
-    return ListTile(
-      dense: false,
-      contentPadding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-      title: Text(title, style: titleStyle),
+    final theme = Theme.of(context);
+    return SwitchListTile(
+      secondary: Icon(icon, color: theme.colorScheme.primary),
+      title: Text(title, style: theme.textTheme.bodyLarge),
       subtitle: subtitle == null ? null : Text(subtitle!),
-      trailing: Switch(value: value, onChanged: onChanged),
-      onTap: () => onChanged(!value),
-      visualDensity: const VisualDensity(vertical: -1),
+      value: value,
+      onChanged: onChanged,
     );
   }
 }

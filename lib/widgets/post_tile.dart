@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gold_tech/core/config/api_config.dart';
-import 'package:gold_tech/widgets/post_options_sheet.dart';
+import 'package:abay_tips/core/config/api_config.dart';
+import 'package:abay_tips/widgets/post_options_sheet.dart';
 import '../core/theme/app_palette.dart';
 import '../models/post.dart';
 
@@ -47,28 +47,6 @@ class PostTile extends StatelessWidget {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Title + description
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            post.title,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: titleStyle,
-                          ),
-                          const SizedBox(height: 6),
-                          Text(
-                            post.subtitle ?? '',
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: descStyle,
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(width: 12),
                     // Right thumbnail
                     ClipRRect(
                       borderRadius: BorderRadius.circular(10),
@@ -89,6 +67,30 @@ class PostTile extends StatelessWidget {
                                 color: Colors.grey,
                               ),
                             ),
+                    ),
+
+                    const SizedBox(width: 12),
+
+                    // Title + description
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            post.title,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: titleStyle,
+                          ),
+                          const SizedBox(height: 6),
+                          Text(
+                            post.subtitle ?? '',
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: descStyle,
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
