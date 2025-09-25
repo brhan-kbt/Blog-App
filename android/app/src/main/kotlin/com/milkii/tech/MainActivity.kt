@@ -1,4 +1,4 @@
-package com.brhan.jaratech
+package com.milki.tech
 
 import io.flutter.embedding.android.FlutterActivity
 

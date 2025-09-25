@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:jara_tech/core/config/api_config.dart';
-import 'package:jara_tech/widgets/post_options_sheet.dart';
+import 'package:milki_tech/core/config/api_config.dart';
+import 'package:milki_tech/widgets/post_options_sheet.dart';
 import '../core/theme/app_palette.dart';
 import '../models/post.dart';
 
@@ -48,28 +48,6 @@ class PostTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Title + description
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            post.title,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: titleStyle,
-                          ),
-                          const SizedBox(height: 6),
-                          Text(
-                            post.subtitle ?? '',
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: descStyle,
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    // Right thumbnail
                     ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: post.image != null && post.image!.isNotEmpty
@@ -90,6 +68,30 @@ class PostTile extends StatelessWidget {
                               ),
                             ),
                     ),
+                    const SizedBox(width: 12),
+
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            post.title,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: titleStyle,
+                          ),
+                          const SizedBox(height: 6),
+                          Text(
+                            post.subtitle ?? '',
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: descStyle,
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    // Right thumbnail
                   ],
                 ),
 

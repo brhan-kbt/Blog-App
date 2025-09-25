@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jara_tech/widgets/adabtiveBanner.dart';
-import 'package:jara_tech/widgets/shimmer_widgets.dart';
+import 'package:milki_tech/modules/category/category_title_list.dart';
+import 'package:milki_tech/widgets/adabtiveBanner.dart';
+import 'package:milki_tech/widgets/shimmer_widgets.dart';
 import '../../core/state/blog_store.dart';
 import '../../models/post.dart';
 import '../../widgets/post_tile.dart';
@@ -64,6 +65,8 @@ class RecentPage extends StatelessWidget {
       return ListView(
         padding: const EdgeInsets.only(bottom: 24),
         children: [
+          const CategoryTitleList(),
+
           HeroCard(
             post: top,
             onTap: () => _openPost(top, store),

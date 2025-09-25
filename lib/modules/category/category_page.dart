@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jara_tech/core/config/api_config.dart';
-import 'package:jara_tech/core/theme/app_palette.dart';
-import 'package:jara_tech/models/category.dart';
-import 'package:jara_tech/widgets/shimmer_widgets.dart';
+import 'package:milki_tech/core/config/api_config.dart';
+import 'package:milki_tech/core/theme/app_palette.dart';
+import 'package:milki_tech/models/category.dart';
+import 'package:milki_tech/widgets/shimmer_widgets.dart';
 import '../../core/state/blog_store.dart';
 import 'category_listing_page.dart';
 
@@ -23,8 +23,8 @@ class CategoryPage extends StatelessWidget {
         return GridView.builder(
           itemCount: 6,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            mainAxisExtent: 120,
+            crossAxisCount: 2,
+            mainAxisExtent: 140,
             crossAxisSpacing: 18,
             mainAxisSpacing: 18,
           ),
@@ -60,8 +60,8 @@ class CategoryPage extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(24, 16, 24, 32),
         itemCount: byQuery.length,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          mainAxisExtent: 120,
+          crossAxisCount: 2,
+          mainAxisExtent: 140,
           crossAxisSpacing: 18,
           mainAxisSpacing: 18,
         ),
@@ -72,51 +72,73 @@ class CategoryPage extends StatelessWidget {
             onTap: () => Get.to(
               () => CategoryListingPage(catId: cat.id, title: cat.name),
             ),
-            child: Column(
-              children: [
-                Container(
-                  height: 68,
-                  width: 68,
-                  decoration: BoxDecoration(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+              decoration: BoxDecoration(
+                color: Brightness.light == theme.brightness
+                    ? Colors.white
+                    : Colors.black,
+                border: Border.all(color: palette.searchOutline, width: 1),
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
                     color: Brightness.light == theme.brightness
-                        ? Colors.white
-                        : Colors.black,
-                    border: Border.all(color: palette.searchOutline, width: 1),
-                    borderRadius: BorderRadius.circular(18),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(.06),
-                        blurRadius: 12,
-                        offset: const Offset(0, 6),
-                      ),
-                    ],
+                        ? Colors.black.withOpacity(.6)
+                        : Colors.white.withOpacity(.6),
+                    blurRadius: 3,
+                    offset: const Offset(0, 6),
                   ),
-                  child: cat.image != null && cat.image!.isNotEmpty
-                      ? ClipRRect(
-                          borderRadius: BorderRadius.circular(18),
-                          child: Image.network(
-                            "${ApiConfig.imageUrl}${cat.image!}",
-                            fit: BoxFit.cover,
-                          ),
-                        )
-                      : Icon(
-                          Icons.folder_outlined,
-                          size: 36,
-                          color:
-                              Brightness.light == Theme.of(context).brightness
-                              ? Colors.blueGrey
-                              : Colors.white,
+                ],
+              ),
+              child: Column(
+                children: [
+                  Container(
+                    height: 68,
+                    width: 68,
+                    decoration: BoxDecoration(
+                      color: Brightness.light == theme.brightness
+                          ? Colors.white
+                          : Colors.black,
+                      border: Border.all(
+                        color: palette.searchOutline,
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.circular(18),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(.06),
+                          blurRadius: 12,
+                          offset: const Offset(0, 6),
                         ),
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  cat.name,
-                  textAlign: TextAlign.center,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontWeight: FontWeight.w600),
-                ),
-              ],
+                      ],
+                    ),
+                    child: cat.image != null && cat.image!.isNotEmpty
+                        ? ClipRRect(
+                            borderRadius: BorderRadius.circular(18),
+                            child: Image.network(
+                              "${ApiConfig.imageUrl}${cat.image!}",
+                              fit: BoxFit.cover,
+                            ),
+                          )
+                        : Icon(
+                            Icons.folder_outlined,
+                            size: 36,
+                            color:
+                                Brightness.light == Theme.of(context).brightness
+                                ? Colors.blueGrey
+                                : Colors.white,
+                          ),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    cat.name,
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(fontWeight: FontWeight.w600),
+                  ),
+                ],
+              ),
             ),
           );
         },

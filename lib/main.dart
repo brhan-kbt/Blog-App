@@ -4,16 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:jara_tech/widgets/adabtiveBanner.dart';
+import 'package:milki_tech/widgets/adabtiveBanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import 'package:jara_tech/core/theme/app_palette.dart';
-import 'package:jara_tech/core/theme/theme_service.dart';
-import 'package:jara_tech/core/services/connectivity_service.dart';
-import 'package:jara_tech/core/services/performance_service.dart';
-import 'package:jara_tech/core/services/version_check_service.dart';
-import 'package:jara_tech/core/services/version_check_controller.dart';
-import 'package:jara_tech/routes/app_pages.dart';
+import 'package:milki_tech/core/theme/app_palette.dart';
+import 'package:milki_tech/core/theme/theme_service.dart';
+import 'package:milki_tech/core/services/connectivity_service.dart';
+import 'package:milki_tech/core/services/performance_service.dart';
+import 'package:milki_tech/core/services/version_check_service.dart';
+import 'package:milki_tech/core/services/version_check_controller.dart';
+import 'package:milki_tech/routes/app_pages.dart';
 import 'core/state/blog_store.dart';
 import 'core/theme/app_theme.dart';
 import 'modules/category/category_page.dart';
@@ -40,7 +40,7 @@ Future<void> main() async {
     _initializeVersionCheckService(),
   ]);
 
-  runApp(const JaraTechApp());
+  runApp(const MilkiTechApp());
 }
 
 Future<void> _initializeThemeService() async {
@@ -79,8 +79,8 @@ Future<void> _initializeVersionCheckService() async {
   Get.put(VersionCheckController(), permanent: true);
 }
 
-class JaraTechApp extends StatelessWidget {
-  const JaraTechApp({super.key});
+class MilkiTechApp extends StatelessWidget {
+  const MilkiTechApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -88,12 +88,12 @@ class JaraTechApp extends StatelessWidget {
 
     return Obx(() {
       debugPrint(
-        "🎨 JaraTechApp - Building with theme mode: ${themeSvc.mode.value}",
+        "🎨 MilkiTechApp - Building with theme mode: ${themeSvc.mode.value}",
       );
-      debugPrint("🎨 JaraTechApp - IsDark: ${themeSvc.isDark}");
+      debugPrint("🎨 MilkiTechApp - IsDark: ${themeSvc.isDark}");
 
       return GetMaterialApp(
-        title: 'Jara Tech',
+        title: 'Milki Tech',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.light,
         darkTheme: AppTheme.dark,
@@ -117,7 +117,7 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
   final store = Get.find<BlogStore>();
   final connectivityService = Get.find<ConnectivityService>();
   final versionCheckService = Get.find<VersionCheckService>();
-  final titles = const ['Recent', 'Category', 'Favorite'];
+  final titles = const ['Home', 'Category', 'Favorite'];
 
   final box = GetStorage();
 
@@ -403,7 +403,7 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
           NavigationDestination(
             icon: Icon(Icons.home_outlined),
             selectedIcon: Icon(Icons.home),
-            label: 'Recent',
+            label: 'Home',
           ),
           NavigationDestination(
             icon: Icon(Icons.grid_view_rounded),
