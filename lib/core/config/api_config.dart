@@ -12,4 +12,6 @@ class ApiConfig {
   static String searchPosts(String query) => "$baseUrl/posts/search?q=$query";
   static String toggleLike(int postId) => "$baseUrl/posts/$postId/like";
   static String addView(int postId) => "$baseUrl/posts/$postId/view";
+
+  static const String registerEndpoint = '$baseUrl/fcm/register';
 }
