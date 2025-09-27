@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "141020261179",
+    "project_id": "abay-tips",
+    "storage_bucket": "abay-tips.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:141020261179:android:debe174c13846d7c48251e",
+        "android_client_info": {
+          "package_name": "com.birhanu.quiz"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCj3O8ehK3YoyCk9r_q4Gr-Ey1qyvb6-qs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
