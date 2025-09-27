@@ -1,6 +1,6 @@
 class ApiConfig {
-  static const String baseUrl = "https://gold.birhanu.et/api/v1";
-  static const String imageUrl = "https://gold.birhanu.et/storage/";
+  static const String baseUrl = "https://abaytips.birhanu.et/api/v1";
+  static const String imageUrl = "https://abaytips.birhanu.et/storage/";
 
   // Endpoints
   static String posts = "$baseUrl/posts";
