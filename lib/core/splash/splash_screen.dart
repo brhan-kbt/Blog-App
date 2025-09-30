@@ -1,8 +1,10 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jara_tech/core/services/connectivity_service.dart';
 import 'package:jara_tech/core/state/blog_store.dart';
 import 'package:jara_tech/core/theme/theme_service.dart';
+import 'dart:ui'; // 👈 Needed for ImageFilter
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -14,9 +16,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
   late AnimationController _logoController;
-  late AnimationController _loadingController;
-  late Animation<double> _logoAnimation;
-  late Animation<double> _loadingAnimation;
+  late AnimationController _textController;
 
   @override
   void initState() {
@@ -27,40 +27,26 @@ class _SplashScreenState extends State<SplashScreen>
 
   void _initializeAnimations() {
     _logoController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1200),
+    )..forward();
+
+    _textController = AnimationController(
+      vsync: this,
       duration: const Duration(milliseconds: 1500),
-      vsync: this,
     );
-
-    _loadingController = AnimationController(
-      duration: const Duration(milliseconds: 1000),
-      vsync: this,
-    );
-
-    _logoAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _logoController, curve: Curves.elasticOut),
-    );
-
-    _loadingAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _loadingController, curve: Curves.easeInOut),
-    );
-
-    _logoController.forward();
-    _loadingController.repeat();
+    Future.delayed(const Duration(milliseconds: 800), () {
+      if (mounted) _textController.forward();
+    });
   }
 
   Future<void> _initializeApp() async {
     try {
-      // Initialize connectivity service
       Get.put(ConnectivityService(), permanent: true);
-
-      // Check connectivity
       final connectivityService = Get.find<ConnectivityService>();
       await connectivityService.checkConnectivity();
 
-      // Initialize blog store and fetch initial data
       final blogStore = Get.find<BlogStore>();
-
-      // Only fetch data if connected
       if (connectivityService.isConnected) {
         await Future.wait([
           blogStore.fetchPosts(),
@@ -68,216 +54,278 @@ class _SplashScreenState extends State<SplashScreen>
         ]);
       }
 
-      // Add minimum splash duration for better UX
-      await Future.delayed(const Duration(milliseconds: 1000));
+      await Future.delayed(const Duration(milliseconds: 1500));
 
-      if (mounted) {
-        Get.offAllNamed('/home');
-      }
+      if (mounted) Get.offAllNamed('/home');
     } catch (e) {
-      debugPrint('Error initializing app: $e');
-      // Still navigate to home even if there's an error
-      if (mounted) {
-        Get.offAllNamed('/home');
-      }
+      if (mounted) Get.offAllNamed('/home');
     }
   }
 
   @override
   void dispose() {
     _logoController.dispose();
-    _loadingController.dispose();
+    _textController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final themeService = Get.find<ThemeService>();
+    final isDark = themeService.isDark;
 
-    return Obx(() {
-      final isDark = themeService.isDark;
-      debugPrint(
-        '🎨 Splash Screen - Theme Mode: ${themeService.mode.value}, IsDark: $isDark',
-      );
-
-      return Scaffold(
-        backgroundColor: const Color(0xffed761c),
-        body: Container(
-          width: double.infinity,
-          height: double.infinity,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: isDark
-                  ? [
-                      const Color.fromARGB(255, 8, 34, 64),
-                      const Color(0xff1d5fb2),
-                      const Color.fromARGB(255, 9, 34, 63),
-                    ]
-                  : [
-                      const Color.fromARGB(255, 8, 34, 64),
-                      const Color(0xff1d5fb2),
-                      const Color.fromARGB(255, 9, 34, 63),
-                    ],
+    return Scaffold(
+      body: Stack(
+        children: [
+          /// Animated Gradient Background
+          AnimatedContainer(
+            duration: const Duration(seconds: 2),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: isDark
+                    ? [
+                        const Color(0xff0f2027),
+                        const Color(0xff203a43),
+                        const Color(0xff2c5364),
+                      ]
+                    : [
+                        const Color(0xff1d976c),
+                        const Color(0xff93f9b9),
+                        const Color(0xff1d976c),
+                      ],
+              ),
             ),
           ),
-          child: SafeArea(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Spacer(flex: 2),
 
-                // App Logo
-                AnimatedBuilder(
-                  animation: _logoAnimation,
-                  builder: (context, child) {
-                    return Transform.scale(
-                      scale: _logoAnimation.value,
-                      child: Container(
-                        width: 140,
-                        height: 140,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(35),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.2),
-                              blurRadius: 30,
-                              offset: const Offset(0, 15),
-                              spreadRadius: 5,
-                            ),
-                            BoxShadow(
-                              color: Colors.white.withOpacity(0.1),
-                              blurRadius: 10,
-                              offset: const Offset(0, -5),
-                              spreadRadius: 2,
-                            ),
-                          ],
-                        ),
-                        child: Container(
-                          margin: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(27),
-                            border: Border.all(
-                              color: const Color(0xff1d5fb2).withOpacity(0.1),
-                              width: 2,
-                            ),
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(27),
-                            child: Image.asset(
-                              'assets/jara_tech_logo.png',
-                              fit: BoxFit.contain,
-                              errorBuilder: (context, error, stackTrace) {
-                                return Container(
-                                  decoration: BoxDecoration(
-                                    color: const Color(
-                                      0xff1d5fb2,
-                                    ).withOpacity(0.1),
-                                    borderRadius: BorderRadius.circular(27),
-                                  ),
-                                  child: Icon(
-                                    Icons.article_outlined,
-                                    size: 70,
-                                    color: const Color(0xff1d5fb2),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
-                    );
-                  },
+          /// Floating Particles
+          // Positioned.fill(child: CustomPaint(painter: _ParticlePainter())),
+          Positioned.fill(child: AnimatedParticles()),
+
+          /// Glassmorphism Center Card
+          Center(
+            child: FadeTransition(
+              opacity: _logoController,
+              child: ScaleTransition(
+                scale: CurvedAnimation(
+                  parent: _logoController,
+                  curve: Curves.elasticOut,
                 ),
-
-                const SizedBox(height: 24),
-
-                // App Name
-                Text(
-                  'Jara Tech',
-                  style: theme.textTheme.headlineMedium?.copyWith(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 36,
-                    fontFamily: 'Pacifico',
-                    color: Colors.white,
-                    shadows: [
-                      Shadow(
-                        color: Colors.black.withOpacity(0.3),
-                        offset: const Offset(0, 2),
-                        blurRadius: 4,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(40),
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                    child: Container(
+                      width: 160,
+                      height: 160,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.08),
+                        borderRadius: BorderRadius.circular(40),
+                        border: Border.all(
+                          color: Colors.white.withOpacity(0.2),
+                          width: 1.5,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.2),
+                            blurRadius: 20,
+                            offset: const Offset(0, 10),
+                          ),
+                        ],
                       ),
-                    ],
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(40),
+                        child: Image.asset(
+                          "assets/jara_tech_logo.png",
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-
-                const SizedBox(height: 12),
-
-                const Spacer(flex: 2),
-
-                // Loading Indicator
-                AnimatedBuilder(
-                  animation: _loadingAnimation,
-                  builder: (context, child) {
-                    return Column(
-                      children: [
-                        Container(
-                          width: 50,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.2),
-                            borderRadius: BorderRadius.circular(25),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.1),
-                                blurRadius: 10,
-                                offset: const Offset(0, 5),
-                              ),
-                            ],
-                          ),
-                          child: SizedBox(
-                            width: 40,
-                            height: 40,
-                            child: CircularProgressIndicator(
-                              value: _loadingAnimation.value,
-                              strokeWidth: 4,
-                              valueColor: const AlwaysStoppedAnimation<Color>(
-                                Colors.white,
-                              ),
-                              backgroundColor: Colors.white.withOpacity(0.3),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        Text(
-                          'Loading...',
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16,
-                            color: Colors.white,
-                            shadows: [
-                              Shadow(
-                                color: Colors.black.withOpacity(0.3),
-                                offset: const Offset(0, 1),
-                                blurRadius: 2,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    );
-                  },
-                ),
-
-                const SizedBox(height: 40),
-              ],
+              ),
             ),
           ),
-        ),
-      );
-    });
+
+          /// App Name + Tagline + Loader
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 80),
+              child: FadeTransition(
+                opacity: _textController,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "Jara Tech",
+                      style: TextStyle(
+                        fontFamily: "Pacifico",
+                        fontSize: 38,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        shadows: [
+                          Shadow(
+                            color: Colors.black.withOpacity(0.3),
+                            blurRadius: 8,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      "Tech Updates • Insights",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white70,
+                        letterSpacing: 1.2,
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+
+                    /// Custom Loading Bar
+                    Container(
+                      width: 180,
+                      height: 6,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(3),
+                      ),
+                      child: AnimatedBuilder(
+                        animation: _textController,
+                        builder: (context, child) {
+                          return FractionallySizedBox(
+                            alignment: Alignment.centerLeft,
+                            widthFactor: _textController.value,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(3),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
+}
+
+/// Particle Painter for floating dots
+// class _ParticlePainter extends CustomPainter {
+//   final Random _random = Random();
+//   @override
+//   void paint(Canvas canvas, Size size) {
+//     final paint = Paint()..color = Colors.white.withOpacity(0.3); // brighter
+//     for (int i = 0; i < 80; i++) {
+//       final dx = _random.nextDouble() * size.width;
+//       final dy = _random.nextDouble() * size.height;
+//       canvas.drawCircle(Offset(dx, dy), _random.nextDouble() * 4 + 2, paint); // larger
+//     }
+//   }
+
+//   @override
+//   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+// }
+
+class AnimatedParticles extends StatefulWidget {
+  const AnimatedParticles({super.key});
+
+  @override
+  State<AnimatedParticles> createState() => _AnimatedParticlesState();
+}
+
+class _AnimatedParticlesState extends State<AnimatedParticles>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  final Random _random = Random();
+  late List<_Particle> particles;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 10),
+    )..repeat();
+
+    // Generate particles
+    particles = List.generate(
+      40,
+      (_) => _Particle(
+        x: _random.nextDouble(),
+        y: _random.nextDouble(),
+        dx: (_random.nextDouble() - 0.5) * 0.002,
+        dy: (_random.nextDouble() - 0.5) * 0.002,
+        size: _random.nextDouble() * 3 + 2,
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (_, __) {
+        return CustomPaint(
+          painter: _ParticlePainter(particles),
+          child: Container(),
+        );
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+}
+
+class _Particle {
+  double x, y, dx, dy, size;
+  _Particle({
+    required this.x,
+    required this.y,
+    required this.dx,
+    required this.dy,
+    required this.size,
+  });
+}
+
+class _ParticlePainter extends CustomPainter {
+  final List<_Particle> particles;
+  _ParticlePainter(this.particles);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()..color = Colors.white.withOpacity(0.4);
+    for (var p in particles) {
+      final dx = (p.x * size.width);
+      final dy = (p.y * size.height);
+
+      // update position
+      p.x += p.dx;
+      p.y += p.dy;
+
+      // wrap around
+      if (p.x < 0) p.x = 1;
+      if (p.x > 1) p.x = 0;
+      if (p.y < 0) p.y = 1;
+      if (p.y > 1) p.y = 0;
+
+      canvas.drawCircle(Offset(dx, dy), p.size, paint);
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }

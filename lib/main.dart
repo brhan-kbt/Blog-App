@@ -392,28 +392,29 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
           ],
         ),
       ),
+
       bottomNavigationBar: NavigationBar(
+        height: 60,
+        backgroundColor: palette.searchOutline.withOpacity(0.2),
+        indicatorColor: palette.favoriteActive.withOpacity(0.8),
         selectedIndex: index,
-        backgroundColor: Brightness.light == theme.brightness
-            ? const Color.fromARGB(255, 242, 242, 242)
-            : const Color.fromARGB(255, 16, 16, 36),
-        indicatorColor: palette.favoriteActive,
+        labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
         onDestinationSelected: (i) => setState(() => index = i),
         destinations: const [
           NavigationDestination(
-            icon: Icon(Icons.home_outlined),
-            selectedIcon: Icon(Icons.home),
-            label: 'Recent',
+            icon: Icon(Icons.home_outlined, size: 28),
+            selectedIcon: Icon(Icons.home, size: 30),
+            label: 'Home',
           ),
           NavigationDestination(
-            icon: Icon(Icons.grid_view_rounded),
-            selectedIcon: Icon(Icons.grid_view_rounded),
-            label: 'Category',
+            icon: Icon(Icons.explore_outlined, size: 28),
+            selectedIcon: Icon(Icons.explore, size: 30),
+            label: 'Explore',
           ),
           NavigationDestination(
-            icon: Icon(Icons.favorite_border),
-            selectedIcon: Icon(Icons.favorite),
-            label: 'Favorite',
+            icon: Icon(Icons.bookmark_border, size: 28),
+            selectedIcon: Icon(Icons.bookmark, size: 30),
+            label: 'Saved',
           ),
         ],
       ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:jara_tech/widgets/adabtiveBanner.dart';
+import 'package:jara_tech/widgets/banner_ad_widget.dart';
 import 'package:jara_tech/widgets/shimmer_widgets.dart';
 import '../../core/state/blog_store.dart';
 import '../../models/post.dart';
@@ -8,8 +10,6 @@ import '../../widgets/post_tile.dart';
 import '../../widgets/hero_card.dart';
 import '../../widgets/post_options_sheet.dart';
 import '../post_detail/post_detail_page.dart';
-import '../../widgets/banner_ad_widget.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class RecentPage extends StatelessWidget {
   const RecentPage({super.key});
@@ -79,7 +79,7 @@ class RecentPage extends StatelessWidget {
               ),
             ];
             if ((index + 1) % 3 == 0) {
-              widgets.add(const AdaptiveBannerAdWidget());
+              widgets.add(const BannerAdWidget(size: AdSize.mediumRectangle));
             }
             return Column(children: widgets);
           }),

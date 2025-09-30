@@ -24,31 +24,15 @@ class HeroCardShimmer extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             // Title line
-            Container(
-              height: 16,
-              width: 220,
-              color: Colors.white,
-            ),
+            Container(height: 16, width: 220, color: Colors.white),
             const SizedBox(height: 6),
             // Subtitle lines
-            Container(
-              height: 14,
-              width: double.infinity,
-              color: Colors.white,
-            ),
+            Container(height: 14, width: double.infinity, color: Colors.white),
             const SizedBox(height: 4),
-            Container(
-              height: 14,
-              width: 150,
-              color: Colors.white,
-            ),
+            Container(height: 14, width: 150, color: Colors.white),
             const SizedBox(height: 10),
             // Meta row
-            Container(
-              height: 12,
-              width: 100,
-              color: Colors.white,
-            ),
+            Container(height: 12, width: 100, color: Colors.white),
           ],
         ),
       ),
@@ -73,7 +57,11 @@ class PostTileShimmer extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(height: 16, width: double.infinity, color: Colors.white),
+                  Container(
+                    height: 16,
+                    width: double.infinity,
+                    color: Colors.white,
+                  ),
                   const SizedBox(height: 6),
                   Container(height: 14, width: 200, color: Colors.white),
                   const SizedBox(height: 14),
@@ -109,8 +97,8 @@ class CategoryShimmer extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            height: 68,
-            width: 68,
+            height: 100,
+            width: 150,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(18),

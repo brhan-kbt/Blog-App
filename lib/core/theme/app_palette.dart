@@ -35,7 +35,7 @@ class AppPalette extends ThemeExtension<AppPalette> {
   static const AppPalette dark = AppPalette(
     primary: Color(0xff1d5fb2), // e94873
     searchBg: Color(0xFF252733), // muted surface tint
-    searchOutline: Color(0xFF3A3C47), // subtle hairline
+    searchOutline: Color.fromARGB(255, 111, 176, 255), // subtle hairline
     searchIcon: Color(0xFFB0B7C3), // soft gray icon/hint
     chipBg: Color(0xFF2E303C),
     cardBg: Color.fromARGB(255, 11, 9, 36),
