@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "662936156493",
+    "project_id": "gold-technology",
+    "storage_bucket": "gold-technology.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:662936156493:android:7716b707634802baf0df04",
+        "android_client_info": {
+          "package_name": "com.brhan.goldtech"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0yvDTNrisBWWJ9POVuv4xXeL1ey_lK3g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

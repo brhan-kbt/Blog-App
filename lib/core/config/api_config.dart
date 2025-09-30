@@ -1,6 +1,6 @@
 class ApiConfig {
-  static const String baseUrl = "https://gold.birhanu.et/api/v1";
-  static const String imageUrl = "https://gold.birhanu.et/storage/";
+  static const String baseUrl = "https://goldtech.birhanu.et/api/v1";
+  static const String imageUrl = "https://goldtech.birhanu.et/storage/";
 
   // Endpoints
   static String posts = "$baseUrl/posts";
@@ -12,4 +12,6 @@ class ApiConfig {
   static String searchPosts(String query) => "$baseUrl/posts/search?q=$query";
   static String toggleLike(int postId) => "$baseUrl/posts/$postId/like";
   static String addView(int postId) => "$baseUrl/posts/$postId/view";
+
+  static const String registerEndpoint = '$baseUrl/fcm/register';
 }
