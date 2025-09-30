@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "787443288557",
+    "project_id": "rivo-tech",
+    "storage_bucket": "rivo-tech.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:787443288557:android:9bccd40b0d613928c6ffe4",
+        "android_client_info": {
+          "package_name": "com.brhan.rivotech"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTJY_cMcrFqWiQe8zp_p3_kAZQ2EUU74Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

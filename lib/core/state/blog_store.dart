@@ -19,6 +19,7 @@ class BlogStore extends GetxController {
   final checkLoadingPosts = true.obs;
   final isLoadingCategories = false.obs;
   final isSearching = false.obs;
+  final isLoadingPost = false.obs;
   final isLoadingSettings = false.obs;
 
   final settings = Rxn<AppSettings>();
@@ -125,6 +126,7 @@ class BlogStore extends GetxController {
 
   Future<Map<String, dynamic>> fetchPostWithSuggested(int id) async {
     try {
+      isLoadingPost.value = true;
       final resp = await http.get(Uri.parse(ApiConfig.post(id)));
 
       if (resp.statusCode == 200) {
@@ -141,6 +143,8 @@ class BlogStore extends GetxController {
       }
     } catch (e) {
       debugPrint("Error fetching post: $e");
+    } finally {
+      isLoadingPost.value = false;
     }
     return {'post': null, 'suggested': []};
   }
