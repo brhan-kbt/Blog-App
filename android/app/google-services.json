@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "758378284265",
+    "project_id": "jara-tech-ca442",
+    "storage_bucket": "jara-tech-ca442.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:758378284265:android:fa2558e9821a5dd8449c78",
+        "android_client_info": {
+          "package_name": "com.brhan.jaratech"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6qjiNkObSXaB8SST5ZUuLsyGRyOFGQkk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:app_settings/app_settings.dart';
+import 'package:jara_tech/core/services/fcm_service.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:get/get.dart';
 
@@ -13,6 +13,7 @@ class PushNotificationPage extends StatefulWidget {
 class _PushNotificationPageState extends State<PushNotificationPage> {
   bool _isLoading = false;
   bool _notificationsEnabled = false;
+  String _fcmToken = '';
 
   @override
   void initState() {
@@ -24,30 +25,15 @@ class _PushNotificationPageState extends State<PushNotificationPage> {
     setState(() => _isLoading = true);
     try {
       final status = await Permission.notification.status;
+      final fcmService = FCMService.instance;
       setState(() {
         _notificationsEnabled = status.isGranted;
+        _fcmToken = fcmService.fcmToken;
         _isLoading = false;
       });
     } catch (e) {
       setState(() => _isLoading = false);
       debugPrint("⚠️ Error checking notification status: $e");
-    }
-  }
-
-  Future<void> _openNotificationSettings() async {
-    setState(() => _isLoading = true);
-    try {
-      await AppSettings.openAppSettings(type: AppSettingsType.notification);
-    } catch (e) {
-      debugPrint("⚠️ Error opening notification settings: $e");
-      Get.snackbar(
-        'Error',
-        'Could not open notification settings',
-        snackPosition: SnackPosition.BOTTOM,
-        margin: const EdgeInsets.all(16),
-      );
-    } finally {
-      setState(() => _isLoading = false);
     }
   }
 
@@ -61,6 +47,14 @@ class _PushNotificationPageState extends State<PushNotificationPage> {
       });
 
       if (result.isGranted) {
+        // Initialize FCM after permission is granted
+        try {
+          await FCMService.instance.initialize();
+          _fcmToken = FCMService.instance.fcmToken;
+        } catch (e) {
+          debugPrint("❌ Error initializing FCM after permission: $e");
+        }
+
         Get.snackbar(
           'Success',
           'Notifications enabled!',
@@ -155,13 +149,55 @@ class _PushNotificationPageState extends State<PushNotificationPage> {
 
             const SizedBox(height: 24),
 
+            // FCM Token Information
+            if (_fcmToken.isNotEmpty) ...[
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'FCM Token',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: Colors.grey[100],
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: SelectableText(
+                          _fcmToken,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontFamily: 'monospace',
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      const Text(
+                        'This token is used to send you push notifications.',
+                        style: TextStyle(fontSize: 12, color: Colors.grey),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+            ],
+
             const Text(
               "Manage Push Notifications",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 12),
             const Text(
-              "To enable or disable push notifications for Jara Tech App, "
+              "To enable or disable push notifications for Abay Tech App, "
               "please use your phone's system settings or the buttons below.",
             ),
             const SizedBox(height: 24),
