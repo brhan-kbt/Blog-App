@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:rivo_tech/core/consent/consent_service.dart';
 
 import '../core/ads/ad_service.dart';
 
@@ -21,6 +22,28 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
   @override
   void initState() {
     super.initState();
+    loadAd();
+    // _ad = BannerAd(
+    //   size: widget.size,
+    //   adUnitId: AdService.bannerId,
+    //   listener: BannerAdListener(
+    //     onAdLoaded: (ad) => setState(() => _loaded = true),
+    //     onAdFailedToLoad: (ad, error) {
+    //       ad.dispose();
+    //       setState(() => _loaded = false);
+    //     },
+    //   ),
+    //   request: const AdRequest(),
+    // )..load();
+  }
+
+  void loadAd() async {
+    final canRequestAds = await ConsentService().checkCanRequestAds();
+    if (!canRequestAds) {
+      debugPrint("🔒 AdaptiveBannerAdWidget - Cannot load ad: no consent");
+      return;
+    }
+
     _ad = BannerAd(
       size: widget.size,
       adUnitId: AdService.bannerId,

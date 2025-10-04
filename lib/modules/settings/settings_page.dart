@@ -10,6 +10,7 @@ import 'package:rivo_tech/core/theme/theme_service.dart';
 import 'package:rivo_tech/modules/settings/pages/about_page.dart';
 import 'package:rivo_tech/modules/settings/pages/privacy_policy_page.dart';
 import 'package:rivo_tech/modules/settings/pages/publisher_info_page.dart';
+import 'package:rivo_tech/widgets/privacy_options_button.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:app_settings/app_settings.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -146,6 +147,7 @@ class SettingsPage extends StatelessWidget {
                         ),
                       ),
                     ),
+                    const PrivacyOptionsButton(),
                   ],
                 ),
 
