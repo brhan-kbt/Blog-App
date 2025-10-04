@@ -1,32 +1,13 @@
 {
   "project_info": {
-    "project_number": "826492808243",
-    "project_id": "blog-b847d",
-    "storage_bucket": "blog-b847d.firebasestorage.app"
+    "project_number": "107801177801",
+    "project_id": "milki-tech",
+    "storage_bucket": "milki-tech.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:826492808243:android:e2b162bdeee3d233ed0746",
-        "android_client_info": {
-          "package_name": "com.blog.birhanu"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyArpsCzuuW6ba7IMZQhCKM-DgDbL8KLpoA"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:826492808243:android:73967854dab03df8ed0746",
+        "mobilesdk_app_id": "1:107801177801:android:703c600e1d64a0a2512718",
         "android_client_info": {
           "package_name": "com.milki.tech"
         }
@@ -34,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyArpsCzuuW6ba7IMZQhCKM-DgDbL8KLpoA"
+          "current_key": "AIzaSyAXt95ZpauVVlJoaxdMp3bJGJZeM_YZpyg"
         }
       ],
       "services": {

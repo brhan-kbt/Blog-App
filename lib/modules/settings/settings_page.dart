@@ -9,6 +9,7 @@ import 'package:milki_tech/modules/settings/pages/contact_us_page.dart';
 import 'package:milki_tech/modules/settings/pages/privacy_policy_page.dart';
 import 'package:milki_tech/modules/settings/pages/publisher_info_page.dart';
 import 'package:milki_tech/modules/settings/pages/push_notification_page.dart';
+import 'package:milki_tech/widgets/privacy_options_button.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -47,6 +48,8 @@ class SettingsPage extends StatelessWidget {
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.all(16),
           children: [
+            const PrivacyOptionsButton(),
+
             const _SectionHeader("General"),
             _SwitchTile(
               icon: Icons.dark_mode_outlined,
