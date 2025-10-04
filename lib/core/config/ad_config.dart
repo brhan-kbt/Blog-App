@@ -11,12 +11,12 @@ class AdConfig {
       'ca-app-pub-3940256099942544/5354046379';
 
   //Real
-  // static const androidBanner = 'ca-app-pub-5496551731411329/7531655368';
-  // static const androidInterstitial = 'ca-app-pub-5496551731411329/2446849640';
-  // static const androidRewarded = 'ca-app-pub-5496551731411329/1046138067';
-  // static const androidAppOPen = 'ca-app-pub-5496551731411329/7768884502';
+  // static const androidBanner = 'ca-app-pub-5496551731411329/7344269679';
+  // static const androidInterstitial = 'ca-app-pub-5496551731411329/4732572294';
+  // static const androidRewarded = 'ca-app-pub-5496551731411329/9072284311';
+  // static const androidAppOPen = 'ca-app-pub-5496551731411329/54391 49301';
   // static const androidRewardedInterstitial =
-  //     'ca-app-pub-5496551731411329/5302449367';
+  //     'ca-app-pub-5496551731411329/9207003926';
 
   static const iosBanner = 'ca-app-pub-3940256099942544/2934735716';
   static const iosInterstitial = 'ca-app-pub-3940256099942544/4411468910';

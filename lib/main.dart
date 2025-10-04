@@ -5,6 +5,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:gold_tech/core/consent/consent_service.dart';
 import 'package:gold_tech/core/services/fcm_service.dart';
 import 'package:gold_tech/firebase_options.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -52,6 +53,7 @@ Future<void> main() async {
 
   // Initialize only essential services for app startup
   await _initializeBlogStore();
+  await _initializeConsentService();
 
   // Initialize other services in background to speed up startup
   _initializeBackgroundServices();
@@ -73,6 +75,16 @@ Future<void> _initializeThemeService() async {
 
 Future<void> _initializeBlogStore() async {
   Get.put(BlogStore(), permanent: true);
+}
+
+Future<void> _initializeConsentService() async {
+  try {
+    await ConsentService().initialize();
+    debugPrint("✅ Consent service initialized successfully");
+  } catch (e) {
+    debugPrint("❌ Error initializing consent service: $e");
+    // Continue app initialization even if consent service fails
+  }
 }
 
 Future<void> _initializeAds() async {
@@ -320,7 +332,7 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
 
       // Show app open ad with error handling
       try {
-        AdService.instance.showAppOpenAd();
+        await AdService.instance.showAppOpenAd();
       } catch (e) {
         debugPrint("⚠️ Error showing app open ad: $e");
       }
@@ -559,18 +571,18 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
         destinations: const [
           NavigationDestination(
             icon: Icon(Icons.home_outlined),
-            selectedIcon: Icon(Icons.home),
-            label: 'Recent',
+            selectedIcon: Icon(Icons.explore),
+            label: 'Explore',
           ),
           NavigationDestination(
             icon: Icon(Icons.grid_view_rounded),
             selectedIcon: Icon(Icons.grid_view_rounded),
-            label: 'Category',
+            label: 'Topics',
           ),
           NavigationDestination(
             icon: Icon(Icons.favorite_border),
             selectedIcon: Icon(Icons.favorite),
-            label: 'Favorite',
+            label: 'Saved',
           ),
         ],
       ),

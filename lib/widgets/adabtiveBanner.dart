@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gold_tech/core/consent/consent_service.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import '../core/ads/ad_service.dart';
 
@@ -21,10 +22,16 @@ class _AdaptiveBannerAdWidgetState extends State<AdaptiveBannerAdWidget> {
   }
 
   Future<void> _loadAd() async {
+    final canRequestAds = await ConsentService().checkCanRequestAds();
+    if (!canRequestAds) {
+      debugPrint("🔒 AdaptiveBannerAdWidget - Cannot load ad: no consent");
+      return;
+    }
+
     final AnchoredAdaptiveBannerAdSize? size =
         await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
-      MediaQuery.of(context).size.width.truncate(),
-    );
+          MediaQuery.of(context).size.width.truncate(),
+        );
 
     if (size == null) {
       debugPrint("❌ Unable to get adaptive banner size.");
