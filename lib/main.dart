@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:jara_tech/core/consent/consent_service.dart';
 import 'package:jara_tech/core/services/fcm_service.dart';
 import 'package:jara_tech/firebase_options.dart';
 import 'package:jara_tech/widgets/adabtiveBanner.dart';
@@ -53,6 +54,8 @@ Future<void> main() async {
   // Initialize only essential services for app startup
   await _initializeBlogStore();
 
+  await _initializeConsentService();
+
   // Initialize other services in background to speed up startup
   _initializeBackgroundServices();
 
@@ -75,6 +78,15 @@ Future<void> _initializeBlogStore() async {
   Get.put(BlogStore(), permanent: true);
 }
 
+Future<void> _initializeConsentService() async {
+  try {
+    await ConsentService().initialize();
+    debugPrint("✅ Consent service initialized successfully");
+  } catch (e) {
+    debugPrint("❌ Error initializing consent service: $e");
+    // Continue app initialization even if consent service fails
+  }
+}
 Future<void> _initializeAds() async {
   try {
     await MobileAds.instance.initialize();
@@ -320,7 +332,7 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
 
       // Show app open ad with error handling
       try {
-        AdService.instance.showAppOpenAd();
+       await AdService.instance.showAppOpenAd();
       } catch (e) {
         debugPrint("⚠️ Error showing app open ad: $e");
       }
