@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jira_tips/core/services/connectivity_service.dart';
+import 'package:jira_tips/core/services/fcm_service.dart';
 import 'package:jira_tips/core/state/blog_store.dart';
 import 'package:jira_tips/core/theme/theme_service.dart';
 
@@ -50,6 +51,25 @@ class _SplashScreenState extends State<SplashScreen>
 
   Future<void> _initializeApp() async {
     try {
+      // Check if we're already on home page (user navigated back)
+      final currentRoute = Get.currentRoute;
+      if (currentRoute == '/home') {
+        debugPrint("🔥 Splash - Already on home page, skipping initialization");
+        return;
+      }
+
+      // Check if FCM service indicates we should navigate to home
+      if (Get.isRegistered<FCMService>()) {
+        final fcmService = Get.find<FCMService>();
+        if (fcmService.hasNavigatedFromNotification) {
+          debugPrint(
+            "🔥 Splash - FCM indicates navigation to home, skipping splash",
+          );
+          Get.offAllNamed('/home');
+          return;
+        }
+      }
+
       // Initialize connectivity service
       Get.put(ConnectivityService(), permanent: true);
 
@@ -72,7 +92,53 @@ class _SplashScreenState extends State<SplashScreen>
       await Future.delayed(const Duration(milliseconds: 1000));
 
       if (mounted) {
-        Get.offAllNamed('/home');
+        // Check if there's a pending notification before navigating to home
+        await _checkForPendingNotification();
+
+        // Only navigate to home if no notification navigation occurred
+        if (mounted) {
+          // Check if FCM service has navigated from notification
+          if (Get.isRegistered<FCMService>()) {
+            final fcmService = Get.find<FCMService>();
+            if (fcmService.hasNavigatedFromNotification) {
+              debugPrint(
+                "🔥 Splash - Notification navigation occurred, checking current route",
+              );
+
+              // Check if we're currently on a detail page
+              if (fcmService.isOnDetailPage()) {
+                debugPrint(
+                  "🔥 Splash - Currently on detail page, skipping home navigation",
+                );
+                return;
+              } else {
+                debugPrint(
+                  "🔥 Splash - Not on detail page, proceeding to home",
+                );
+                // Reset the notification flag since we're navigating to home
+                fcmService.resetNotificationFlag();
+              }
+            }
+          }
+
+          debugPrint(
+            "🔥 Splash - No notification navigation, proceeding to home",
+          );
+
+          // Only navigate to home if we're not already on a detail page
+          if (Get.isRegistered<FCMService>()) {
+            final fcmService = Get.find<FCMService>();
+            if (fcmService.isOnDetailPage()) {
+              debugPrint(
+                "🔥 Splash - Currently on detail page, skipping home navigation",
+              );
+              return;
+            }
+          }
+
+          // Use Get.offAllNamed to clear the navigation stack and go to home
+          Get.offAllNamed('/home');
+        }
       }
     } catch (e) {
       debugPrint('Error initializing app: $e');
@@ -80,6 +146,30 @@ class _SplashScreenState extends State<SplashScreen>
       if (mounted) {
         Get.offAllNamed('/home');
       }
+    }
+  }
+
+  /// Check for pending notifications and handle them
+  Future<void> _checkForPendingNotification() async {
+    try {
+      // Check if FCM service is available
+      if (Get.isRegistered<FCMService>()) {
+        final fcmService = Get.find<FCMService>();
+
+        // Check if there are pending notifications
+        final hasPending = await fcmService.hasPendingNotifications();
+        if (hasPending) {
+          debugPrint("🔥 Splash - Found pending notifications, processing...");
+          await fcmService.checkPendingNotifications();
+          debugPrint("🔥 Splash - Pending notifications processed");
+        } else {
+          debugPrint("🔥 Splash - No pending notifications found");
+        }
+      } else {
+        debugPrint("🔥 Splash - FCM service not available yet");
+      }
+    } catch (e) {
+      debugPrint("❌ Error checking pending notifications in splash: $e");
     }
   }
 
@@ -125,10 +215,9 @@ class _SplashScreenState extends State<SplashScreen>
           ),
           child: SafeArea(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const Spacer(flex: 2),
-
+                SizedBox(height: MediaQuery.of(context).padding.top),
                 // App Logo
                 AnimatedBuilder(
                   animation: _logoAnimation,
@@ -138,34 +227,34 @@ class _SplashScreenState extends State<SplashScreen>
                       child: Container(
                         width: 140,
                         height: 140,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(35),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.2),
-                              blurRadius: 30,
-                              offset: const Offset(0, 15),
-                              spreadRadius: 5,
-                            ),
-                            BoxShadow(
-                              color: Colors.white.withOpacity(0.1),
-                              blurRadius: 10,
-                              offset: const Offset(0, -5),
-                              spreadRadius: 2,
-                            ),
-                          ],
-                        ),
+                        // decoration: BoxDecoration(
+                        //   color: Colors.white,
+                        //   borderRadius: BorderRadius.circular(35),
+                        //   boxShadow: [
+                        //     BoxShadow(
+                        //       color: Colors.black.withOpacity(0.2),
+                        //       blurRadius: 30,
+                        //       offset: const Offset(0, 15),
+                        //       spreadRadius: 5,
+                        //     ),
+                        //     BoxShadow(
+                        //       color: Colors.white.withOpacity(0.1),
+                        //       blurRadius: 10,
+                        //       offset: const Offset(0, -5),
+                        //       spreadRadius: 2,
+                        //     ),
+                        //   ],
+                        // ),
                         child: Container(
                           margin: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(27),
-                            border: Border.all(
-                              color: const Color(0xFFff6221).withOpacity(0.1),
-                              width: 2,
-                            ),
-                          ),
+                          // decoration: BoxDecoration(
+                          //   color: Colors.white,
+                          //   borderRadius: BorderRadius.circular(27),
+                          //   border: Border.all(
+                          //     color: const Color(0xFFff6221).withOpacity(0.1),
+                          //     width: 2,
+                          //   ),
+                          // ),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(27),
                             child: Image.asset(
@@ -194,7 +283,9 @@ class _SplashScreenState extends State<SplashScreen>
                   },
                 ),
 
-                const SizedBox(height: 24),
+                Spacer(flex: 2),
+
+                // const SizedBox(height: 24),
 
                 // App Name
                 Text(

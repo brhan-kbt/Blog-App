@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jira_tips/core/ads/ad_service.dart';
 import 'package:jira_tips/core/config/api_config.dart';
+import 'package:jira_tips/core/services/fcm_service.dart';
 import 'package:jira_tips/core/theme/app_palette.dart';
 import 'package:jira_tips/widgets/adabtiveBanner.dart';
+import 'package:jira_tips/widgets/banner_ad_widget.dart';
 import 'package:jira_tips/widgets/post_detail_shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../core/state/blog_store.dart';
 import '../../models/post.dart';
 import '../../widgets/post_tile.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:jira_tips/core/ads/ad_service.dart';
-import 'package:jira_tips/widgets/banner_ad_widget.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class PostDetailPage extends StatefulWidget {
@@ -36,6 +37,24 @@ class _PostDetailPageState extends State<PostDetailPage> {
     AdService.instance.showRandomOpenAd();
   }
 
+  void _handleBackNavigation() {
+    // Check if we came from notification
+    if (Get.isRegistered<FCMService>()) {
+      final fcmService = Get.find<FCMService>();
+      if (fcmService.hasNavigatedFromNotification) {
+        debugPrint(
+          "🔥 PostDetail - Back from notification, resetting flag and going back",
+        );
+        fcmService.onBackFromDetailPage();
+        // Use normal back navigation instead of forcing home
+        Get.back();
+        return;
+      }
+    }
+    // Normal back navigation
+    Get.back();
+  }
+
   Future<void> _fetchPost() async {
     final result = await store.fetchPostWithSuggested(widget.postId);
     setState(() {
@@ -47,6 +66,18 @@ class _PostDetailPageState extends State<PostDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) {
+        if (!didPop) {
+          _handleBackNavigation();
+        }
+      },
+      child: _buildContent(),
+    );
+  }
+
+  Widget _buildContent() {
     if (loading) {
       return const Scaffold(body: PostDetailShimmer());
     }
@@ -59,12 +90,28 @@ class _PostDetailPageState extends State<PostDetailPage> {
     final palette = theme.extension<AppPalette>()!;
     return Scaffold(
       appBar: AppBar(
-        title: Text(post!.title, maxLines: 1, overflow: TextOverflow.ellipsis),
-        // back button
-        // leading: IconButton(
-        //   icon: const Icon(Icons.arrow_back),
-        //   onPressed: () => Get.to(() => const RecentPage()),
-        // ),
+        title: Text(post!.title),
+        // Custom back button to ensure proper navigation
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            // Check if we came from notification
+            if (Get.isRegistered<FCMService>()) {
+              final fcmService = Get.find<FCMService>();
+              if (fcmService.hasNavigatedFromNotification) {
+                debugPrint(
+                  "🔥 PostDetail - AppBar back from notification, resetting flag and going back",
+                );
+                fcmService.onBackFromDetailPage();
+                // Use normal back navigation instead of forcing home
+                Get.back();
+                return;
+              }
+            }
+            // Normal back navigation
+            Get.back();
+          },
+        ),
         actions: [
           IconButton(
             onPressed: () => store.toggleFavorite(post!.id),

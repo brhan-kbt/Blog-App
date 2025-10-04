@@ -5,6 +5,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:jira_tips/modules/settings/pages/contact_us_page.dart';
 import 'package:jira_tips/modules/settings/pages/push_notification_page.dart';
+import 'package:jira_tips/widgets/privacy_options_button.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:jira_tips/core/theme/app_palette.dart';
 import 'package:jira_tips/core/theme/theme_service.dart';
@@ -26,445 +27,687 @@ class SettingsPage extends StatelessWidget {
       snackPosition: SnackPosition.BOTTOM,
       margin: const EdgeInsets.all(12),
       duration: const Duration(seconds: 2),
+      backgroundColor: Get.theme.colorScheme.surface,
+      colorText: Get.theme.colorScheme.onSurface,
     );
   }
 
   @override
   Widget build(BuildContext context) {
     final store = Get.find<BlogStore>();
-
     final theme = Theme.of(context);
     final palette =
         theme.extension<AppPalette>() ?? AppPalette.fromTheme(theme);
     final isDark = Get.isDarkMode;
-    final bg = Theme.of(context).colorScheme.surface;
 
     return Scaffold(
+      backgroundColor: isDark ? Color(0xFF0F0F1E) : Color(0xFFF8FAFD),
       appBar: AppBar(
-        title: const Text('Settings'),
+        title: Text(
+          'Settings',
+          style: TextStyle(
+            fontWeight: FontWeight.w800,
+            fontSize: 28,
+            color: isDark ? Colors.white : Color(0xFF1A1A2E),
+          ),
+        ),
         centerTitle: false,
         elevation: 0,
+        backgroundColor: Colors.transparent,
+        leading: IconButton(
+          icon: Container(
+            padding: EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: isDark ? Color(0xFF1A1A2E) : Colors.white,
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 10,
+                  offset: Offset(0, 4),
+                ),
+              ],
+            ),
+            child: Icon(
+              Icons.arrow_back_ios_new_rounded,
+              size: 20,
+              color: isDark ? Colors.white : Color(0xFF1A1A2E),
+            ),
+          ),
+          onPressed: () => Get.back(),
+        ),
       ),
       body: Obx(() {
         if (store.isLoadingSettings.value) {
-          return const Center(child: CircularProgressIndicator());
+          return _buildLoadingShimmer();
         }
 
         final settings = store.settings.value;
         if (settings == null) {
-          return const Center(child: Text("No settings available"));
+          return _buildEmptyState();
         }
 
         return SafeArea(
-          child: ListView(
+          child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-            children: [
-              _SectionCard(
-                initiallyExpanded: true,
-                headerTitle: 'General',
-                headerSubtitle: 'Theme and notifications',
-                background: palette.cardBg,
-                children: [
-                  _SwitchTile(
-                    title: 'Dark Mode',
-                    subtitle: 'Better eyesight and power saving',
-                    value: isDark,
-                    onChanged: (v) {
-                      final themeSvc = Get.find<ThemeService>();
-                      themeSvc.set(v ? ThemeMode.dark : ThemeMode.light);
-                    },
-                  ),
+            padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Header with decorative elements
+                _buildHeader(),
+                const SizedBox(height: 24),
 
-                  _SimpleTile(
-                    title: 'Push Notification',
-                    subtitle: 'Manage push notification settings',
-                    onTap: () async {
-                      Get.to(() => PushNotificationPage());
-                      // try {
-                      //   await Future.delayed(const Duration(milliseconds: 100));
+                // Privacy Options
+                const PrivacyOptionsButton(),
+                const SizedBox(height: 20),
 
-                      //   if (context.mounted) {
-                      //     WidgetsBinding.instance.addPostFrameCallback((_) {
-                      //       try {
-                      //         AppSettings.openAppSettings(
-                      //           type: AppSettingsType.notification,
-                      //         );
-                      //       } catch (e) {
-                      //         debugPrint(
-                      //           "⚠️ Error opening notification settings: $e",
-                      //         );
-                      //         _snack(
-                      //           'Settings',
-                      //           'Could not open notification settings',
-                      //         );
-                      //       }
-                      //     });
-                      //   }
-                      // } catch (e) {
-                      //   debugPrint(
-                      //     "⚠️ Error handling notification settings tap: $e",
-                      //   );
-                      //   _snack(
-                      //     'Settings',
-                      //     'Could not open notification settings',
-                      //   );
-                      // }
-                    },
-                  ),
-                ],
-              ),
+                // General Section
+                _ModernSectionCard(
+                  icon: Icons.settings_rounded,
+                  title: 'General',
+                  subtitle: 'Appearance and notifications',
+                  gradient: isDark
+                      ? [Color(0xFF1A1A2E), Color(0xFF16213E)]
+                      : [Color(0xFF667eea), Color(0xFF764ba2)],
+                  children: [
+                    _ModernSwitchTile(
+                      icon: Icons.dark_mode_rounded,
+                      title: 'Dark Mode',
+                      subtitle: 'Better for your eyes and battery',
+                      value: isDark,
+                      onChanged: (v) {
+                        final themeSvc = Get.find<ThemeService>();
+                        themeSvc.set(v ? ThemeMode.dark : ThemeMode.light);
+                      },
+                    ),
+                    _ModernSimpleTile(
+                      icon: Icons.notifications_active_rounded,
+                      title: 'Push Notification',
+                      subtitle: 'Manage your notification preferences',
+                      gradient: isDark
+                          ? [Color(0xFFFF6221), Color(0xFFFFD700)]
+                          : [Color(0xFFf093fb), Color(0xFFf5576c)],
+                      onTap: () => Get.to(() => PushNotificationPage()),
+                    ),
+                  ],
+                ),
 
-              const SizedBox(height: 12),
+                const SizedBox(height: 16),
 
-              _SectionCard(
-                headerTitle: 'Cache',
-                headerSubtitle: 'Clear caches, search history',
-                background: palette.cardBg,
-                children: [
-                  _SimpleTile(
-                    title: 'Clear Cache',
-                    subtitle: 'Free up space',
-                    onTap: () async {
-                      try {
-                        await GetStorage().erase();
-                        imageCache.clear();
-                        imageCache.clearLiveImages();
-                        final tempDir = await getTemporaryDirectory();
-                        if (tempDir.existsSync()) {
-                          tempDir.deleteSync(recursive: true);
+                // Cache Section
+                _ModernSectionCard(
+                  icon: Icons.storage_rounded,
+                  title: 'Storage',
+                  subtitle: 'Clear cache and search history',
+                  gradient: isDark
+                      ? [Color(0xFF0F3460), Color(0xFF1A1A2E)]
+                      : [Color(0xFF4facfe), Color(0xFF00f2fe)],
+                  children: [
+                    _ModernSimpleTile(
+                      icon: Icons.cleaning_services_rounded,
+                      title: 'Clear Cache',
+                      subtitle: 'Free up storage space',
+                      gradient: isDark
+                          ? [Color(0xFF00b4db), Color(0xFF0083b0)]
+                          : [Color(0xFFa8edea), Color(0xFFfed6e3)],
+                      onTap: () async {
+                        try {
+                          await GetStorage().erase();
+                          imageCache.clear();
+                          imageCache.clearLiveImages();
+                          final tempDir = await getTemporaryDirectory();
+                          if (tempDir.existsSync()) {
+                            tempDir.deleteSync(recursive: true);
+                          }
+                          _snack('Success', 'Cache cleared successfully 🎉');
+                        } catch (e) {
+                          _snack('Error', 'Failed to clear cache');
                         }
-                        _snack('Cache', 'Cache cleared successfully');
-                      } catch (e) {
-                        _snack('Cache', 'Failed to clear: $e');
-                      }
-                    },
-                  ),
-                  _SimpleTile(
-                    title: 'Clear search history',
-                    onTap: () {
-                      store.clearRecentSearches();
-                      _snack('Search', 'Search history cleared');
-                    },
-                  ),
-                ],
-              ),
-              const SizedBox(height: 12),
-
-              _SectionCard(
-                headerTitle: 'Privacy',
-                headerSubtitle: 'Privacy policy, About Us, Contact Us',
-                background: palette.cardBg,
-                children: [
-                  _SimpleTile(
-                    title: 'Privacy Policy',
-                    // subtitle: 'Learn more about our privacy policy',
-                    onTap: () => Get.to(
-                      () => PrivacyPolicyPage(
-                        content: settings.privacyPolicy ?? "Not available",
-                      ),
+                      },
                     ),
-                  ),
-                  _SimpleTile(
-                    title: 'About Us',
-                    // subtitle: settings.publisher_info ?? "Not available",
-                    onTap: () => Get.to(
-                      () => PublisherInfoPage(
-                        content: settings.publisher_info ?? "Not available",
-                      ),
+                    _ModernSimpleTile(
+                      icon: Icons.history_rounded,
+                      title: 'Clear Search History',
+                      subtitle: 'Remove all recent searches',
+                      gradient: isDark
+                          ? [Color(0xFF834d9b), Color(0xFFd04ed6)]
+                          : [Color(0xFFffecd2), Color(0xFFfcb69f)],
+                      onTap: () {
+                        store.clearRecentSearches();
+                        _snack('Success', 'Search history cleared 🗑️');
+                      },
                     ),
-                  ),
+                  ],
+                ),
 
-                   _SimpleTile(
-                    title: 'Contact Us',
-                    // subtitle: 'Get in touch with us',
-                    onTap: () => Get.to(
-                      () => ContactUsPage(
-                        content: settings.contactUs ?? "Not available",
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                const SizedBox(height: 16),
 
-              const SizedBox(height: 12),
-
-              _SectionCard(
-                headerTitle: 'The App',
-                headerSubtitle: 'Build version, rate, share',
-                background: palette.cardBg,
-                children: [
-                  _SimpleTile(
-                    title: 'About App',
-                    onTap: () => Get.bottomSheet(
-                      AboutPage(content: settings.aboutUs ?? "Not available"),
-                      backgroundColor: Colors.white,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(16.0),
-                          topRight: Radius.circular(16.0),
+                // Privacy Section
+                _ModernSectionCard(
+                  icon: Icons.security_rounded,
+                  title: 'Privacy & Legal',
+                  subtitle: 'Policies and information',
+                  gradient: isDark
+                      ? [Color(0xFF16213E), Color(0xFF0F3460)]
+                      : [Color(0xFFfd746c), Color(0xFFff9068)],
+                  children: [
+                    _ModernSimpleTile(
+                      icon: Icons.privacy_tip_rounded,
+                      title: 'Privacy Policy',
+                      gradient: isDark
+                          ? [Color(0xFF667eea), Color(0xFF764ba2)]
+                          : [Color(0xFFa8edea), Color(0xFFfed6e3)],
+                      onTap: () => Get.to(
+                        () => PrivacyPolicyPage(
+                          content: settings.privacyPolicy ?? "Not available",
                         ),
                       ),
                     ),
-                  ),
-                  // _SimpleTile(
-                  //   title: 'App Version',
-                  //   subtitle: settings.appVersion ?? "Unknown",
-                  // ),
-                  _SimpleTile(
-                    title: 'Rate Us',
-                    onTap: () async {
-                      final inAppReview = InAppReview.instance;
-                      if (await inAppReview.isAvailable()) {
-                        inAppReview.requestReview();
-                      } else {
-                        inAppReview.openStoreListing(
-                          appStoreId: "com.brhan.jiratips", // TODO: replace
-                        );
-                      }
-                    },
-                  ),
-                  _SimpleTile(
-                    title: 'Share to Friends',
-                    onTap: () {
-                      Share.share(
-                        "Check out Jira Tips App: https://play.google.com/store/apps/details?id=com.brhan.jiratips",
-                      );
-                    },
-                  ),
+                    _ModernSimpleTile(
+                      icon: Icons.business_center_rounded,
+                      title: 'About Us',
+                      gradient: isDark
+                          ? [Color(0xFFf093fb), Color(0xFFf5576c)]
+                          : [Color(0xFF4facfe), Color(0xFF00f2fe)],
+                      onTap: () => Get.to(
+                        () => PublisherInfoPage(
+                          content: settings.publisher_info ?? "Not available",
+                        ),
+                      ),
+                    ),
+                    _ModernSimpleTile(
+                      icon: Icons.contact_support_rounded,
+                      title: 'Contact Us',
+                      gradient: isDark
+                          ? [Color(0xFF4facfe), Color(0xFF00f2fe)]
+                          : [Color(0xFFa8edea), Color(0xFFfed6e3)],
+                      onTap: () => Get.to(
+                        () => ContactUsPage(
+                          content: settings.contactUs ?? "Not available",
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
 
-                  _SimpleTile(
-                    title: 'More apps',
-                    onTap: () async {
-                      final uri = Uri.parse(
-                        "https://play.google.com/store/apps/dev?id=5407164320419796496",
-                      );
-                      if (await canLaunchUrl(uri)) {
-                        await launchUrl(
-                          uri,
-                          mode: LaunchMode.externalApplication,
-                        );
-                      } else {
-                        throw 'Could not launch $uri';
-                      }
-                    },
-                  ),
-                ],
-              ),
+                const SizedBox(height: 16),
 
-              Container(height: 12, color: bg.withOpacity(0)),
-            ],
+                // App Section
+                _ModernSectionCard(
+                  icon: Icons.apps_rounded,
+                  title: 'About App',
+                  subtitle: 'Version, rating, and sharing',
+                  gradient: isDark
+                      ? [Color(0xFF834d9b), Color(0xFFd04ed6)]
+                      : [Color(0xFFff9a9e), Color(0xFFfecfef)],
+                  children: [
+                    _ModernSimpleTile(
+                      icon: Icons.info_rounded,
+                      title: 'App Information',
+                      gradient: isDark
+                          ? [Color(0xFF00b4db), Color(0xFF0083b0)]
+                          : [Color(0xFFa8edea), Color(0xFFfed6e3)],
+                      onTap: () => Get.bottomSheet(
+                        AboutPage(content: settings.aboutUs ?? "Not available"),
+                        backgroundColor: isDark
+                            ? Color(0xFF1A1A2E)
+                            : Colors.white,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(24.0),
+                            topRight: Radius.circular(24.0),
+                          ),
+                        ),
+                      ),
+                    ),
+                    _ModernSimpleTile(
+                      icon: Icons.star_rate_rounded,
+                      title: 'Rate Us',
+                      gradient: isDark
+                          ? [Color(0xFFFFD700), Color(0xFFFF6221)]
+                          : [Color(0xFFf6d365), Color(0xFFfda085)],
+                      onTap: () async {
+                        final inAppReview = InAppReview.instance;
+                        if (await inAppReview.isAvailable()) {
+                          inAppReview.requestReview();
+                        } else {
+                          inAppReview.openStoreListing(
+                            appStoreId: "com.brhan.jiratips",
+                          );
+                        }
+                      },
+                    ),
+                    _ModernSimpleTile(
+                      icon: Icons.share_rounded,
+                      title: 'Share with Friends',
+                      gradient: isDark
+                          ? [Color(0xFF667eea), Color(0xFF764ba2)]
+                          : [Color(0xFF4facfe), Color(0xFF00f2fe)],
+                      onTap: () {
+                        Share.share(
+                          "🚀 Check out Jira Tips App - Master your Jira workflow! https://play.google.com/store/apps/details?id=com.brhan.jiratips",
+                        );
+                      },
+                    ),
+                    _ModernSimpleTile(
+                      icon: Icons.apps_outage_rounded,
+                      title: 'More Apps',
+                      gradient: isDark
+                          ? [Color(0xFFf093fb), Color(0xFFf5576c)]
+                          : [Color(0xFFa8edea), Color(0xFFfed6e3)],
+                      onTap: () async {
+                        final uri = Uri.parse(
+                          "https://play.google.com/store/apps/dev?id=5407164320419796496",
+                        );
+                        if (await canLaunchUrl(uri)) {
+                          await launchUrl(
+                            uri,
+                            mode: LaunchMode.externalApplication,
+                          );
+                        } else {
+                          throw 'Could not launch $uri';
+                        }
+                      },
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 30),
+
+                // Footer
+                _buildFooter(),
+              ],
+            ),
           ),
         );
       }),
     );
   }
-}
 
-/// A polished expandable card that mirrors your screenshots:
-/// - rounded 12
-/// - subtle background
-/// - header title + subtitle
-/// - rotating chevron
-/// - clean dividers between tiles
-class _SectionCard extends StatefulWidget {
-  final String headerTitle;
-  final String? headerSubtitle;
-  final List<Widget> children;
-  final bool initiallyExpanded;
-  final Color? background;
-
-  const _SectionCard({
-    required this.headerTitle,
-    this.headerSubtitle,
-    required this.children,
-    this.initiallyExpanded = false,
-    this.background,
-  });
-
-  @override
-  State<_SectionCard> createState() => _SectionCardState();
-}
-
-class _SectionCardState extends State<_SectionCard>
-    with SingleTickerProviderStateMixin {
-  late bool _expanded;
-  late final AnimationController _ctr = AnimationController(
-    vsync: this,
-    duration: const Duration(milliseconds: 180),
-  );
-  late final Animation<double> _rotate = Tween(
-    begin: 0.0,
-    end: .5,
-  ).animate(CurvedAnimation(parent: _ctr, curve: Curves.easeOut));
-
-  @override
-  void initState() {
-    super.initState();
-    _expanded = widget.initiallyExpanded;
-    if (_expanded) _ctr.value = .5;
-  }
-
-  void _toggle() {
-    setState(() => _expanded = !_expanded);
-    _expanded ? _ctr.forward() : _ctr.reverse();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final subtitleStyle = Theme.of(context).textTheme.bodySmall?.copyWith(
-      color: Theme.of(context).textTheme.bodySmall!.color?.withOpacity(.7),
-    );
-
-    return Material(
-      color: widget.background ?? Theme.of(context).colorScheme.surfaceVariant,
-      borderRadius: BorderRadius.circular(12),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(12),
-        onTap: _toggle,
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 12, 12, 8),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.headerTitle,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 18,
-                          ),
-                        ),
-                        if (widget.headerSubtitle != null) ...[
-                          const SizedBox(height: 4),
-                          Text(widget.headerSubtitle!, style: subtitleStyle),
-                        ],
-                      ],
-                    ),
-                  ),
-                  RotationTransition(
-                    turns: _rotate,
-                    child: const Icon(Icons.expand_more_rounded),
-                  ),
-                ],
-              ),
-
-              // content
-              AnimatedCrossFade(
-                firstChild: const SizedBox.shrink(),
-                secondChild: Padding(
-                  padding: const EdgeInsets.only(top: 8, bottom: 4),
-                  child: _SectionChildren(children: widget.children),
-                ),
-                crossFadeState: _expanded
-                    ? CrossFadeState.showSecond
-                    : CrossFadeState.showFirst,
-                duration: const Duration(milliseconds: 180),
-                sizeCurve: Curves.easeOut,
-              ),
-            ],
+  Widget _buildHeader() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Preferences',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: Get.isDarkMode ? Colors.white70 : Color(0xFF666666),
+              letterSpacing: 1.5,
+            ),
           ),
+          const SizedBox(height: 8),
+          Text(
+            'Customize your experience',
+            style: TextStyle(
+              fontSize: 12,
+              color: Get.isDarkMode ? Colors.white54 : Color(0xFF888888),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFooter() {
+    return Container(
+      padding: EdgeInsets.all(20),
+      margin: EdgeInsets.symmetric(horizontal: 8),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: Get.isDarkMode
+              ? [
+                  Color(0xFF1A1A2E).withOpacity(0.8),
+                  Color(0xFF16213E).withOpacity(0.8),
+                ]
+              : [
+                  Color(0xFF667eea).withOpacity(0.1),
+                  Color(0xFF764ba2).withOpacity(0.1),
+                ],
+        ),
+      ),
+      // child: Column(
+      //   children: [
+      //     Icon(
+      //       Icons.rocket_launch_rounded,
+      //       size: 40,
+      //       color: Get.isDarkMode ? Color(0xFFFF6221) : Color(0xFF667eea),
+      //     ),
+      //     const SizedBox(height: 12),
+      //     Text(
+      //       'Jira Tips',
+      //       style: TextStyle(
+      //         fontSize: 18,
+      //         fontWeight: FontWeight.w800,
+      //         color: Get.isDarkMode ? Colors.white : Color(0xFF1A1A2E),
+      //       ),
+      //     ),
+      //     const SizedBox(height: 4),
+      //     Text(
+      //       'Master Your Workflow',
+      //       style: TextStyle(
+      //         fontSize: 12,
+      //         color: Get.isDarkMode ? Colors.white70 : Color(0xFF666666),
+      //       ),
+      //     ),
+      //   ],
+      // ),
+    );
+  }
+
+  Widget _buildLoadingShimmer() {
+    return SafeArea(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
+        child: Column(
+          children: List.generate(5, (index) => _buildShimmerCard()),
         ),
       ),
     );
   }
 
-  @override
-  void dispose() {
-    _ctr.dispose();
-    super.dispose();
-  }
-}
-
-/// Renders children with slim dividers like your screenshots.
-class _SectionChildren extends StatelessWidget {
-  final List<Widget> children;
-  const _SectionChildren({required this.children});
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(12),
+  Widget _buildShimmerCard() {
+    return Container(
+      margin: EdgeInsets.only(bottom: 16),
+      padding: EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: Get.isDarkMode ? Color(0xFF1A1A2E) : Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 15,
+            offset: Offset(0, 5),
+          ),
+        ],
+      ),
       child: Column(
         children: [
-          for (int i = 0; i < children.length; i++) ...[
-            children[i],
-            if (i != children.length - 1)
-              Divider(
-                height: 1,
-                thickness: 1,
-                indent: 0,
-                endIndent: 0,
-                color: Theme.of(context).dividerColor.withOpacity(.6),
+          Row(
+            children: [
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: Get.isDarkMode ? Color(0xFF16213E) : Color(0xFFF0F0F0),
+                  borderRadius: BorderRadius.circular(10),
+                ),
               ),
-          ],
+              SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: 120,
+                      height: 16,
+                      decoration: BoxDecoration(
+                        color: Get.isDarkMode
+                            ? Color(0xFF16213E)
+                            : Color(0xFFF0F0F0),
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                    ),
+                    SizedBox(height: 6),
+                    Container(
+                      width: 80,
+                      height: 12,
+                      decoration: BoxDecoration(
+                        color: Get.isDarkMode
+                            ? Color(0xFF16213E)
+                            : Color(0xFFF0F0F0),
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildEmptyState() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.settings_suggest_rounded,
+            size: 80,
+            color: Get.isDarkMode ? Color(0xFFFF6221) : Color(0xFF667eea),
+          ),
+          SizedBox(height: 20),
+          Text(
+            'Settings Unavailable',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              color: Get.isDarkMode ? Colors.white : Color(0xFF1A1A2E),
+            ),
+          ),
+          SizedBox(height: 8),
+          Text(
+            'Please check your connection',
+            style: TextStyle(
+              color: Get.isDarkMode ? Colors.white70 : Color(0xFF666666),
+            ),
+          ),
         ],
       ),
     );
   }
 }
 
-class _SimpleTile extends StatelessWidget {
+class _ModernSectionCard extends StatelessWidget {
+  final IconData icon;
   final String title;
-  final String? subtitle;
-  final VoidCallback? onTap;
+  final String subtitle;
+  final List<Color> gradient;
+  final List<Widget> children;
 
-  const _SimpleTile({required this.title, this.subtitle, this.onTap});
+  const _ModernSectionCard({
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+    required this.gradient,
+    required this.children,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      dense: false,
-      contentPadding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+    final isDark = Get.isDarkMode;
 
-      // ✅ Title rendered as HTML
-      title: Html(
-        data: title,
-        style: {
-          "body": Style(
-            margin: Margins.zero,
-            padding: HtmlPaddings.zero,
-            fontSize: FontSize(16),
-            fontWeight: FontWeight.w600,
-            color: Theme.of(context).textTheme.bodyLarge?.color,
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: gradient,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: gradient.first.withOpacity(0.3),
+            blurRadius: 20,
+            offset: Offset(0, 10),
           ),
-        },
+        ],
       ),
+      child: Container(
+        margin: EdgeInsets.all(1.5),
+        decoration: BoxDecoration(
+          color: isDark ? Color(0xFF0F0F1E) : Colors.white,
+          borderRadius: BorderRadius.circular(19),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Header
+              Row(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(colors: gradient),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Icon(icon, color: Colors.white, size: 20),
+                  ),
+                  SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          title,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                            color: isDark ? Colors.white : Color(0xFF1A1A2E),
+                          ),
+                        ),
+                        SizedBox(height: 2),
+                        Text(
+                          subtitle,
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: isDark ? Colors.white70 : Color(0xFF666666),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 16),
 
-      // ✅ Subtitle rendered as HTML if available
-      subtitle: subtitle == null
-          ? null
-          : Html(
-              data: subtitle!,
-              style: {
-                "body": Style(
-                  margin: Margins.zero,
-                  padding: HtmlPaddings.zero,
-                  fontSize: FontSize(14),
-                  color: Theme.of(context).textTheme.bodyMedium?.color,
-                ),
-              },
-            ),
-
-      onTap: onTap,
-      visualDensity: const VisualDensity(vertical: -1),
-      trailing: onTap == null ? null : const Icon(Icons.chevron_right),
+              // Children
+              ...children,
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
 
-class _SwitchTile extends StatelessWidget {
+class _ModernSimpleTile extends StatelessWidget {
+  final IconData icon;
   final String title;
+  final String? subtitle;
+  final List<Color> gradient;
+  final VoidCallback? onTap;
 
+  const _ModernSimpleTile({
+    required this.icon,
+    required this.title,
+    this.subtitle,
+    required this.gradient,
+    this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Get.isDarkMode;
+
+    return Container(
+      margin: EdgeInsets.only(bottom: 12),
+      child: Material(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(16),
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(16),
+          child: Container(
+            padding: EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              color: isDark
+                  ? Color(0xFF1A1A2E).withOpacity(0.5)
+                  : Color(0xFFF8FAFD),
+            ),
+            child: Row(
+              children: [
+                Container(
+                  padding: EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(colors: gradient),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Icon(icon, color: Colors.white, size: 18),
+                ),
+                SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Html(
+                        data: title,
+                        style: {
+                          "body": Style(
+                            margin: Margins.zero,
+                            padding: HtmlPaddings.zero,
+                            fontSize: FontSize(15),
+                            fontWeight: FontWeight.w600,
+                            color: isDark ? Colors.white : Color(0xFF1A1A2E),
+                          ),
+                        },
+                      ),
+                      if (subtitle != null) ...[
+                        SizedBox(height: 4),
+                        Html(
+                          data: subtitle!,
+                          style: {
+                            "body": Style(
+                              margin: Margins.zero,
+                              padding: HtmlPaddings.zero,
+                              fontSize: FontSize(12),
+                              color: isDark
+                                  ? Colors.white70
+                                  : Color(0xFF666666),
+                            ),
+                          },
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+                if (onTap != null)
+                  Icon(
+                    Icons.arrow_forward_ios_rounded,
+                    size: 16,
+                    color: isDark ? Colors.white54 : Color(0xFF888888),
+                  ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ModernSwitchTile extends StatelessWidget {
+  final IconData icon;
+  final String title;
   final String? subtitle;
   final bool value;
   final ValueChanged<bool> onChanged;
 
-  const _SwitchTile({
+  const _ModernSwitchTile({
+    required this.icon,
     required this.title,
     this.subtitle,
     required this.value,
@@ -473,19 +716,78 @@ class _SwitchTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final titleStyle = const TextStyle(
-      fontWeight: FontWeight.w600,
-      fontSize: 16,
-    );
+    final isDark = Get.isDarkMode;
 
-    return ListTile(
-      dense: false,
-      contentPadding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-      title: Text(title, style: titleStyle),
-      subtitle: subtitle == null ? null : Text(subtitle!),
-      trailing: Switch(value: value, onChanged: onChanged),
-      onTap: () => onChanged(!value),
-      visualDensity: const VisualDensity(vertical: -1),
+    return Container(
+      margin: EdgeInsets.only(bottom: 12),
+      child: Material(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(16),
+        child: InkWell(
+          onTap: () => onChanged(!value),
+          borderRadius: BorderRadius.circular(16),
+          child: Container(
+            padding: EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              color: isDark
+                  ? Color(0xFF1A1A2E).withOpacity(0.5)
+                  : Color(0xFFF8FAFD),
+            ),
+            child: Row(
+              children: [
+                Container(
+                  padding: EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: isDark
+                          ? [Color(0xFF667eea), Color(0xFF764ba2)]
+                          : [Color(0xFF4facfe), Color(0xFF00f2fe)],
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Icon(icon, color: Colors.white, size: 18),
+                ),
+                SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                          color: isDark ? Colors.white : Color(0xFF1A1A2E),
+                        ),
+                      ),
+                      if (subtitle != null) ...[
+                        SizedBox(height: 4),
+                        Text(
+                          subtitle!,
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: isDark ? Colors.white70 : Color(0xFF666666),
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+                Transform.scale(
+                  scale: 0.8,
+                  child: Switch(
+                    value: value,
+                    onChanged: onChanged,
+                    activeColor: Color(0xFFFF6221),
+                    activeTrackColor: Color(0xFFFF6221).withOpacity(0.3),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

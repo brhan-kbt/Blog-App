@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "596841720591",
+    "project_id": "jira-tips",
+    "storage_bucket": "jira-tips.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:596841720591:android:8eb59dec7390115169ec7a",
+        "android_client_info": {
+          "package_name": "com.brhan.jiratips"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDJC1FkGLrkbNa2M0UiRhHSwpzQGUPvfQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

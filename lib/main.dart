@@ -1,9 +1,14 @@
 import 'dart:math';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:jira_tips/core/consent/consent_service.dart';
+import 'package:jira_tips/core/services/fcm_service.dart';
+import 'package:jira_tips/firebase_options.dart';
 import 'package:jira_tips/widgets/adabtiveBanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -26,6 +31,12 @@ import 'widgets/update_dialog.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  // Initialize Firebase first
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  // Set up background message handler
+  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+
   // Initialize GetStorage first (required for theme service)
   await GetStorage.init();
 
@@ -33,12 +44,19 @@ Future<void> main() async {
   await _initializeThemeService();
 
   // Initialize other services in parallel
-  await Future.wait([
-    _initializeBlogStore(),
-    _initializeAds(),
-    _initializePerformanceService(),
-    _initializeVersionCheckService(),
-  ]);
+  // await Future.wait([
+  //   _initializeBlogStore(),
+  //   _initializeAds(),
+  //   _initializePerformanceService(),
+  //   _initializeVersionCheckService(),
+  // ]);
+
+  // Initialize only essential services for app startup
+  await _initializeBlogStore();
+  await _initializeConsentService();
+
+  // Initialize other services in background to speed up startup
+  _initializeBackgroundServices();
 
   runApp(const JiraTipsApp());
 }
@@ -59,6 +77,16 @@ Future<void> _initializeBlogStore() async {
   Get.put(BlogStore(), permanent: true);
 }
 
+Future<void> _initializeConsentService() async {
+  try {
+    await ConsentService().initialize();
+    debugPrint("✅ Consent service initialized successfully");
+  } catch (e) {
+    debugPrint("❌ Error initializing consent service: $e");
+    // Continue app initialization even if consent service fails
+  }
+}
+
 Future<void> _initializeAds() async {
   try {
     await MobileAds.instance.initialize();
@@ -77,6 +105,60 @@ Future<void> _initializePerformanceService() async {
 Future<void> _initializeVersionCheckService() async {
   Get.put(VersionCheckService(), permanent: true);
   Get.put(VersionCheckController(), permanent: true);
+}
+
+Future<void> _initializeFCMService() async {
+  try {
+    Get.put(FCMService(), permanent: true);
+    await FCMService.instance.initialize();
+    // Reset notification flag when app starts normally
+    FCMService.instance.resetNotificationFlag();
+    debugPrint("✅ FCM Service initialized successfully");
+  } catch (e) {
+    debugPrint("❌ Error initializing FCM Service: $e");
+    // Continue app initialization even if FCM fails
+  }
+}
+
+/// Initialize background services to speed up app startup
+void _initializeBackgroundServices() {
+  // Initialize performance and version check services in background
+  Future.microtask(() async {
+    try {
+      await _initializePerformanceService();
+      debugPrint("✅ Performance service initialized in background");
+    } catch (e) {
+      debugPrint("❌ Error initializing performance service: $e");
+    }
+  });
+
+  Future.microtask(() async {
+    try {
+      await _initializeVersionCheckService();
+      debugPrint("✅ Version check service initialized in background");
+    } catch (e) {
+      debugPrint("❌ Error initializing version check service: $e");
+    }
+  });
+
+  // Initialize ads and FCM with longer delays to prevent blocking
+  Future.delayed(const Duration(milliseconds: 1000), () async {
+    try {
+      await _initializeAds();
+      debugPrint("✅ Ads initialized in background");
+    } catch (e) {
+      debugPrint("❌ Error initializing ads in background: $e");
+    }
+  });
+
+  Future.delayed(const Duration(milliseconds: 1000), () async {
+    try {
+      await _initializeFCMService();
+      debugPrint("✅ FCM Service initialized in background");
+    } catch (e) {
+      debugPrint("❌ Error initializing FCM in background: $e");
+    }
+  });
 }
 
 class JiraTipsApp extends StatelessWidget {
@@ -100,8 +182,39 @@ class JiraTipsApp extends StatelessWidget {
         themeMode: themeSvc.mode.value,
         initialRoute: AppPages.initial,
         getPages: AppPages.routes,
+        navigatorObservers: [
+          GetObserver((routing) {
+            if (routing != null) {
+              debugPrint(
+                "🔥 Navigation - Route changed to: ${routing.current}",
+              );
+              _handleRouteChange(routing.current);
+            }
+          }),
+        ],
       );
     });
+  }
+
+  void _handleRouteChange(String currentRoute) {
+    try {
+      if (Get.isRegistered<FCMService>()) {
+        final fcmService = Get.find<FCMService>();
+
+        // If we're on home page and notification flag is set, reset it
+        if (currentRoute == '/home' &&
+            fcmService.hasNavigatedFromNotification) {
+          debugPrint(
+            "🔥 App - Detected navigation to home, resetting notification flag",
+          );
+          fcmService.onBackFromDetailPage();
+
+          debugPrint("🔥 App - User is on home page after back navigation");
+        }
+      }
+    } catch (e) {
+      debugPrint("⚠️ Error handling route change: $e");
+    }
   }
 }
 
@@ -168,14 +281,58 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
     }
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Listen for route changes to detect when user navigates back from detail page
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _checkForBackNavigation();
+    });
+  }
+
+  void _checkForBackNavigation() {
+    try {
+      if (Get.isRegistered<FCMService>()) {
+        final fcmService = Get.find<FCMService>();
+        final currentRoute = Get.currentRoute;
+
+        // If we're on home page and notification flag is set, reset it
+        if (currentRoute == '/home' &&
+            fcmService.hasNavigatedFromNotification) {
+          debugPrint(
+            "🔥 Shell - Detected back navigation to home, resetting notification flag",
+          );
+          fcmService.onBackFromDetailPage();
+        }
+      }
+    } catch (e) {
+      debugPrint("⚠️ Error checking for back navigation: $e");
+    }
+  }
+
   Future<void> _handleAppResume() async {
     try {
       // Check notification status when returning from settings
       await _checkNotificationStatus();
 
+      // Check for pending notifications from background (but not if we're already on a detail page)
+      try {
+        final fcmService = Get.find<FCMService>();
+        // Only check pending notifications if we haven't navigated from notification
+        if (!fcmService.hasNavigatedFromNotification) {
+          await fcmService.checkPendingNotifications();
+        } else {
+          debugPrint(
+            "🔥 Shell - Skipping pending notification check (already navigated from notification)",
+          );
+        }
+      } catch (e) {
+        debugPrint("⚠️ Error checking pending notifications on resume: $e");
+      }
+
       // Show app open ad with error handling
       try {
-        AdService.instance.showAppOpenAd();
+        await AdService.instance.showAppOpenAd();
       } catch (e) {
         debugPrint("⚠️ Error showing app open ad: $e");
       }
@@ -187,7 +344,13 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
   Future<void> _checkFirstLaunch() async {
     final isFirstLaunch = box.read("isFirstLaunch") ?? true;
     if (isFirstLaunch) {
-      await _requestNotificationPermission();
+      // await _requestNotificationPermission();
+      // Delay notification permission request until after home page renders
+      Future.delayed(const Duration(seconds: 3), () async {
+        if (mounted) {
+          await _requestNotificationPermission();
+        }
+      });
       await box.write("isFirstLaunch", false);
     }
   }
@@ -209,6 +372,12 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
 
         if (result.isGranted) {
           debugPrint("✅ Notification permission granted");
+          // Initialize FCM after permission is granted
+          try {
+            await FCMService.instance.initialize();
+          } catch (e) {
+            debugPrint("❌ Error initializing FCM after permission: $e");
+          }
           _showNotificationPermissionSnackbar(
             "Notifications enabled! You'll receive updates about new articles.",
           );
@@ -403,7 +572,7 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
           NavigationDestination(
             icon: Icon(Icons.home_outlined),
             selectedIcon: Icon(Icons.home),
-            label: 'Recent',
+            label: 'Home',
           ),
           NavigationDestination(
             icon: Icon(Icons.grid_view_rounded),
