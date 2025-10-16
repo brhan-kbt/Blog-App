@@ -273,7 +273,7 @@ class SettingsPage extends StatelessWidget {
                           inAppReview.requestReview();
                         } else {
                           inAppReview.openStoreListing(
-                            appStoreId: "com.brhan.jiratips",
+                            appStoreId: "com.brhan.jobs",
                           );
                         }
                       },
@@ -286,7 +286,7 @@ class SettingsPage extends StatelessWidget {
                           : [Color(0xFF4facfe), Color(0xFF00f2fe)],
                       onTap: () {
                         Share.share(
-                          "🚀 Check out Jira Tips App - Master your Jira workflow! https://play.google.com/store/apps/details?id=com.brhan.jiratips",
+                          "🚀 Check out Jira Tips App - Master your Jira workflow! https://play.google.com/store/apps/details?id=com.brhan.jobs",
                         );
                       },
                     ),

@@ -63,7 +63,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '596841720591',
     projectId: 'jira-tips',
     storageBucket: 'jira-tips.firebasestorage.app',
-    iosBundleId: 'com.brhan.jiratips',
+    iosBundleId: 'com.brhan.jobs',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -72,7 +72,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '596841720591',
     projectId: 'jira-tips',
     storageBucket: 'jira-tips.firebasestorage.app',
-    iosBundleId: 'com.brhan.jiratips',
+    iosBundleId: 'com.brhan.jobs',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(

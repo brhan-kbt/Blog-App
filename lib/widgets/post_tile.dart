@@ -47,6 +47,29 @@ class PostTile extends StatelessWidget {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // Right thumbnail
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: post.image != null && post.image!.isNotEmpty
+                          ? Image.network(
+                              "${ApiConfig.imageUrl}${post.image!}",
+                              // post.image!,
+                              width: 40, // ~pixel look from screenshot
+                              height: 40, // 4:3-ish
+                              fit: BoxFit.cover,
+                            )
+                          : Container(
+                              width: 40, // ~pixel look from screenshot
+                              height: 40, // 4:3-ish
+                              color: Colors.grey.shade300,
+                              child: const Icon(
+                                Icons.image,
+                                color: Colors.grey,
+                              ),
+                            ),
+                    ),
+                    const SizedBox(width: 12),
+
                     // Title + description
                     Expanded(
                       child: Column(
@@ -58,54 +81,117 @@ class PostTile extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             style: titleStyle,
                           ),
-                          const SizedBox(height: 6),
-                          Text(
-                            post.subtitle ?? '',
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: descStyle,
+
+                          const SizedBox(height: 3),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 12.0),
+                            child: Row(
+                              children: [
+                                if (post.companyName != null)
+                                  Icon(
+                                    Icons.business,
+                                    size: 16,
+                                    color: iconColor,
+                                  ),
+                                const SizedBox(width: 6),
+                                Text(
+                                  post.companyName ?? '',
+                                  style: TextStyle(
+                                    fontSize: 13.5,
+                                    color: theme.colorScheme.onSurface
+                                        .withOpacity(.75),
+                                  ),
+                                ),
+                                const Spacer(),
+                                Row(
+                                  children: [
+                                    if (post.experienceLevel != null)
+                                      Icon(
+                                        Icons.work,
+                                        size: 16,
+                                        color: iconColor,
+                                      ),
+                                    const SizedBox(width: 4),
+                                    Text(
+                                      post.experienceLevel ?? '',
+                                      style: TextStyle(
+                                        fontSize: 13.5,
+                                        color: theme.colorScheme.onSurface
+                                            .withOpacity(.75),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
                     ),
-                    const SizedBox(width: 12),
-                    // Right thumbnail
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: post.image != null && post.image!.isNotEmpty
-                          ? Image.network(
-                              "${ApiConfig.imageUrl}${post.image!}",
-                              // post.image!,
-                              width: 96, // ~pixel look from screenshot
-                              height: 72, // 4:3-ish
-                              fit: BoxFit.cover,
-                            )
-                          : Container(
-                              width: 96, // ~pixel look from screenshot
-                              height: 72, // 4:3-ish
-                              color: Colors.grey.shade300,
-                              child: const Icon(
-                                Icons.image,
-                                color: Colors.grey,
-                              ),
-                            ),
-                    ),
                   ],
                 ),
 
-                const SizedBox(height: 10),
+                //   required this.category,
+
+                //   this.employmentType,
+
+                // this.deadlineAt,
+
+                // const SizedBox(height: 6),
+
+                // Text(
+                //   post.subtitle ?? '',
+                //   maxLines: 2,
+                //   overflow: TextOverflow.ellipsis,
+                //   style: descStyle,
+                // ),
+                // const SizedBox(height: 10),
 
                 // ---------- ROW 2: date (L) + more (R)
                 Row(
                   children: [
-                    Icon(Icons.access_time, size: 16, color: iconColor),
-                    const SizedBox(width: 6),
-                    Text(post.prettyDate, style: metaStyle),
+                    if (post.deadlineAt != null ||
+                        post.prettyDeadlineAt != 'N/A')
+                      Icon(Icons.date_range, size: 16, color: iconColor),
+                    if (post.deadlineAt != null ||
+                        post.prettyDeadlineAt != 'N/A')
+                      const SizedBox(width: 6),
+                    if (post.deadlineAt != null ||
+                        post.prettyDeadlineAt != 'N/A')
+                      Text(
+                        post.prettyDeadlineAt,
+                        style: TextStyle(
+                          fontSize: 13.5,
+                          fontWeight: FontWeight.bold,
+                          color: theme.colorScheme.onSurface.withOpacity(.75),
+                        ),
+                      ),
+                    Text(
+                      post.postedAt != null ? " • ${post.category.name}" : '',
+                      style: metaStyle,
+                    ),
+
+                    Text(
+                      post.postedAt != null ? " • ${post.employmentType}" : '',
+                      style: metaStyle,
+                    ),
                     const Spacer(),
+
+                    // IconButton(
+                    //   onPressed:
+                    //       onMore ?? () => showPostOptionsSheet(context, post),
+                    //   icon: Icon(Icons.more_vert, color: iconColor),
+                    //   padding: EdgeInsets.zero,
+                    //   constraints: const BoxConstraints(
+                    //     minWidth: 0,
+                    //     minHeight: 0,
+                    //   ),
+                    //   visualDensity: VisualDensity.compact,
+                    //   splashRadius: 18,
+                    // ),
                     IconButton(
-                      onPressed:
-                          onMore ?? () => showPostOptionsSheet(context, post),
-                      icon: Icon(Icons.more_vert, color: iconColor),
+                      onPressed: onTap,
+                      icon: Icon(Icons.open_in_new, color: iconColor),
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(
                         minWidth: 0,
