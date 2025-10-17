@@ -4,6 +4,7 @@ class ApiConfig {
 
   // Endpoints
   static String posts = "$baseUrl/posts";
+  static String featuredPosts = "$baseUrl/posts/featured";
   static String settings = "$baseUrl/settings";
   static String checkVersion = "$baseUrl/app-config/check-version";
 

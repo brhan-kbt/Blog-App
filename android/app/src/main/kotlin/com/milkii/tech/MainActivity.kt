@@ -1,4 +1,4 @@
-package com.brhan.jobs
+package com.brhan.abayjobs
 
 import io.flutter.embedding.android.FlutterActivity
 

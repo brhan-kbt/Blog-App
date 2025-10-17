@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jira_tips/models/post.dart';
-import 'package:jira_tips/widgets/adabtiveBanner.dart';
-import 'package:jira_tips/widgets/hero_card.dart';
-import 'package:jira_tips/widgets/post_options_sheet.dart';
-import 'package:jira_tips/widgets/shimmer_widgets.dart';
+import 'package:abayjobs/models/post.dart';
+import 'package:abayjobs/widgets/adabtiveBanner.dart';
+import 'package:abayjobs/widgets/hero_card.dart';
+import 'package:abayjobs/widgets/post_options_sheet.dart';
+import 'package:abayjobs/widgets/shimmer_widgets.dart';
 import '../../core/state/blog_store.dart';
 import '../../widgets/post_tile.dart';
 import '../post_detail/post_detail_page.dart';
@@ -35,7 +35,7 @@ class CategoryListingPage extends StatelessWidget {
         if (store.isLoadingPosts.value) {
           return ListView(
             children: const [
-              HeroCardShimmer(),
+              // HeroCardShimmer(),
               PostTileShimmer(),
               PostTileShimmer(),
               PostTileShimmer(),
@@ -66,19 +66,11 @@ class CategoryListingPage extends StatelessWidget {
           );
         }
 
-        final top = list.first;
-        final rest = list.length > 1 ? list.sublist(1) : const <Post>[];
-
         return ListView(
           padding: const EdgeInsets.only(bottom: 24),
           children: [
-            HeroCard(
-              post: top,
-              onTap: () => _openPost(top, store),
-              onMore: () => showPostOptionsSheet(context, top),
-            ),
-            ...List.generate(rest.length, (index) {
-              final p = rest[index];
+            ...List.generate(list.length, (index) {
+              final p = list[index];
               final widgets = <Widget>[
                 PostTile(
                   post: p,

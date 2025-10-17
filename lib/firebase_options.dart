@@ -41,46 +41,47 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDaKfP5F-NTvZuVSrJsujrTndJuSbXhyi0',
-    appId: '1:596841720591:web:256c82ff99e03afd69ec7a',
-    messagingSenderId: '596841720591',
-    projectId: 'jira-tips',
-    authDomain: 'jira-tips.firebaseapp.com',
-    storageBucket: 'jira-tips.firebasestorage.app',
+    apiKey: 'AIzaSyD73dydYNmFVZl2SzezYXX34iFinIZiynU',
+    appId: '1:342325777029:web:b41542132af202d6564fec',
+    messagingSenderId: '342325777029',
+    projectId: 'abay-jobs',
+    authDomain: 'abay-jobs.firebaseapp.com',
+    storageBucket: 'abay-jobs.firebasestorage.app',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDDJC1FkGLrkbNa2M0UiRhHSwpzQGUPvfQ',
-    appId: '1:596841720591:android:8eb59dec7390115169ec7a',
-    messagingSenderId: '596841720591',
-    projectId: 'jira-tips',
-    storageBucket: 'jira-tips.firebasestorage.app',
+    apiKey: 'AIzaSyBiU6kdoqohn-IRd1UuesC49Mn2EyQANxs',
+    appId: '1:342325777029:android:d833c631450693f8564fec',
+    messagingSenderId: '342325777029',
+    projectId: 'abay-jobs',
+    storageBucket: 'abay-jobs.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBtBQsbcV04JcK-uPNHNnJSsQihDqZFA2c',
-    appId: '1:596841720591:ios:b729929f4021a76e69ec7a',
-    messagingSenderId: '596841720591',
-    projectId: 'jira-tips',
-    storageBucket: 'jira-tips.firebasestorage.app',
-    iosBundleId: 'com.brhan.jobs',
+    apiKey: 'AIzaSyBDF01rO2NWXCvtU8fdwec6tVU1I8xRrjI',
+    appId: '1:342325777029:ios:e51d5e86de2e1599564fec',
+    messagingSenderId: '342325777029',
+    projectId: 'abay-jobs',
+    storageBucket: 'abay-jobs.firebasestorage.app',
+    iosBundleId: 'com.brhan.abayjobs',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyBtBQsbcV04JcK-uPNHNnJSsQihDqZFA2c',
-    appId: '1:596841720591:ios:b729929f4021a76e69ec7a',
-    messagingSenderId: '596841720591',
-    projectId: 'jira-tips',
-    storageBucket: 'jira-tips.firebasestorage.app',
-    iosBundleId: 'com.brhan.jobs',
+    apiKey: 'AIzaSyBDF01rO2NWXCvtU8fdwec6tVU1I8xRrjI',
+    appId: '1:342325777029:ios:e51d5e86de2e1599564fec',
+    messagingSenderId: '342325777029',
+    projectId: 'abay-jobs',
+    storageBucket: 'abay-jobs.firebasestorage.app',
+    iosBundleId: 'com.brhan.abayjobs',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyDaKfP5F-NTvZuVSrJsujrTndJuSbXhyi0',
-    appId: '1:596841720591:web:85c3a0ad684a200069ec7a',
-    messagingSenderId: '596841720591',
-    projectId: 'jira-tips',
-    authDomain: 'jira-tips.firebaseapp.com',
-    storageBucket: 'jira-tips.firebasestorage.app',
+    apiKey: 'AIzaSyD73dydYNmFVZl2SzezYXX34iFinIZiynU',
+    appId: '1:342325777029:web:4ac73be336379ece564fec',
+    messagingSenderId: '342325777029',
+    projectId: 'abay-jobs',
+    authDomain: 'abay-jobs.firebaseapp.com',
+    storageBucket: 'abay-jobs.firebasestorage.app',
   );
+
 }

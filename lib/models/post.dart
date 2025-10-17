@@ -1,5 +1,5 @@
 import 'package:intl/intl.dart';
-import 'package:jira_tips/models/user_ref.dart';
+import 'package:abayjobs/models/user_ref.dart';
 import 'category.dart';
 
 class Post {

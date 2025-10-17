@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:jira_tips/models/app_Setting.dart';
+import 'package:abayjobs/models/app_Setting.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/post.dart';
 import '../../models/category.dart';
@@ -10,6 +10,7 @@ import '../config/api_config.dart';
 
 class BlogStore extends GetxController {
   final posts = <Post>[].obs;
+  final featuredPosts = <Post>[].obs;
   final categories = <Category>[].obs;
   final favorites = <int>{}.obs;
   final query = ''.obs;
@@ -17,6 +18,7 @@ class BlogStore extends GetxController {
   // loading states
   final isLoadingPosts = false.obs;
   final checkLoadingPosts = true.obs;
+  final isLoadingFeaturedPosts = false.obs;
   final isLoadingCategories = false.obs;
   final isLoadingPost = false.obs;
   final isSearching = false.obs;
@@ -36,6 +38,7 @@ class BlogStore extends GetxController {
     _loadFavorites(); // ✅ load favorites
 
     fetchPosts();
+    // fetchFeaturedPosts();
     fetchCategories();
     loadSettings(); // load settings at startup
   }
@@ -149,11 +152,66 @@ class BlogStore extends GetxController {
     return {'post': null, 'suggested': []};
   }
 
-  // ------------------- Networking -------------------
-  Future<void> fetchPosts() async {
-    isLoadingPosts.value = true;
+  // inside BlogStore
+
+  int currentPage = 1;
+  int lastPage = 1;
+  bool isLoadingMore = false;
+
+  Future<void> fetchPosts({bool loadMore = false}) async {
+    if (isLoadingPosts.value || isLoadingMore) return;
+
+    if (!loadMore) {
+      currentPage = 1;
+      posts.clear();
+    } else {
+      isLoadingMore = true;
+    }
+
     try {
-      final resp = await http.get(Uri.parse(ApiConfig.posts));
+      final resp = await http.get(
+        Uri.parse('${ApiConfig.posts}?page=$currentPage'),
+      );
+      if (resp.statusCode == 200) {
+        final jsonBody = json.decode(resp.body);
+
+        final data = (jsonBody['data']['data'] ?? []) as List;
+        final newPosts = data
+            .map((e) => Post.fromJson(Map<String, dynamic>.from(e)))
+            .toList();
+
+        if (loadMore) {
+          posts.addAll(newPosts);
+        } else {
+          posts.assignAll(newPosts);
+        }
+
+        // pagination info
+        currentPage = jsonBody['data']['current_page'] ?? 1;
+        lastPage = jsonBody['data']['last_page'] ?? 1;
+
+        // featured posts
+        final featuredData = (jsonBody['featuredPosts'] ?? []) as List;
+        featuredPosts.assignAll(
+          featuredData
+              .map((e) => Post.fromJson(Map<String, dynamic>.from(e)))
+              .toList(),
+        );
+      }
+    } catch (e) {
+      debugPrint("Error fetching posts: $e");
+    } finally {
+      isLoadingPosts.value = false;
+      isLoadingMore = false;
+    }
+  }
+
+  bool get canLoadMore => currentPage < lastPage;
+
+  Future<void> fetchFeaturedPosts() async {
+    isLoadingFeaturedPosts.value = true;
+    try {
+      final resp = await http.get(Uri.parse(ApiConfig.featuredPosts));
       debugPrint("Posts API response: ${resp.statusCode} ${resp.body}");
 
       if (resp.statusCode == 200) {
@@ -171,16 +229,16 @@ class BlogStore extends GetxController {
             .map((e) => Post.fromJson(Map<String, dynamic>.from(e)))
             .toList();
 
-        posts.assignAll(parsed);
+        featuredPosts.assignAll(parsed);
       } else {
-        posts.clear();
+        featuredPosts.clear();
       }
     } catch (e, st) {
       debugPrint("Error fetching posts: $e");
       debugPrintStack(stackTrace: st);
-      posts.clear();
+      featuredPosts.clear();
     } finally {
-      isLoadingPosts.value = false;
+      isLoadingFeaturedPosts.value = false;
     }
   }
 

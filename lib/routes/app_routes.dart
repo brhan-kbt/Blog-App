@@ -2,6 +2,7 @@ abstract class Routes {
   static const splash = '/';
   static const home = '/home';
   static const recent = '/recent';
+  static const jobs = '/jobs';
   static const category = '/category';
   static const favorite = '/favorite';
   static const postDetail = '/post_detail';

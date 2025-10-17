@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "596841720591",
-    "project_id": "jira-tips",
-    "storage_bucket": "jira-tips.firebasestorage.app"
+    "project_number": "342325777029",
+    "project_id": "abay-jobs",
+    "storage_bucket": "abay-jobs.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:596841720591:android:8eb59dec7390115169ec7a",
+        "mobilesdk_app_id": "1:342325777029:android:d833c631450693f8564fec",
         "android_client_info": {
-          "package_name": "com.brhan.jobs"
+          "package_name": "com.brhan.abayjobs"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDDJC1FkGLrkbNa2M0UiRhHSwpzQGUPvfQ"
+          "current_key": "AIzaSyBiU6kdoqohn-IRd1UuesC49Mn2EyQANxs"
         }
       ],
       "services": {

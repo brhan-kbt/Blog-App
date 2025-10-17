@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:abayjobs/modules/jobs/jobs.dart';
 import '../core/splash/splash_screen.dart';
 import '../main.dart';
 import '../modules/recent/recent_page.dart';
@@ -19,6 +20,7 @@ class AppPages {
     GetPage(name: Routes.recent, page: () => const RecentPage()),
     GetPage(name: Routes.category, page: () => const CategoryPage()),
     GetPage(name: Routes.favorite, page: () => const FavoritePage()),
+    GetPage(name: Routes.jobs, page: () => const JobsListPage()),
 
     GetPage(
       name: Routes.postDetail,

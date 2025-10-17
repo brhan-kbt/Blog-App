@@ -3,15 +3,15 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:in_app_review/in_app_review.dart';
-import 'package:jira_tips/modules/settings/pages/contact_us_page.dart';
-import 'package:jira_tips/modules/settings/pages/push_notification_page.dart';
-import 'package:jira_tips/widgets/privacy_options_button.dart';
+import 'package:abayjobs/modules/settings/pages/contact_us_page.dart';
+import 'package:abayjobs/modules/settings/pages/push_notification_page.dart';
+import 'package:abayjobs/widgets/privacy_options_button.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:jira_tips/core/theme/app_palette.dart';
-import 'package:jira_tips/core/theme/theme_service.dart';
-import 'package:jira_tips/modules/settings/pages/about_page.dart';
-import 'package:jira_tips/modules/settings/pages/privacy_policy_page.dart';
-import 'package:jira_tips/modules/settings/pages/publisher_info_page.dart';
+import 'package:abayjobs/core/theme/app_palette.dart';
+import 'package:abayjobs/core/theme/theme_service.dart';
+import 'package:abayjobs/modules/settings/pages/about_page.dart';
+import 'package:abayjobs/modules/settings/pages/privacy_policy_page.dart';
+import 'package:abayjobs/modules/settings/pages/publisher_info_page.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:app_settings/app_settings.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -83,9 +83,9 @@ class SettingsPage extends StatelessWidget {
         }
 
         final settings = store.settings.value;
-        if (settings == null) {
-          return _buildEmptyState();
-        }
+        // if (settings == null) {
+        //   return _buildEmptyState();
+        // }
 
         return SafeArea(
           child: SingleChildScrollView(
@@ -200,7 +200,7 @@ class SettingsPage extends StatelessWidget {
                           : [Color(0xFFa8edea), Color(0xFFfed6e3)],
                       onTap: () => Get.to(
                         () => PrivacyPolicyPage(
-                          content: settings.privacyPolicy ?? "Not available",
+                          content: settings?.privacyPolicy ?? "Not available",
                         ),
                       ),
                     ),
@@ -212,7 +212,7 @@ class SettingsPage extends StatelessWidget {
                           : [Color(0xFF4facfe), Color(0xFF00f2fe)],
                       onTap: () => Get.to(
                         () => PublisherInfoPage(
-                          content: settings.publisher_info ?? "Not available",
+                          content: settings?.publisher_info ?? "Not available",
                         ),
                       ),
                     ),
@@ -224,7 +224,7 @@ class SettingsPage extends StatelessWidget {
                           : [Color(0xFFa8edea), Color(0xFFfed6e3)],
                       onTap: () => Get.to(
                         () => ContactUsPage(
-                          content: settings.contactUs ?? "Not available",
+                          content: settings?.contactUs ?? "Not available",
                         ),
                       ),
                     ),
@@ -249,7 +249,9 @@ class SettingsPage extends StatelessWidget {
                           ? [Color(0xFF00b4db), Color(0xFF0083b0)]
                           : [Color(0xFFa8edea), Color(0xFFfed6e3)],
                       onTap: () => Get.bottomSheet(
-                        AboutPage(content: settings.aboutUs ?? "Not available"),
+                        AboutPage(
+                          content: settings?.aboutUs ?? "Not available",
+                        ),
                         backgroundColor: isDark
                             ? Color(0xFF1A1A2E)
                             : Colors.white,
@@ -273,7 +275,7 @@ class SettingsPage extends StatelessWidget {
                           inAppReview.requestReview();
                         } else {
                           inAppReview.openStoreListing(
-                            appStoreId: "com.brhan.jobs",
+                            appStoreId: "com.brhan.abayjobs",
                           );
                         }
                       },
@@ -286,7 +288,7 @@ class SettingsPage extends StatelessWidget {
                           : [Color(0xFF4facfe), Color(0xFF00f2fe)],
                       onTap: () {
                         Share.share(
-                          "🚀 Check out Jira Tips App - Master your Jira workflow! https://play.google.com/store/apps/details?id=com.brhan.jobs",
+                          "🚀 Check out Abay Jobs App - Master your Jira workflow! https://play.google.com/store/apps/details?id=com.brhan.abayjobs",
                         );
                       },
                     ),
@@ -382,7 +384,7 @@ class SettingsPage extends StatelessWidget {
       //     ),
       //     const SizedBox(height: 12),
       //     Text(
-      //       'Jira Tips',
+      //       'Abay Jobs',
       //       style: TextStyle(
       //         fontSize: 18,
       //         fontWeight: FontWeight.w800,
