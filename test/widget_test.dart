@@ -8,14 +8,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:milki_tech/main.dart';
+import 'package:habesha_tech/main.dart';
 
 void main() {
   testWidgets('App loads successfully', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MilkiTechApp());
+    await tester.pumpWidget(const HabeshaTechApp());
 
     // Verify that the app loads without crashing
-    expect(find.byType(MilkiTechApp), findsOneWidget);
+    expect(find.byType(HabeshaTechApp), findsOneWidget);
   });
 }

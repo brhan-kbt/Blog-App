@@ -6,19 +6,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:milki_tech/core/consent/consent_service.dart';
-import 'package:milki_tech/core/services/fcm_service.dart';
-import 'package:milki_tech/firebase_options.dart';
-import 'package:milki_tech/widgets/adabtiveBanner.dart';
+import 'package:habesha_tech/core/consent/consent_service.dart';
+import 'package:habesha_tech/core/services/fcm_service.dart';
+import 'package:habesha_tech/firebase_options.dart';
+import 'package:habesha_tech/widgets/adabtiveBanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import 'package:milki_tech/core/theme/app_palette.dart';
-import 'package:milki_tech/core/theme/theme_service.dart';
-import 'package:milki_tech/core/services/connectivity_service.dart';
-import 'package:milki_tech/core/services/performance_service.dart';
-import 'package:milki_tech/core/services/version_check_service.dart';
-import 'package:milki_tech/core/services/version_check_controller.dart';
-import 'package:milki_tech/routes/app_pages.dart';
+import 'package:habesha_tech/core/theme/app_palette.dart';
+import 'package:habesha_tech/core/theme/theme_service.dart';
+import 'package:habesha_tech/core/services/connectivity_service.dart';
+import 'package:habesha_tech/core/services/performance_service.dart';
+import 'package:habesha_tech/core/services/version_check_service.dart';
+import 'package:habesha_tech/core/services/version_check_controller.dart';
+import 'package:habesha_tech/routes/app_pages.dart';
 import 'core/state/blog_store.dart';
 import 'core/theme/app_theme.dart';
 import 'modules/category/category_page.dart';
@@ -53,13 +53,12 @@ Future<void> main() async {
 
   // Initialize only essential services for app startup
   await _initializeBlogStore();
-    await _initializeConsentService();
-
+  await _initializeConsentService();
 
   // Initialize other services in background to speed up startup
   _initializeBackgroundServices();
 
-  runApp(const MilkiTechApp());
+  runApp(const HabeshaTechApp());
 }
 
 Future<void> _initializeThemeService() async {
@@ -75,9 +74,8 @@ Future<void> _initializeThemeService() async {
 }
 
 Future<void> _initializeBlogStore() async {
-Get.put(BlogStore(), permanent: true);
+  Get.put(BlogStore(), permanent: true);
 }
-
 
 Future<void> _initializeConsentService() async {
   try {
@@ -88,6 +86,7 @@ Future<void> _initializeConsentService() async {
     // Continue app initialization even if consent service fails
   }
 }
+
 Future<void> _initializeAds() async {
   try {
     await MobileAds.instance.initialize();
@@ -162,8 +161,8 @@ void _initializeBackgroundServices() {
   });
 }
 
-class MilkiTechApp extends StatelessWidget {
-  const MilkiTechApp({super.key});
+class HabeshaTechApp extends StatelessWidget {
+  const HabeshaTechApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -171,12 +170,12 @@ class MilkiTechApp extends StatelessWidget {
 
     return Obx(() {
       debugPrint(
-        "🎨 MilkiTechApp - Building with theme mode: ${themeSvc.mode.value}",
+        "🎨 HabeshaTechApp - Building with theme mode: ${themeSvc.mode.value}",
       );
-      debugPrint("🎨 MilkiTechApp - IsDark: ${themeSvc.isDark}");
+      debugPrint("🎨 HabeshaTechApp - IsDark: ${themeSvc.isDark}");
 
       return GetMaterialApp(
-        title: 'Milki Tech',
+        title: 'Habesha Tech',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.light,
         darkTheme: AppTheme.dark,
@@ -571,19 +570,19 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
         onDestinationSelected: (i) => setState(() => index = i),
         destinations: const [
           NavigationDestination(
-            icon: Icon(Icons.home_outlined),
-            selectedIcon: Icon(Icons.home),
-            label: 'Home',
+            icon: Icon(Icons.browse_gallery_outlined),
+            selectedIcon: Icon(Icons.browse_gallery),
+            label: 'Browse',
           ),
           NavigationDestination(
-            icon: Icon(Icons.grid_view_rounded),
-            selectedIcon: Icon(Icons.grid_view_rounded),
+            icon: Icon(Icons.category_outlined),
+            selectedIcon: Icon(Icons.category),
             label: 'Category',
           ),
           NavigationDestination(
-            icon: Icon(Icons.favorite_border),
-            selectedIcon: Icon(Icons.favorite),
-            label: 'Favorite',
+            icon: Icon(Icons.bookmark_outlined),
+            selectedIcon: Icon(Icons.bookmark),
+            label: 'Bookmarks',
           ),
         ],
       ),

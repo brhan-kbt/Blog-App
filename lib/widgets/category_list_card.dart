@@ -1,9 +1,9 @@
 // give me a code that list categories in a horizontal list view with a card for each category
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:milki_tech/core/state/blog_store.dart';
-import 'package:milki_tech/models/category.dart';
-import 'package:milki_tech/widgets/shimmer_widgets.dart';
+import 'package:habesha_tech/core/state/blog_store.dart';
+import 'package:habesha_tech/models/category.dart';
+import 'package:habesha_tech/widgets/shimmer_widgets.dart';
 import '../core/theme/app_palette.dart';
 import 'package:google_fonts/google_fonts.dart';
 

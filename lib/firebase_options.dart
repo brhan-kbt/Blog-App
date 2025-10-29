@@ -2,7 +2,7 @@
 // ignore_for_file: type=lint
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
-    show defaultTargetPlatform, kIsWeb, TargetPlatform;
+show defaultTargetPlatform, kIsWeb, TargetPlatform;
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -11,78 +11,32 @@ import 'package:flutter/foundation.dart'
 /// import 'firebase_options.dart';
 /// // ...
 /// await Firebase.initializeApp(
-///   options: DefaultFirebaseOptions.currentPlatform,
+/// options: DefaultFirebaseOptions.currentPlatform,
 /// );
 /// ```
 class DefaultFirebaseOptions {
-  static FirebaseOptions get currentPlatform {
-    if (kIsWeb) {
-      return web;
-    }
-    switch (defaultTargetPlatform) {
-      case TargetPlatform.android:
-        return android;
-      case TargetPlatform.iOS:
-        return ios;
-      case TargetPlatform.macOS:
-        return macos;
-      case TargetPlatform.windows:
-        return windows;
-      case TargetPlatform.linux:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for linux - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
-      default:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions are not supported for this platform.',
-        );
-    }
-  }
+static FirebaseOptions get currentPlatform {
+switch (defaultTargetPlatform) {
+case TargetPlatform.android:
+return android;
+case TargetPlatform.linux:
+throw UnsupportedError(
+'DefaultFirebaseOptions have not been configured for linux - '
+'you can reconfigure this by running the FlutterFire CLI again.',
+);
+default:
+throw UnsupportedError(
+'DefaultFirebaseOptions are not supported for this platform.',
+);
+}
+}
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyByR5m9vNyDMR5bcR4Uo5tdZviLSkIdT54',
-    appId: '1:107801177801:web:9f71e37b087810a5512718',
-    messagingSenderId: '107801177801',
-    projectId: 'milki-tech',
-    authDomain: 'milki-tech.firebaseapp.com',
-    storageBucket: 'milki-tech.firebasestorage.app',
-    measurementId: 'G-4QR1G74F9X',
-  );
+static const FirebaseOptions android = FirebaseOptions(
+apiKey: 'AIzaSyA6wmNHyJfy99mfgIZk5ouNST-or-DmD6U',
+appId: '1:487945867113:android:d45355b26fd7fc619b77f8',
+messagingSenderId: '487945867113',
+projectId: 'habesha-tech1',
+storageBucket: 'habesha-tech1.firebasestorage.app',
+);
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAXt95ZpauVVlJoaxdMp3bJGJZeM_YZpyg',
-    appId: '1:107801177801:android:703c600e1d64a0a2512718',
-    messagingSenderId: '107801177801',
-    projectId: 'milki-tech',
-    storageBucket: 'milki-tech.firebasestorage.app',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBEqb_TnuBEDKzJep9fT12XAhq_TrcbVzQ',
-    appId: '1:107801177801:ios:7bf4c7166d2c80ed512718',
-    messagingSenderId: '107801177801',
-    projectId: 'milki-tech',
-    storageBucket: 'milki-tech.firebasestorage.app',
-    iosBundleId: 'com.milki.tech',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyBEqb_TnuBEDKzJep9fT12XAhq_TrcbVzQ',
-    appId: '1:107801177801:ios:7bf4c7166d2c80ed512718',
-    messagingSenderId: '107801177801',
-    projectId: 'milki-tech',
-    storageBucket: 'milki-tech.firebasestorage.app',
-    iosBundleId: 'com.milki.tech',
-  );
-
-  static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyByR5m9vNyDMR5bcR4Uo5tdZviLSkIdT54',
-    appId: '1:107801177801:web:8800d3cbe5e661ba512718',
-    messagingSenderId: '107801177801',
-    projectId: 'milki-tech',
-    authDomain: 'milki-tech.firebaseapp.com',
-    storageBucket: 'milki-tech.firebasestorage.app',
-    measurementId: 'G-5127XYY61Y',
-  );
 }

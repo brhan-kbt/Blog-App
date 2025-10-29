@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "107801177801",
-    "project_id": "milki-tech",
-    "storage_bucket": "milki-tech.firebasestorage.app"
+    "project_number": "487945867113",
+    "project_id": "habesha-tech1",
+    "storage_bucket": "habesha-tech1.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:107801177801:android:703c600e1d64a0a2512718",
+        "mobilesdk_app_id": "1:487945867113:android:d45355b26fd7fc619b77f8",
         "android_client_info": {
-          "package_name": "com.milki.tech"
+          "package_name": "com.tekopia.habesha_tech"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAXt95ZpauVVlJoaxdMp3bJGJZeM_YZpyg"
+          "current_key": "AIzaSyA6wmNHyJfy99mfgIZk5ouNST-or-DmD6U"
         }
       ],
       "services": {
