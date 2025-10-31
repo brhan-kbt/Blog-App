@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "487945867113",
-    "project_id": "habesha-tech1",
-    "storage_bucket": "habesha-tech1.firebasestorage.app"
+    "project_number": "87861554833",
+    "project_id": "nile-tech01",
+    "storage_bucket": "nile-tech01.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:487945867113:android:d45355b26fd7fc619b77f8",
+        "mobilesdk_app_id": "1:87861554833:android:5ac12f6a5161aae9b51930",
         "android_client_info": {
-          "package_name": "com.tekopia.habesha_tech"
+          "package_name": "com.tekopia.nile_tech"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyA6wmNHyJfy99mfgIZk5ouNST-or-DmD6U"
+          "current_key": "AIzaSyDjl0jsYUxLusx6qe1nD0Q6a7cAfE7rFyA"
         }
       ],
       "services": {

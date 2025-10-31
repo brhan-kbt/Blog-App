@@ -31,12 +31,12 @@ throw UnsupportedError(
 }
 }
 
-static const FirebaseOptions android = FirebaseOptions(
-apiKey: 'AIzaSyA6wmNHyJfy99mfgIZk5ouNST-or-DmD6U',
-appId: '1:487945867113:android:d45355b26fd7fc619b77f8',
-messagingSenderId: '487945867113',
-projectId: 'habesha-tech1',
-storageBucket: 'habesha-tech1.firebasestorage.app',
-);
+  static const FirebaseOptions android = FirebaseOptions(
+    apiKey: 'AIzaSyDjl0jsYUxLusx6qe1nD0Q6a7cAfE7rFyA',
+    appId: '1:87861554833:android:5ac12f6a5161aae9b51930',
+    messagingSenderId: '87861554833',
+    projectId: 'nile-tech01',
+    storageBucket: 'nile-tech01.firebasestorage.app',
+  );
 
 }

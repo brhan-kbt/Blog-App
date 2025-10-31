@@ -6,19 +6,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:habesha_tech/core/consent/consent_service.dart';
-import 'package:habesha_tech/core/services/fcm_service.dart';
-import 'package:habesha_tech/firebase_options.dart';
-import 'package:habesha_tech/widgets/adabtiveBanner.dart';
+import 'package:nile_tech/core/consent/consent_service.dart';
+import 'package:nile_tech/core/services/fcm_service.dart';
+import 'package:nile_tech/firebase_options.dart';
+import 'package:nile_tech/widgets/adabtiveBanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import 'package:habesha_tech/core/theme/app_palette.dart';
-import 'package:habesha_tech/core/theme/theme_service.dart';
-import 'package:habesha_tech/core/services/connectivity_service.dart';
-import 'package:habesha_tech/core/services/performance_service.dart';
-import 'package:habesha_tech/core/services/version_check_service.dart';
-import 'package:habesha_tech/core/services/version_check_controller.dart';
-import 'package:habesha_tech/routes/app_pages.dart';
+import 'package:nile_tech/core/theme/app_palette.dart';
+import 'package:nile_tech/core/theme/theme_service.dart';
+import 'package:nile_tech/core/services/connectivity_service.dart';
+import 'package:nile_tech/core/services/performance_service.dart';
+import 'package:nile_tech/core/services/version_check_service.dart';
+import 'package:nile_tech/core/services/version_check_controller.dart';
+import 'package:nile_tech/routes/app_pages.dart';
 import 'core/state/blog_store.dart';
 import 'core/theme/app_theme.dart';
 import 'modules/category/category_page.dart';
@@ -58,7 +58,7 @@ Future<void> main() async {
   // Initialize other services in background to speed up startup
   _initializeBackgroundServices();
 
-  runApp(const HabeshaTechApp());
+  runApp(const NileTechApp());
 }
 
 Future<void> _initializeThemeService() async {
@@ -161,8 +161,8 @@ void _initializeBackgroundServices() {
   });
 }
 
-class HabeshaTechApp extends StatelessWidget {
-  const HabeshaTechApp({super.key});
+class NileTechApp extends StatelessWidget {
+  const NileTechApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -170,12 +170,12 @@ class HabeshaTechApp extends StatelessWidget {
 
     return Obx(() {
       debugPrint(
-        "🎨 HabeshaTechApp - Building with theme mode: ${themeSvc.mode.value}",
+        "🎨 NileTechApp - Building with theme mode: ${themeSvc.mode.value}",
       );
-      debugPrint("🎨 HabeshaTechApp - IsDark: ${themeSvc.isDark}");
+      debugPrint("🎨 NileTechApp - IsDark: ${themeSvc.isDark}");
 
       return GetMaterialApp(
-        title: 'Habesha Tech',
+        title: 'Nile Tech',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.light,
         darkTheme: AppTheme.dark,
@@ -547,7 +547,7 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
               title: "Search ... ",
               onChanged: (q) => store.query.value = q,
             ),
-            const SizedBox(height: 8),
+            // const SizedBox(height: 8),
             Expanded(
               child: RefreshIndicator(
                 onRefresh: _onRefresh,
@@ -555,7 +555,7 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
               ),
             ),
             // Bottom banner ad on all pages (slightly smaller than inline)
-            const SizedBox(height: 8),
+            // const SizedBox(height: 8),
             // if (choice == 1 || choice == 2)
             const AdaptiveBannerAdWidget(),
           ],

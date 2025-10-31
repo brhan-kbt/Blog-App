@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     
     <application
-        android:label="Habesha Tech"
+        android:label="Nile Tech"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
@@ -38,7 +38,7 @@
             android:value="2" />
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-5496551731411329~4436968872" />
+            android:value="ca-app-pub-5496551731411329~3550498277" />
         
         <!-- Firebase Cloud Messaging Service -->
         <service

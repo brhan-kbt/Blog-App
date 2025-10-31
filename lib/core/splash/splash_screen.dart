@@ -2,10 +2,10 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:habesha_tech/core/services/connectivity_service.dart';
-import 'package:habesha_tech/core/services/fcm_service.dart';
-import 'package:habesha_tech/core/state/blog_store.dart';
-import 'package:habesha_tech/core/theme/theme_service.dart';
+import 'package:nile_tech/core/services/connectivity_service.dart';
+import 'package:nile_tech/core/services/fcm_service.dart';
+import 'package:nile_tech/core/state/blog_store.dart';
+import 'package:nile_tech/core/theme/theme_service.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -16,12 +16,21 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
-  late AnimationController _patternController;
-  late AnimationController _textRevealController;
-  late AnimationController _ethiopianSymbolController;
-  late Animation<double> _patternAnimation;
+  late AnimationController _waveController;
+  late AnimationController _particleController;
+  late AnimationController _logoController;
+  late AnimationController _textController;
+  late Animation<double> _waveAnimation;
+  late Animation<double> _particleAnimation;
+  late Animation<double> _logoAnimation;
   late Animation<double> _textAnimation;
-  late Animation<double> _symbolAnimation;
+
+  // Color palette based on #1b1b45
+  final Color primaryColor = const Color(0xFF1B1B45);
+  final Color secondaryColor = const Color(0xFF2D2D6D);
+  final Color accentColor = const Color(0xFF4A4A9C);
+  final Color highlightColor = const Color(0xFF6C6CD3);
+  final Color textColor = const Color(0xFFE0E0FF);
 
   @override
   void initState() {
@@ -31,55 +40,59 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   void _initializeAnimations() {
-    // Full width pattern animation
-    _patternController = AnimationController(
+    // Wave animation
+    _waveController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 4),
+      duration: const Duration(seconds: 6),
     )..repeat(reverse: true);
 
-    _patternAnimation = Tween<double>(
-      begin: -0.2,
-      end: 0.2,
-    ).animate(CurvedAnimation(
-      parent: _patternController,
-      curve: Curves.easeInOut,
-    ));
-
-    // Text reveal animation
-    _textRevealController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1800),
+    _waveAnimation = Tween<double>(begin: -0.1, end: 0.1).animate(
+      CurvedAnimation(parent: _waveController, curve: Curves.easeInOut),
     );
 
-    _textAnimation = Tween<double>(
-      begin: 0,
-      end: 1,
-    ).animate(CurvedAnimation(
-      parent: _textRevealController,
-      curve: Curves.easeOutCubic,
-    ));
-
-    // Ethiopian symbol animation
-    _ethiopianSymbolController = AnimationController(
+    // Particle animation
+    _particleController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 2),
+      duration: const Duration(seconds: 4),
+    )..repeat();
+
+    _particleAnimation = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(parent: _particleController, curve: Curves.linear),
     );
 
-    _symbolAnimation = Tween<double>(
-      begin: 0,
-      end: 1,
-    ).animate(CurvedAnimation(
-      parent: _ethiopianSymbolController,
-      curve: Curves.elasticOut,
-    ));
+    // Logo animation
+    _logoController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1500),
+    );
+
+    _logoAnimation = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: _logoController,
+        curve: Curves.elasticOut,
+      ),
+    );
+
+    // Text animation
+    _textController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1200),
+    );
+
+    _textAnimation = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: _textController,
+        curve: Curves.easeOutCubic,
+      ),
+    );
 
     // Start sequenced animations
     _startAnimationSequence();
   }
 
   void _startAnimationSequence() async {
-    await _ethiopianSymbolController.forward();
-    await _textRevealController.forward();
+    await _logoController.forward();
+    await _textController.forward();
   }
 
   Future<void> _initializeApp() async {
@@ -115,7 +128,7 @@ class _SplashScreenState extends State<SplashScreen>
         ]);
       }
 
-      await Future.delayed(const Duration(milliseconds: 2500));
+      await Future.delayed(const Duration(milliseconds: 3000));
 
       if (mounted) {
         await _checkForPendingNotification();
@@ -189,68 +202,81 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   void dispose() {
-    _patternController.dispose();
-    _textRevealController.dispose();
-    _ethiopianSymbolController.dispose();
+    _waveController.dispose();
+    _particleController.dispose();
+    _logoController.dispose();
+    _textController.dispose();
     super.dispose();
   }
 
-  // Full-width Ethiopian Pattern
-  Widget _buildFullWidthPattern() {
+  // Animated background waves
+  Widget _buildAnimatedWaves() {
     return AnimatedBuilder(
-      animation: _patternAnimation,
+      animation: _waveAnimation,
       builder: (context, child) {
         return Transform.translate(
-          offset: Offset(0, _patternAnimation.value * 30),
-          child: SizedBox(
-            width: double.infinity,
-            height: 150,
-            child: CustomPaint(
-              painter: _FullWidthEthiopianPatternPainter(),
+          offset: Offset(0, _waveAnimation.value * 20),
+          child: CustomPaint(
+            painter: _WavePatternPainter(
+              primaryColor: primaryColor,
+              secondaryColor: secondaryColor,
+              accentColor: accentColor,
             ),
+            size: Size.infinite,
           ),
         );
       },
     );
   }
 
-  // Full-width Tech Circuit Background
-  Widget _buildFullWidthTechCircuit() {
-    return Positioned.fill(
-      child: CustomPaint(
-        painter: _FullWidthTechCircuitPainter(),
-      ),
+  // Floating tech particles
+  Widget _buildFloatingParticles() {
+    return AnimatedBuilder(
+      animation: _particleAnimation,
+      builder: (context, child) {
+        return CustomPaint(
+          painter: _ParticlePainter(
+            animationValue: _particleAnimation.value,
+            highlightColor: highlightColor,
+            accentColor: accentColor,
+          ),
+          size: Size.infinite,
+        );
+      },
     );
   }
 
-  // Ethiopian Symbol with full-width context
-  Widget _buildEthiopianSymbol() {
+  // Modern geometric logo
+  Widget _buildModernLogo() {
     return AnimatedBuilder(
-      animation: _symbolAnimation,
+      animation: _logoAnimation,
       builder: (context, child) {
         return Transform.scale(
-          scale: _symbolAnimation.value,
+          scale: _logoAnimation.value,
           child: Transform.rotate(
-            angle: _symbolAnimation.value * 2 * 3.14159,
+            angle: _logoAnimation.value * 2 * pi,
             child: Container(
-              width: 100,
-              height: 100,
+              width: 120,
+              height: 120,
               decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: Colors.amber,
-                  width: 3,
+                gradient: RadialGradient(
+                  colors: [accentColor, primaryColor],
+                  stops: const [0.7, 1.0],
                 ),
+                shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.amber.withOpacity(0.4),
-                    blurRadius: 15,
-                    spreadRadius: 3,
+                    color: highlightColor.withOpacity(0.5),
+                    blurRadius: 20,
+                    spreadRadius: 5,
                   ),
                 ],
               ),
               child: CustomPaint(
-                painter: _EthiopianCrossPainter(),
+                painter: _GeometricLogoPainter(
+                  primaryColor: textColor,
+                  highlightColor: highlightColor,
+                ),
               ),
             ),
           ),
@@ -261,88 +287,32 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
-    final themeService = Get.find<ThemeService>();
     final screenWidth = MediaQuery.of(context).size.width;
-    
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
-      body: Obx(() {
-        final isDark = themeService.isDark;
-        return Stack(
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              primaryColor,
+              secondaryColor,
+              const Color(0xFF151538),
+            ],
+            stops: const [0.0, 0.6, 1.0],
+          ),
+        ),
+        child: Stack(
           children: [
-            // Full-width background gradient
-            Container(
-              width: double.infinity,
-              height: double.infinity,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: isDark
-                      ? [
-                          const Color(0xff0a1a1c),
-                          const Color(0xff0d2a2d),
-                          const Color(0xff123437),
-                          const Color(0xff0a1f21),
-                        ]
-                      : [
-                          const Color(0xff195158),
-                          const Color(0xff32a1af),
-                          const Color(0xff1a5d66),
-                          const Color(0xff0d2a2d),
-                        ],
-                  stops: const [0.0, 0.3, 0.7, 1.0],
-                ),
-              ),
-            ),
+            // Animated background waves
+            _buildAnimatedWaves(),
 
-            // Full-width tech circuit background
-            _buildFullWidthTechCircuit(),
-
-            // Full-width top pattern
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              child: _buildFullWidthPattern(),
-            ),
-
-            // Full-width bottom pattern (rotated)
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Transform.rotate(
-                angle: 3.14159, // 180 degrees
-                child: _buildFullWidthPattern(),
-              ),
-            ),
-
-            // Side patterns for complete immersion
-            Positioned(
-              left: 0,
-              top: 0,
-              bottom: 0,
-              child: Transform.rotate(
-                angle: 1.5708, // 90 degrees
-                child: SizedBox(
-                  width: 150,
-                  child: _buildFullWidthPattern(),
-                ),
-              ),
-            ),
-
-            Positioned(
-              right: 0,
-              top: 0,
-              bottom: 0,
-              child: Transform.rotate(
-                angle: -1.5708, // -90 degrees
-                child: SizedBox(
-                  width: 150,
-                  child: _buildFullWidthPattern(),
-                ),
-              ),
-            ),
+            // Floating particles
+            _buildFloatingParticles(),
 
             // Main content
             SafeArea(
@@ -355,86 +325,64 @@ class _SplashScreenState extends State<SplashScreen>
                   children: [
                     const Spacer(flex: 2),
 
-                    // Central symbol with full-width context
+                    // Modern logo with orbiting elements
                     Stack(
                       alignment: Alignment.center,
                       children: [
-                        // Outer tech ring that spans more width
-                        AnimatedBuilder(
-                          animation: _patternController,
-                          builder: (context, child) {
-                            return Container(
-                              width: screenWidth * 0.4,
-                              height: screenWidth * 0.4,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: Colors.amber.withOpacity(0.8),
-                                  width: 2,
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.amber.withOpacity(0.4),
-                                    blurRadius: 25,
-                                    spreadRadius: 5,
-                                  ),
-                                ],
-                              ),
-                              child: CircularProgressIndicator(
-                                value: _patternController.value,
-                                strokeWidth: 2,
-                                color: Colors.amber,
-                                backgroundColor: Colors.transparent,
-                              ),
-                            );
-                          },
-                        ),
-
-                        // Ethiopian symbol
-                        _buildEthiopianSymbol(),
-
-                        // Tech dots around the symbol - full circle
-                        ...List.generate(12, (index) {
-                          final angle = (index / 12) * 2 * 3.14159;
-                          final distance = screenWidth * 0.18;
+                        // Orbiting dots
+                        ...List.generate(8, (index) {
+                          final angle = (index / 8) * 2 * pi +
+                              _particleAnimation.value * 2 * pi;
+                          final distance = 60.0;
                           return Positioned(
-                            left: distance * cos(angle) + screenWidth * 0.5 - 50,
-                            top: distance * sin(angle) + screenWidth * 0.2,
+                            left: distance * cos(angle) + screenWidth * 0.5 - 60,
+                            top: distance * sin(angle) + screenHeight * 0.3,
                             child: AnimatedBuilder(
-                              animation: _patternController,
+                              animation: _particleController,
                               builder: (context, child) {
-                                return Container(
-                                  width: 8,
-                                  height: 8,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: index % 3 == 0 
-                                      ? Colors.green 
-                                      : index % 3 == 1 
-                                        ? Colors.amber 
-                                        : Colors.red,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: (index % 3 == 0 
-                                          ? Colors.green 
-                                          : index % 3 == 1 
-                                            ? Colors.amber 
-                                            : Colors.red).withOpacity(0.7),
-                                        blurRadius: 10,
-                                      ),
-                                    ],
+                                final scale = 0.5 +
+                                    0.5 *
+                                        sin(_particleAnimation.value * 2 * pi +
+                                            index * 0.5);
+                                return Transform.scale(
+                                  scale: scale,
+                                  child: Container(
+                                    width: 6,
+                                    height: 6,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: index % 3 == 0
+                                          ? highlightColor
+                                          : index % 3 == 1
+                                              ? accentColor
+                                              : textColor,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: (index % 3 == 0
+                                                  ? highlightColor
+                                                  : index % 3 == 1
+                                                      ? accentColor
+                                                      : textColor)
+                                              .withOpacity(0.8),
+                                          blurRadius: 8,
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 );
                               },
                             ),
                           );
                         }),
+
+                        // Main logo
+                        _buildModernLogo(),
                       ],
                     ),
 
-                    const SizedBox(height: 50),
+                    const SizedBox(height: 60),
 
-                    // App Name with full-width emphasis
+                    // App Name with modern typography
                     AnimatedBuilder(
                       animation: _textAnimation,
                       builder: (context, child) {
@@ -447,21 +395,21 @@ class _SplashScreenState extends State<SplashScreen>
                                   alignment: Alignment.center,
                                   widthFactor: _textAnimation.value,
                                   child: Text(
-                                    "HABESHA TECH",
+                                    "NILE TECH",
                                     style: TextStyle(
-                                      fontSize: screenWidth * 0.08,
-                                      fontWeight: FontWeight.w900,
-                                      letterSpacing: 3,
-                                      color: Colors.white,
+                                      fontSize: screenWidth * 0.09,
+                                      fontWeight: FontWeight.w800,
+                                      letterSpacing: 4,
+                                      color: textColor,
                                       fontFamily: "Roboto",
                                       shadows: [
                                         Shadow(
-                                          blurRadius: 15,
-                                          color: Colors.amber.withOpacity(0.6),
+                                          blurRadius: 20,
+                                          color: highlightColor.withOpacity(0.6),
                                         ),
                                         Shadow(
-                                          blurRadius: 30,
-                                          color: Colors.green.withOpacity(0.4),
+                                          blurRadius: 40,
+                                          color: accentColor.withOpacity(0.4),
                                         ),
                                       ],
                                     ),
@@ -469,18 +417,18 @@ class _SplashScreenState extends State<SplashScreen>
                                   ),
                                 ),
                               ),
-                              const SizedBox(height: 10),
+                              const SizedBox(height: 16),
                               AnimatedBuilder(
                                 animation: _textAnimation,
                                 builder: (context, child) {
                                   return Opacity(
                                     opacity: _textAnimation.value,
                                     child: Text(
-                                      "Where Innovation Meets Heritage",
+                                      "Innovation ∙ Heritage ∙ Future",
                                       style: TextStyle(
-                                        color: Colors.white.withOpacity(0.9),
+                                        color: textColor.withOpacity(0.8),
                                         fontSize: screenWidth * 0.035,
-                                        letterSpacing: 2,
+                                        letterSpacing: 3,
                                         fontWeight: FontWeight.w300,
                                         fontStyle: FontStyle.italic,
                                       ),
@@ -497,14 +445,14 @@ class _SplashScreenState extends State<SplashScreen>
 
                     const Spacer(flex: 3),
 
-                    // Full-width loading bar
+                    // Modern loading indicator
                     Container(
-                      width: screenWidth * 0.6,
-                      height: 6,
+                      width: screenWidth * 0.7,
+                      height: 8,
                       margin: const EdgeInsets.symmetric(horizontal: 40),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(3),
-                        color: Colors.white.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(4),
+                        color: primaryColor.withOpacity(0.5),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.black.withOpacity(0.3),
@@ -515,28 +463,29 @@ class _SplashScreenState extends State<SplashScreen>
                       ),
                       child: Stack(
                         children: [
-                          // Animated progress - full width movement
+                          // Animated progress
                           AnimatedBuilder(
-                            animation: _patternController,
+                            animation: _particleController,
                             builder: (context, child) {
                               return Container(
-                                width: screenWidth * 0.6 * _patternController.value,
+                                width: screenWidth *
+                                    0.7 *
+                                    (_particleAnimation.value * 0.3 + 0.7),
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(3),
-                                  gradient: const LinearGradient(
+                                  borderRadius: BorderRadius.circular(4),
+                                  gradient: LinearGradient(
                                     colors: [
-                                      Colors.green,
-                                      Colors.amber,
-                                      Colors.red,
-                                      Colors.green,
+                                      highlightColor,
+                                      accentColor,
+                                      highlightColor,
                                     ],
-                                    stops: [0.0, 0.4, 0.7, 1.0],
+                                    stops: const [0.0, 0.5, 1.0],
                                     tileMode: TileMode.mirror,
                                   ),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.green.withOpacity(0.5),
-                                      blurRadius: 10,
+                                      color: highlightColor.withOpacity(0.6),
+                                      blurRadius: 15,
                                       spreadRadius: 2,
                                     ),
                                   ],
@@ -550,15 +499,22 @@ class _SplashScreenState extends State<SplashScreen>
 
                     const SizedBox(height: 30),
 
-                    // Loading text
-                    Text(
-                      "Loading...",
-                      style: TextStyle(
-                        color: Colors.white.withOpacity(0.8),
-                        fontSize: screenWidth * 0.04,
-                        fontWeight: FontWeight.w300,
-                        letterSpacing: 1.5,
-                      ),
+                    // Loading text with dots animation
+                    AnimatedBuilder(
+                      animation: _particleController,
+                      builder: (context, child) {
+                        final dots = '.' *
+                            ((_particleAnimation.value * 3).floor() % 4);
+                        return Text(
+                          "Loading$dots",
+                          style: TextStyle(
+                            color: textColor.withOpacity(0.8),
+                            fontSize: screenWidth * 0.04,
+                            fontWeight: FontWeight.w300,
+                            letterSpacing: 2,
+                          ),
+                        );
+                      },
                     ),
 
                     const SizedBox(height: 40),
@@ -567,136 +523,184 @@ class _SplashScreenState extends State<SplashScreen>
               ),
             ),
           ],
-        );
-      }),
+        ),
+      ),
     );
   }
 }
 
-// Full-width Ethiopian Pattern Painter
-class _FullWidthEthiopianPatternPainter extends CustomPainter {
+// Wave Pattern Painter
+class _WavePatternPainter extends CustomPainter {
+  final Color primaryColor;
+  final Color secondaryColor;
+  final Color accentColor;
+
+  _WavePatternPainter({
+    required this.primaryColor,
+    required this.secondaryColor,
+    required this.accentColor,
+  });
+
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = Colors.amber.withOpacity(0.15)
+    final wavePaint = Paint()
+      ..color = accentColor.withOpacity(0.1)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.5;
 
-    const patternSize = 50.0;
-    final columns = (size.width / patternSize).ceil();
-    final rows = (size.height / patternSize).ceil();
+    final fillPaint = Paint()
+      ..color = secondaryColor.withOpacity(0.05)
+      ..style = PaintingStyle.fill;
 
-    for (int i = 0; i < columns; i++) {
-      for (int j = 0; j < rows; j++) {
-        final x = i * patternSize;
-        final y = j * patternSize;
+    const waveCount = 8;
+    final waveSpacing = size.height / waveCount;
 
-        // Draw interconnected Ethiopian cross pattern
-        final path = Path();
-        
-        // Main cross
-        path.moveTo(x + patternSize / 2, y);
-        path.lineTo(x + patternSize, y + patternSize / 2);
-        path.lineTo(x + patternSize / 2, y + patternSize);
-        path.lineTo(x, y + patternSize / 2);
-        path.close();
+    for (int i = 0; i < waveCount; i++) {
+      final y = i * waveSpacing;
+      final path = Path();
 
-        // Inner decorative elements
-        path.moveTo(x + patternSize / 4, y + patternSize / 4);
-        path.lineTo(x + patternSize * 3 / 4, y + patternSize / 4);
-        path.lineTo(x + patternSize * 3 / 4, y + patternSize * 3 / 4);
-        path.lineTo(x + patternSize / 4, y + patternSize * 3 / 4);
-        path.close();
-
-        canvas.drawPath(path, paint);
+      path.moveTo(0, y);
+      for (double x = 0; x < size.width; x += 10) {
+        final waveHeight = sin(x * 0.02 + i * 0.5) * 8;
+        path.lineTo(x, y + waveHeight);
       }
+
+      canvas.drawPath(path, wavePaint);
     }
-  }
 
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
-}
+    // Draw some geometric shapes in background
+    final shapePaint = Paint()
+      ..color = primaryColor.withOpacity(0.1)
+      ..style = PaintingStyle.fill;
 
-// Full-width Tech Circuit Painter
-class _FullWidthTechCircuitPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = Colors.green.withOpacity(0.08)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 1;
+    for (int i = 0; i < 20; i++) {
+      final x = Random(i).nextDouble() * size.width;
+      final y = Random(i + 100).nextDouble() * size.height;
+      final sizeShape = Random(i + 200).nextDouble() * 30 + 10;
 
-    final circuitSize = 80.0;
-    final columns = (size.width / circuitSize).ceil();
-    final rows = (size.height / circuitSize).ceil();
-
-    for (int i = 0; i < columns; i++) {
-      for (int j = 0; j < rows; j++) {
-        final x = i * circuitSize;
-        final y = j * circuitSize;
-
-        // Draw interconnected circuit lines
-        if (i < columns - 1) {
-          canvas.drawLine(
-            Offset(x + circuitSize, y + circuitSize / 2),
-            Offset(x + circuitSize * 1.5, y + circuitSize / 2),
-            paint,
-          );
-        }
-
-        if (j < rows - 1) {
-          canvas.drawLine(
-            Offset(x + circuitSize / 2, y + circuitSize),
-            Offset(x + circuitSize / 2, y + circuitSize * 1.5),
-            paint,
-          );
-        }
-
-        // Circuit nodes
-        canvas.drawCircle(
-          Offset(x + circuitSize / 2, y + circuitSize / 2),
-          2,
-          paint..style = PaintingStyle.fill,
+      if (i % 3 == 0) {
+        canvas.drawCircle(Offset(x, y), sizeShape / 2, shapePaint);
+      } else if (i % 3 == 1) {
+        canvas.drawRect(
+          Rect.fromCenter(center: Offset(x, y), width: sizeShape, height: sizeShape),
+          shapePaint,
         );
+      } else {
+        final path = Path()
+          ..moveTo(x, y - sizeShape / 2)
+          ..lineTo(x + sizeShape / 2, y + sizeShape / 2)
+          ..lineTo(x - sizeShape / 2, y + sizeShape / 2)
+          ..close();
+        canvas.drawPath(path, shapePaint);
       }
     }
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }
 
-// Ethiopian Cross Painter (unchanged)
-class _EthiopianCrossPainter extends CustomPainter {
+// Particle Painter
+class _ParticlePainter extends CustomPainter {
+  final double animationValue;
+  final Color highlightColor;
+  final Color accentColor;
+
+  _ParticlePainter({
+    required this.animationValue,
+    required this.highlightColor,
+    required this.accentColor,
+  });
+
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = Colors.amber
+    final particlePaint = Paint()
+      ..style = PaintingStyle.fill;
+
+    final particleCount = 15;
+
+    for (int i = 0; i < particleCount; i++) {
+      final progress = (animationValue + i / particleCount) % 1.0;
+      final x = progress * size.width;
+      final y = sin(progress * 2 * pi) * 50 + size.height * 0.3;
+
+      final particleSize = 2 + sin(progress * 4 * pi) * 2;
+      final opacity = 0.3 + sin(progress * 2 * pi) * 0.3;
+
+      particlePaint.color = (i % 2 == 0 ? highlightColor : accentColor)
+          .withOpacity(opacity);
+
+      canvas.drawCircle(
+        Offset(x, y),
+        particleSize,
+        particlePaint,
+      );
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
+}
+
+// Geometric Logo Painter
+class _GeometricLogoPainter extends CustomPainter {
+  final Color primaryColor;
+  final Color highlightColor;
+
+  _GeometricLogoPainter({
+    required this.primaryColor,
+    required this.highlightColor,
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final center = Offset(size.width / 2, size.height / 2);
+    final basePaint = Paint()
+      ..color = primaryColor
       ..style = PaintingStyle.stroke
       ..strokeWidth = 3
       ..strokeCap = StrokeCap.round;
 
-    final center = Offset(size.width / 2, size.height / 2);
-    const crossSize = 40.0;
+    final fillPaint = Paint()
+      ..color = highlightColor.withOpacity(0.3)
+      ..style = PaintingStyle.fill;
 
-    // Draw elaborate Ethiopian cross
-    final path = Path();
-    
-    // Main cross arms
-    path.moveTo(center.dx, center.dy - crossSize / 2);
-    path.lineTo(center.dx + crossSize / 3, center.dy - crossSize / 6);
-    path.lineTo(center.dx + crossSize / 2, center.dy);
-    path.lineTo(center.dx + crossSize / 3, center.dy + crossSize / 6);
-    path.lineTo(center.dx, center.dy + crossSize / 2);
-    path.lineTo(center.dx - crossSize / 3, center.dy + crossSize / 6);
-    path.lineTo(center.dx - crossSize / 2, center.dy);
-    path.lineTo(center.dx - crossSize / 3, center.dy - crossSize / 6);
-    path.close();
+    // Main hexagon
+    final hexagonPath = Path();
+    const hexagonRadius = 30.0;
+    for (int i = 0; i < 6; i++) {
+      final angle = 2 * pi * i / 6;
+      final x = center.dx + hexagonRadius * cos(angle);
+      final y = center.dy + hexagonRadius * sin(angle);
+      if (i == 0) {
+        hexagonPath.moveTo(x, y);
+      } else {
+        hexagonPath.lineTo(x, y);
+      }
+    }
+    hexagonPath.close();
 
-    canvas.drawPath(path, paint);
+    canvas.drawPath(hexagonPath, fillPaint);
+    canvas.drawPath(hexagonPath, basePaint);
 
-    // Inner decorative circle
-    canvas.drawCircle(center, crossSize / 6, paint);
+    // Inner circles
+    canvas.drawCircle(center, 15, basePaint..strokeWidth = 2);
+    canvas.drawCircle(center, 8, basePaint..strokeWidth = 1);
+
+    // Tech lines
+    for (int i = 0; i < 6; i++) {
+      final angle = 2 * pi * i / 6;
+      final innerX = center.dx + 15 * cos(angle);
+      final innerY = center.dy + 15 * sin(angle);
+      final outerX = center.dx + hexagonRadius * cos(angle);
+      final outerY = center.dy + hexagonRadius * sin(angle);
+
+      canvas.drawLine(
+        Offset(innerX, innerY),
+        Offset(outerX, outerY),
+        basePaint..strokeWidth = 1.5,
+      );
+    }
   }
 
   @override
