@@ -1,5 +1,5 @@
 import 'package:intl/intl.dart';
-import 'package:nile_tech/models/user_ref.dart';
+import 'package:kana_tech/models/user_ref.dart';
 import 'category.dart';
 
 class Post {

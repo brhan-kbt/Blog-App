@@ -6,19 +6,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:nile_tech/core/consent/consent_service.dart';
-import 'package:nile_tech/core/services/fcm_service.dart';
-import 'package:nile_tech/firebase_options.dart';
-import 'package:nile_tech/widgets/adabtiveBanner.dart';
+import 'package:kana_tech/core/consent/consent_service.dart';
+import 'package:kana_tech/core/services/fcm_service.dart';
+import 'package:kana_tech/firebase_options.dart';
+import 'package:kana_tech/widgets/adabtiveBanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import 'package:nile_tech/core/theme/app_palette.dart';
-import 'package:nile_tech/core/theme/theme_service.dart';
-import 'package:nile_tech/core/services/connectivity_service.dart';
-import 'package:nile_tech/core/services/performance_service.dart';
-import 'package:nile_tech/core/services/version_check_service.dart';
-import 'package:nile_tech/core/services/version_check_controller.dart';
-import 'package:nile_tech/routes/app_pages.dart';
+import 'package:kana_tech/core/theme/app_palette.dart';
+import 'package:kana_tech/core/theme/theme_service.dart';
+import 'package:kana_tech/core/services/connectivity_service.dart';
+import 'package:kana_tech/core/services/performance_service.dart';
+import 'package:kana_tech/core/services/version_check_service.dart';
+import 'package:kana_tech/core/services/version_check_controller.dart';
+import 'package:kana_tech/routes/app_pages.dart';
 import 'core/state/blog_store.dart';
 import 'core/theme/app_theme.dart';
 import 'modules/category/category_page.dart';
@@ -58,7 +58,7 @@ Future<void> main() async {
   // Initialize other services in background to speed up startup
   _initializeBackgroundServices();
 
-  runApp(const NileTechApp());
+  runApp(const KanaTechApp());
 }
 
 Future<void> _initializeThemeService() async {
@@ -161,8 +161,8 @@ void _initializeBackgroundServices() {
   });
 }
 
-class NileTechApp extends StatelessWidget {
-  const NileTechApp({super.key});
+class KanaTechApp extends StatelessWidget {
+  const KanaTechApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -170,12 +170,12 @@ class NileTechApp extends StatelessWidget {
 
     return Obx(() {
       debugPrint(
-        "🎨 NileTechApp - Building with theme mode: ${themeSvc.mode.value}",
+        "🎨KanaTechApp - Building with theme mode: ${themeSvc.mode.value}",
       );
-      debugPrint("🎨 NileTechApp - IsDark: ${themeSvc.isDark}");
+      debugPrint("🎨KanaTechApp - IsDark: ${themeSvc.isDark}");
 
       return GetMaterialApp(
-        title: 'Nile Tech',
+        title: 'Kana Tech',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.light,
         darkTheme: AppTheme.dark,

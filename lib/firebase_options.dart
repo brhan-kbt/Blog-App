@@ -32,11 +32,11 @@ throw UnsupportedError(
 }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDjl0jsYUxLusx6qe1nD0Q6a7cAfE7rFyA',
-    appId: '1:87861554833:android:5ac12f6a5161aae9b51930',
-    messagingSenderId: '87861554833',
-    projectId: 'nile-tech01',
-    storageBucket: 'nile-tech01.firebasestorage.app',
+    apiKey: 'AIzaSyC_V752uCIEKSnWtcgiPTc7dnjCAzL2Zww',
+    appId: '1:1020107108861:android:3bf70acd252d879475a994',
+    messagingSenderId: '1020107108861',
+    projectId: 'kana-tech01',
+    storageBucket: 'kana-tech01.firebasestorage.app',
   );
 
 }

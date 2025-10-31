@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nile_tech/core/config/api_config.dart';
-import 'package:nile_tech/widgets/post_options_sheet.dart';
+import 'package:kana_tech/core/config/api_config.dart';
+import 'package:kana_tech/widgets/post_options_sheet.dart';
 import '../core/theme/app_palette.dart';
 import '../models/post.dart';
 

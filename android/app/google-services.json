@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "87861554833",
-    "project_id": "nile-tech01",
-    "storage_bucket": "nile-tech01.firebasestorage.app"
+    "project_number": "1020107108861",
+    "project_id": "kana-tech01",
+    "storage_bucket": "kana-tech01.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:87861554833:android:5ac12f6a5161aae9b51930",
+        "mobilesdk_app_id": "1:1020107108861:android:3bf70acd252d879475a994",
         "android_client_info": {
-          "package_name": "com.tekopia.nile_tech"
+          "package_name": "com.tekopia.kana_tech"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDjl0jsYUxLusx6qe1nD0Q6a7cAfE7rFyA"
+          "current_key": "AIzaSyC_V752uCIEKSnWtcgiPTc7dnjCAzL2Zww"
         }
       ],
       "services": {

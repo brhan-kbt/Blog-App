@@ -1,4 +1,4 @@
-# Nile Tech 
+#Kana Tech 
 
 A new Flutter project.
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nile_tech/core/services/fcm_service.dart';
+import 'package:kana_tech/core/services/fcm_service.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:get/get.dart';
 

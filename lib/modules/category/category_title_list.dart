@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nile_tech/core/state/blog_store.dart';
-import 'package:nile_tech/models/category.dart';
-import 'package:nile_tech/modules/category/category_listing_page.dart';
+import 'package:kana_tech/core/state/blog_store.dart';
+import 'package:kana_tech/models/category.dart';
+import 'package:kana_tech/modules/category/category_listing_page.dart';
 
 class CategoryTitleList extends StatelessWidget {
   const CategoryTitleList({super.key});
