@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:habesha_tech/core/state/blog_store.dart';
-import 'package:habesha_tech/models/category.dart';
-import 'package:habesha_tech/modules/category/category_listing_page.dart';
+import 'package:ethio_tips/core/state/blog_store.dart';
+import 'package:ethio_tips/models/category.dart';
+import 'package:ethio_tips/modules/category/category_listing_page.dart';
 
 class CategoryTitleList extends StatelessWidget {
   const CategoryTitleList({super.key});

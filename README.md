@@ -1,4 +1,4 @@
-# Habesha Tech 
+# Ethio Tips 
 
 A new Flutter project.
 

@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:in_app_review/in_app_review.dart';
-import 'package:habesha_tech/core/state/blog_store.dart';
-import 'package:habesha_tech/core/theme/theme_service.dart';
-import 'package:habesha_tech/modules/settings/pages/about_page.dart';
-import 'package:habesha_tech/modules/settings/pages/contact_us_page.dart';
-import 'package:habesha_tech/modules/settings/pages/privacy_policy_page.dart';
-import 'package:habesha_tech/modules/settings/pages/publisher_info_page.dart';
-import 'package:habesha_tech/modules/settings/pages/push_notification_page.dart';
-import 'package:habesha_tech/widgets/privacy_options_button.dart';
+import 'package:ethio_tips/core/state/blog_store.dart';
+import 'package:ethio_tips/core/theme/theme_service.dart';
+import 'package:ethio_tips/modules/settings/pages/about_page.dart';
+import 'package:ethio_tips/modules/settings/pages/contact_us_page.dart';
+import 'package:ethio_tips/modules/settings/pages/privacy_policy_page.dart';
+import 'package:ethio_tips/modules/settings/pages/publisher_info_page.dart';
+import 'package:ethio_tips/modules/settings/pages/push_notification_page.dart';
+import 'package:ethio_tips/widgets/privacy_options_button.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -156,7 +156,7 @@ class SettingsPage extends StatelessWidget {
                   inAppReview.requestReview();
                 } else {
                   inAppReview.openStoreListing(
-                    appStoreId: "com.tekopia.habesha_tech", // TODO replace
+                    appStoreId: "com.tekopia.ethio_tips", // TODO replace
                   );
                 }
               },
@@ -166,7 +166,7 @@ class SettingsPage extends StatelessWidget {
               title: "Share with Friends",
               onTap: () {
                 Share.share(
-                  "Check out Habesha Tech App: https://play.google.com/store/apps/details?id=com.tekopia.habesha_tech",
+                  "Check out Ethio Tips App: https://play.google.com/store/apps/details?id=com.tekopia.ethio_tips",
                 );
               },
             ),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:habesha_tech/modules/category/category_title_list.dart';
-import 'package:habesha_tech/widgets/adabtiveBanner.dart';
-import 'package:habesha_tech/widgets/shimmer_widgets.dart';
+import 'package:ethio_tips/modules/category/category_title_list.dart';
+import 'package:ethio_tips/widgets/adabtiveBanner.dart';
+import 'package:ethio_tips/widgets/shimmer_widgets.dart';
 import '../../core/state/blog_store.dart';
 import '../../models/post.dart';
 import '../../widgets/post_tile.dart';

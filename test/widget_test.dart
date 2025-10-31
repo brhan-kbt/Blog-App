@@ -8,14 +8,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:habesha_tech/main.dart';
+import 'package:ethio_tips/main.dart';
 
 void main() {
   testWidgets('App loads successfully', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const HabeshaTechApp());
+    await tester.pumpWidget(const EthioTipsApp());
 
     // Verify that the app loads without crashing
-    expect(find.byType(HabeshaTechApp), findsOneWidget);
+    expect(find.byType(EthioTipsApp), findsOneWidget);
   });
 }

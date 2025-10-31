@@ -8,11 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:habesha_tech/core/config/api_config.dart';
-import 'package:habesha_tech/core/config/fcm_config.dart';
-import 'package:habesha_tech/firebase_options.dart';
-import 'package:habesha_tech/modules/category/category_listing_page.dart';
-import 'package:habesha_tech/modules/post_detail/post_detail_page.dart';
+import 'package:ethio_tips/core/config/api_config.dart';
+import 'package:ethio_tips/core/config/fcm_config.dart';
+import 'package:ethio_tips/firebase_options.dart';
+import 'package:ethio_tips/modules/category/category_listing_page.dart';
+import 'package:ethio_tips/modules/post_detail/post_detail_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// FCM Service for handling push notifications

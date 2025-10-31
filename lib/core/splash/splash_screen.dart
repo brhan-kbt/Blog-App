@@ -2,10 +2,10 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:habesha_tech/core/services/connectivity_service.dart';
-import 'package:habesha_tech/core/services/fcm_service.dart';
-import 'package:habesha_tech/core/state/blog_store.dart';
-import 'package:habesha_tech/core/theme/theme_service.dart';
+import 'package:ethio_tips/core/services/connectivity_service.dart';
+import 'package:ethio_tips/core/services/fcm_service.dart';
+import 'package:ethio_tips/core/state/blog_store.dart';
+import 'package:ethio_tips/core/theme/theme_service.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -23,6 +23,13 @@ class _SplashScreenState extends State<SplashScreen>
   late Animation<double> _textAnimation;
   late Animation<double> _symbolAnimation;
 
+  // New color scheme
+  final Color _primaryColor = const Color(0xff1f5ac1);
+  final Color _primaryLight = const Color(0xff4a7fd4);
+  final Color _primaryDark = const Color(0xff0d3a8a);
+  final Color _accentColor = const Color(0xff00c6ff);
+  final Color _backgroundColor = const Color(0xff0a1526);
+
   @override
   void initState() {
     super.initState();
@@ -37,13 +44,9 @@ class _SplashScreenState extends State<SplashScreen>
       duration: const Duration(seconds: 4),
     )..repeat(reverse: true);
 
-    _patternAnimation = Tween<double>(
-      begin: -0.2,
-      end: 0.2,
-    ).animate(CurvedAnimation(
-      parent: _patternController,
-      curve: Curves.easeInOut,
-    ));
+    _patternAnimation = Tween<double>(begin: -0.2, end: 0.2).animate(
+      CurvedAnimation(parent: _patternController, curve: Curves.easeInOut),
+    );
 
     // Text reveal animation
     _textRevealController = AnimationController(
@@ -51,13 +54,12 @@ class _SplashScreenState extends State<SplashScreen>
       duration: const Duration(milliseconds: 1800),
     );
 
-    _textAnimation = Tween<double>(
-      begin: 0,
-      end: 1,
-    ).animate(CurvedAnimation(
-      parent: _textRevealController,
-      curve: Curves.easeOutCubic,
-    ));
+    _textAnimation = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: _textRevealController,
+        curve: Curves.easeOutCubic,
+      ),
+    );
 
     // Ethiopian symbol animation
     _ethiopianSymbolController = AnimationController(
@@ -65,13 +67,12 @@ class _SplashScreenState extends State<SplashScreen>
       duration: const Duration(seconds: 2),
     );
 
-    _symbolAnimation = Tween<double>(
-      begin: 0,
-      end: 1,
-    ).animate(CurvedAnimation(
-      parent: _ethiopianSymbolController,
-      curve: Curves.elasticOut,
-    ));
+    _symbolAnimation = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: _ethiopianSymbolController,
+        curve: Curves.elasticOut,
+      ),
+    );
 
     // Start sequenced animations
     _startAnimationSequence();
@@ -206,7 +207,9 @@ class _SplashScreenState extends State<SplashScreen>
             width: double.infinity,
             height: 150,
             child: CustomPaint(
-              painter: _FullWidthEthiopianPatternPainter(),
+              painter: _FullWidthEthiopianPatternPainter(
+                primaryColor: _primaryColor,
+              ),
             ),
           ),
         );
@@ -218,12 +221,12 @@ class _SplashScreenState extends State<SplashScreen>
   Widget _buildFullWidthTechCircuit() {
     return Positioned.fill(
       child: CustomPaint(
-        painter: _FullWidthTechCircuitPainter(),
+        painter: _FullWidthTechCircuitPainter(primaryColor: _primaryColor),
       ),
     );
   }
 
-  // Ethiopian Symbol with full-width context
+  // Ethiopian Symbol with new color scheme
   Widget _buildEthiopianSymbol() {
     return AnimatedBuilder(
       animation: _symbolAnimation,
@@ -237,20 +240,17 @@ class _SplashScreenState extends State<SplashScreen>
               height: 100,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: Border.all(
-                  color: Colors.amber,
-                  width: 3,
-                ),
+                border: Border.all(color: _primaryColor, width: 3),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.amber.withOpacity(0.4),
+                    color: _primaryColor.withOpacity(0.4),
                     blurRadius: 15,
                     spreadRadius: 3,
                   ),
                 ],
               ),
               child: CustomPaint(
-                painter: _EthiopianCrossPainter(),
+                painter: _EthiopianCrossPainter(primaryColor: _primaryColor),
               ),
             ),
           ),
@@ -263,13 +263,13 @@ class _SplashScreenState extends State<SplashScreen>
   Widget build(BuildContext context) {
     final themeService = Get.find<ThemeService>();
     final screenWidth = MediaQuery.of(context).size.width;
-    
+
     return Scaffold(
       body: Obx(() {
         final isDark = themeService.isDark;
         return Stack(
           children: [
-            // Full-width background gradient
+            // Full-width background gradient with new color scheme
             Container(
               width: double.infinity,
               height: double.infinity,
@@ -279,16 +279,16 @@ class _SplashScreenState extends State<SplashScreen>
                   end: Alignment.bottomRight,
                   colors: isDark
                       ? [
-                          const Color(0xff0a1a1c),
-                          const Color(0xff0d2a2d),
-                          const Color(0xff123437),
-                          const Color(0xff0a1f21),
+                          _backgroundColor,
+                          _primaryDark,
+                          _primaryColor,
+                          _primaryDark,
                         ]
                       : [
-                          const Color(0xff195158),
-                          const Color(0xff32a1af),
-                          const Color(0xff1a5d66),
-                          const Color(0xff0d2a2d),
+                          _primaryLight,
+                          _primaryColor,
+                          _primaryDark,
+                          _backgroundColor,
                         ],
                   stops: const [0.0, 0.3, 0.7, 1.0],
                 ),
@@ -324,10 +324,7 @@ class _SplashScreenState extends State<SplashScreen>
               bottom: 0,
               child: Transform.rotate(
                 angle: 1.5708, // 90 degrees
-                child: SizedBox(
-                  width: 150,
-                  child: _buildFullWidthPattern(),
-                ),
+                child: SizedBox(width: 150, child: _buildFullWidthPattern()),
               ),
             ),
 
@@ -337,10 +334,7 @@ class _SplashScreenState extends State<SplashScreen>
               bottom: 0,
               child: Transform.rotate(
                 angle: -1.5708, // -90 degrees
-                child: SizedBox(
-                  width: 150,
-                  child: _buildFullWidthPattern(),
-                ),
+                child: SizedBox(width: 150, child: _buildFullWidthPattern()),
               ),
             ),
 
@@ -359,6 +353,8 @@ class _SplashScreenState extends State<SplashScreen>
                     Stack(
                       alignment: Alignment.center,
                       children: [
+                        // App Name with new color scheme
+
                         // Outer tech ring that spans more width
                         AnimatedBuilder(
                           animation: _patternController,
@@ -369,12 +365,12 @@ class _SplashScreenState extends State<SplashScreen>
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 border: Border.all(
-                                  color: Colors.amber.withOpacity(0.8),
+                                  color: Colors.white.withOpacity(0.8),
                                   width: 2,
                                 ),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.amber.withOpacity(0.4),
+                                    color: Colors.white.withOpacity(0.4),
                                     blurRadius: 25,
                                     spreadRadius: 5,
                                   ),
@@ -383,7 +379,7 @@ class _SplashScreenState extends State<SplashScreen>
                               child: CircularProgressIndicator(
                                 value: _patternController.value,
                                 strokeWidth: 2,
-                                color: Colors.amber,
+                                color: Colors.white,
                                 backgroundColor: Colors.transparent,
                               ),
                             );
@@ -398,7 +394,8 @@ class _SplashScreenState extends State<SplashScreen>
                           final angle = (index / 12) * 2 * 3.14159;
                           final distance = screenWidth * 0.18;
                           return Positioned(
-                            left: distance * cos(angle) + screenWidth * 0.5 - 50,
+                            left:
+                                distance * cos(angle) + screenWidth * 0.5 - 50,
                             top: distance * sin(angle) + screenWidth * 0.2,
                             child: AnimatedBuilder(
                               animation: _patternController,
@@ -408,18 +405,20 @@ class _SplashScreenState extends State<SplashScreen>
                                   height: 8,
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
-                                    color: index % 3 == 0 
-                                      ? Colors.green 
-                                      : index % 3 == 1 
-                                        ? Colors.amber 
-                                        : Colors.red,
+                                    color: index % 3 == 0
+                                        ? _primaryLight
+                                        : index % 3 == 1
+                                        ? _primaryColor
+                                        : _accentColor,
                                     boxShadow: [
                                       BoxShadow(
-                                        color: (index % 3 == 0 
-                                          ? Colors.green 
-                                          : index % 3 == 1 
-                                            ? Colors.amber 
-                                            : Colors.red).withOpacity(0.7),
+                                        color:
+                                            (index % 3 == 0
+                                                    ? _primaryLight
+                                                    : index % 3 == 1
+                                                    ? _primaryColor
+                                                    : _accentColor)
+                                                .withOpacity(0.7),
                                         blurRadius: 10,
                                       ),
                                     ],
@@ -434,7 +433,6 @@ class _SplashScreenState extends State<SplashScreen>
 
                     const SizedBox(height: 50),
 
-                    // App Name with full-width emphasis
                     AnimatedBuilder(
                       animation: _textAnimation,
                       builder: (context, child) {
@@ -447,7 +445,7 @@ class _SplashScreenState extends State<SplashScreen>
                                   alignment: Alignment.center,
                                   widthFactor: _textAnimation.value,
                                   child: Text(
-                                    "HABESHA TECH",
+                                    "Ethio Tips",
                                     style: TextStyle(
                                       fontSize: screenWidth * 0.08,
                                       fontWeight: FontWeight.w900,
@@ -457,11 +455,11 @@ class _SplashScreenState extends State<SplashScreen>
                                       shadows: [
                                         Shadow(
                                           blurRadius: 15,
-                                          color: Colors.amber.withOpacity(0.6),
+                                          color: _primaryColor.withOpacity(0.6),
                                         ),
                                         Shadow(
                                           blurRadius: 30,
-                                          color: Colors.green.withOpacity(0.4),
+                                          color: _accentColor.withOpacity(0.4),
                                         ),
                                       ],
                                     ),
@@ -469,35 +467,15 @@ class _SplashScreenState extends State<SplashScreen>
                                   ),
                                 ),
                               ),
-                              const SizedBox(height: 10),
-                              AnimatedBuilder(
-                                animation: _textAnimation,
-                                builder: (context, child) {
-                                  return Opacity(
-                                    opacity: _textAnimation.value,
-                                    child: Text(
-                                      "Where Innovation Meets Heritage",
-                                      style: TextStyle(
-                                        color: Colors.white.withOpacity(0.9),
-                                        fontSize: screenWidth * 0.035,
-                                        letterSpacing: 2,
-                                        fontWeight: FontWeight.w300,
-                                        fontStyle: FontStyle.italic,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  );
-                                },
-                              ),
                             ],
                           ),
                         );
                       },
                     ),
-
+                    
                     const Spacer(flex: 3),
 
-                    // Full-width loading bar
+                    // Full-width loading bar with new colors
                     Container(
                       width: screenWidth * 0.6,
                       height: 6,
@@ -520,22 +498,25 @@ class _SplashScreenState extends State<SplashScreen>
                             animation: _patternController,
                             builder: (context, child) {
                               return Container(
-                                width: screenWidth * 0.6 * _patternController.value,
+                                width:
+                                    screenWidth *
+                                    0.6 *
+                                    _patternController.value,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(3),
-                                  gradient: const LinearGradient(
+                                  gradient: LinearGradient(
                                     colors: [
-                                      Colors.green,
-                                      Colors.amber,
-                                      Colors.red,
-                                      Colors.green,
+                                      _primaryLight,
+                                      _primaryColor,
+                                      _accentColor,
+                                      _primaryLight,
                                     ],
-                                    stops: [0.0, 0.4, 0.7, 1.0],
+                                    stops: const [0.0, 0.4, 0.7, 1.0],
                                     tileMode: TileMode.mirror,
                                   ),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.green.withOpacity(0.5),
+                                      color: _primaryColor.withOpacity(0.5),
                                       blurRadius: 10,
                                       spreadRadius: 2,
                                     ),
@@ -573,12 +554,16 @@ class _SplashScreenState extends State<SplashScreen>
   }
 }
 
-// Full-width Ethiopian Pattern Painter
+// Full-width Ethiopian Pattern Painter with new colors
 class _FullWidthEthiopianPatternPainter extends CustomPainter {
+  final Color primaryColor;
+
+  const _FullWidthEthiopianPatternPainter({required this.primaryColor});
+
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.amber.withOpacity(0.15)
+      ..color = primaryColor.withOpacity(0.15)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.5;
 
@@ -593,7 +578,7 @@ class _FullWidthEthiopianPatternPainter extends CustomPainter {
 
         // Draw interconnected Ethiopian cross pattern
         final path = Path();
-        
+
         // Main cross
         path.moveTo(x + patternSize / 2, y);
         path.lineTo(x + patternSize, y + patternSize / 2);
@@ -617,12 +602,16 @@ class _FullWidthEthiopianPatternPainter extends CustomPainter {
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
 
-// Full-width Tech Circuit Painter
+// Full-width Tech Circuit Painter with new colors
 class _FullWidthTechCircuitPainter extends CustomPainter {
+  final Color primaryColor;
+
+  const _FullWidthTechCircuitPainter({required this.primaryColor});
+
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.green.withOpacity(0.08)
+      ..color = primaryColor.withOpacity(0.08)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1;
 
@@ -666,12 +655,16 @@ class _FullWidthTechCircuitPainter extends CustomPainter {
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
 
-// Ethiopian Cross Painter (unchanged)
+// Ethiopian Cross Painter with new colors
 class _EthiopianCrossPainter extends CustomPainter {
+  final Color primaryColor;
+
+  const _EthiopianCrossPainter({required this.primaryColor});
+
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.amber
+      ..color = primaryColor
       ..style = PaintingStyle.stroke
       ..strokeWidth = 3
       ..strokeCap = StrokeCap.round;
@@ -681,7 +674,7 @@ class _EthiopianCrossPainter extends CustomPainter {
 
     // Draw elaborate Ethiopian cross
     final path = Path();
-    
+
     // Main cross arms
     path.moveTo(center.dx, center.dy - crossSize / 2);
     path.lineTo(center.dx + crossSize / 3, center.dy - crossSize / 6);

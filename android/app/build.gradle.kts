@@ -19,7 +19,7 @@ plugins {
 }
 
 android {
-    namespace = "com.tekopia.habesha_tech"
+    namespace = "com.tekopia.ethio_tips"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -36,7 +36,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.tekopia.habesha_tech"
+        applicationId = "com.tekopia.ethio_tips"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion

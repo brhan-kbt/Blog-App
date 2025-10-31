@@ -6,19 +6,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:habesha_tech/core/consent/consent_service.dart';
-import 'package:habesha_tech/core/services/fcm_service.dart';
-import 'package:habesha_tech/firebase_options.dart';
-import 'package:habesha_tech/widgets/adabtiveBanner.dart';
+import 'package:ethio_tips/core/consent/consent_service.dart';
+import 'package:ethio_tips/core/services/fcm_service.dart';
+import 'package:ethio_tips/firebase_options.dart';
+import 'package:ethio_tips/widgets/adabtiveBanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import 'package:habesha_tech/core/theme/app_palette.dart';
-import 'package:habesha_tech/core/theme/theme_service.dart';
-import 'package:habesha_tech/core/services/connectivity_service.dart';
-import 'package:habesha_tech/core/services/performance_service.dart';
-import 'package:habesha_tech/core/services/version_check_service.dart';
-import 'package:habesha_tech/core/services/version_check_controller.dart';
-import 'package:habesha_tech/routes/app_pages.dart';
+import 'package:ethio_tips/core/theme/app_palette.dart';
+import 'package:ethio_tips/core/theme/theme_service.dart';
+import 'package:ethio_tips/core/services/connectivity_service.dart';
+import 'package:ethio_tips/core/services/performance_service.dart';
+import 'package:ethio_tips/core/services/version_check_service.dart';
+import 'package:ethio_tips/core/services/version_check_controller.dart';
+import 'package:ethio_tips/routes/app_pages.dart';
 import 'core/state/blog_store.dart';
 import 'core/theme/app_theme.dart';
 import 'modules/category/category_page.dart';
@@ -58,7 +58,7 @@ Future<void> main() async {
   // Initialize other services in background to speed up startup
   _initializeBackgroundServices();
 
-  runApp(const HabeshaTechApp());
+  runApp(const EthioTipsApp());
 }
 
 Future<void> _initializeThemeService() async {
@@ -161,8 +161,8 @@ void _initializeBackgroundServices() {
   });
 }
 
-class HabeshaTechApp extends StatelessWidget {
-  const HabeshaTechApp({super.key});
+class EthioTipsApp extends StatelessWidget {
+  const EthioTipsApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -170,12 +170,12 @@ class HabeshaTechApp extends StatelessWidget {
 
     return Obx(() {
       debugPrint(
-        "🎨 HabeshaTechApp - Building with theme mode: ${themeSvc.mode.value}",
+        "🎨 EthioTipsApp - Building with theme mode: ${themeSvc.mode.value}",
       );
-      debugPrint("🎨 HabeshaTechApp - IsDark: ${themeSvc.isDark}");
+      debugPrint("🎨 EthioTipsApp - IsDark: ${themeSvc.isDark}");
 
       return GetMaterialApp(
-        title: 'Habesha Tech',
+        title: 'Ethio Tips',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.light,
         darkTheme: AppTheme.dark,
@@ -547,7 +547,6 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
               title: "Search ... ",
               onChanged: (q) => store.query.value = q,
             ),
-            const SizedBox(height: 8),
             Expanded(
               child: RefreshIndicator(
                 onRefresh: _onRefresh,
@@ -555,7 +554,6 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
               ),
             ),
             // Bottom banner ad on all pages (slightly smaller than inline)
-            const SizedBox(height: 8),
             // if (choice == 1 || choice == 2)
             const AdaptiveBannerAdWidget(),
           ],
@@ -572,17 +570,17 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
           NavigationDestination(
             icon: Icon(Icons.browse_gallery_outlined),
             selectedIcon: Icon(Icons.browse_gallery),
-            label: 'Browse',
+            label: 'Home',
           ),
           NavigationDestination(
             icon: Icon(Icons.category_outlined),
             selectedIcon: Icon(Icons.category),
-            label: 'Category',
+            label: 'Categories',
           ),
           NavigationDestination(
             icon: Icon(Icons.bookmark_outlined),
             selectedIcon: Icon(Icons.bookmark),
-            label: 'Bookmarks',
+            label: 'Favorites',
           ),
         ],
       ),

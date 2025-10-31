@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:habesha_tech/core/config/api_config.dart';
-import 'package:habesha_tech/widgets/post_options_sheet.dart';
+import 'package:ethio_tips/core/config/api_config.dart';
+import 'package:ethio_tips/widgets/post_options_sheet.dart';
 import '../core/theme/app_palette.dart';
 import '../models/post.dart';
 

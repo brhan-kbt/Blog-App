@@ -22,10 +22,10 @@ class AppPalette extends ThemeExtension<AppPalette> {
 
   /// Explicit LIGHT palette (tweak to taste)
   static const AppPalette light = AppPalette(
-    primary: Color(0xff003578), // e94873
+    primary: Color(0xff1f5ac1), // e94873
     searchBg: Color.fromARGB(255, 174, 209, 255), // soft blue-tint chip
-    searchOutline: Color(0xff003578), // slate-300-ish hairline
-    searchIcon: Color(0xff003578), // slate-600
+    searchOutline: Color(0xff1f5ac1), // slate-300-ish hairline
+    searchIcon: Color(0xff1f5ac1), // slate-600
     chipBg: Color.fromARGB(255, 113, 175, 255), // slate-50/100
     cardBg: Colors.white, // cards, tiles
     favoriteActive: Color.fromARGB(255, 110, 173, 255), // matches your seed
@@ -33,12 +33,12 @@ class AppPalette extends ThemeExtension<AppPalette> {
 
   /// Explicit DARK palette
   static const AppPalette dark = AppPalette(
-    primary: Color(0xff003578), // e94873
+    primary: Color(0xff1f5ac1), // e94873
     searchBg: Color.fromARGB(255, 0, 35, 81), // soft blue-tint chip
-    searchOutline: Color(0xff003578), // subtle hairline
+    searchOutline: Color(0xff1f5ac1), // subtle hairline
     searchIcon: Color(0xFFB0B7C3), // soft gray icon/hint
     chipBg: Color(0xFF2E303C),
-    cardBg: Color.fromARGB(255, 11, 9, 36),
+    cardBg: Color.fromARGB(255, 34, 31, 71),
     favoriteActive: Color.fromARGB(255, 0, 81, 188), // matches your seed
   );
 

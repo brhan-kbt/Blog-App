@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "487945867113",
-    "project_id": "habesha-tech1",
-    "storage_bucket": "habesha-tech1.firebasestorage.app"
+    "project_number": "188473217213",
+    "project_id": "ethio-tips01",
+    "storage_bucket": "ethio-tips01.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:487945867113:android:d45355b26fd7fc619b77f8",
+        "mobilesdk_app_id": "1:188473217213:android:64d3ca79e7ff65abb767d4",
         "android_client_info": {
-          "package_name": "com.tekopia.habesha_tech"
+          "package_name": "com.tekopia.ethio_tips"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyA6wmNHyJfy99mfgIZk5ouNST-or-DmD6U"
+          "current_key": "AIzaSyC6tjwQoe1Zl4GmwiP5HY2RsHXGqUUDToI"
         }
       ],
       "services": {

@@ -1,5 +1,5 @@
 import 'package:intl/intl.dart';
-import 'package:habesha_tech/models/user_ref.dart';
+import 'package:ethio_tips/models/user_ref.dart';
 import 'category.dart';
 
 class Post {
