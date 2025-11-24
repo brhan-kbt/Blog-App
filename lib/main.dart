@@ -15,6 +15,7 @@ import 'package:news/core/services/performance_service.dart';
 import 'package:news/core/services/version_check_service.dart';
 import 'package:news/core/services/version_check_controller.dart';
 import 'package:news/core/services/fcm_service.dart';
+import 'package:news/core/consent/consent_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:news/routes/app_pages.dart';
@@ -44,6 +45,7 @@ Future<void> main() async {
 
   // Initialize only essential services for app startup
   await _initializeBlogStore();
+  await _initializeConsentService();
 
   // Initialize other services in background to speed up startup
   _initializeBackgroundServices();
@@ -65,6 +67,16 @@ Future<void> _initializeThemeService() async {
 
 Future<void> _initializeBlogStore() async {
   Get.put(BlogStore(), permanent: true);
+}
+
+Future<void> _initializeConsentService() async {
+  try {
+    await ConsentService().initialize();
+    debugPrint("✅ Consent service initialized successfully");
+  } catch (e) {
+    debugPrint("❌ Error initializing consent service: $e");
+    // Continue app initialization even if consent service fails
+  }
 }
 
 Future<void> _initializeAds() async {
@@ -312,7 +324,7 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
 
       // Show app open ad with error handling
       try {
-        AdService.instance.showAppOpenAd();
+        await AdService.instance.showAppOpenAd();
       } catch (e) {
         debugPrint("⚠️ Error showing app open ad: $e");
       }
@@ -533,6 +545,8 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
                 child: pages[index],
               ),
             ),
+            // Privacy options button (if required)
+
             // Bottom banner ad on all pages (slightly smaller than inline)
             const SizedBox(height: 8),
             // if (choice == 1 || choice == 2)

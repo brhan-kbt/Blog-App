@@ -37,7 +37,7 @@
             android:value="2" />
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-5496551731411329~2079559656" />
+            android:value="ca-app-pub-5496551731411329~2030653929" />
         
         <!-- Firebase Cloud Messaging Service -->
         <service

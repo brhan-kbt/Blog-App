@@ -6,7 +6,7 @@ import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart';
 
 import '../config/ad_config.dart';
-import '../../widgets/app_resume_ad_dialog.dart';
+import '../consent/consent_service.dart';
 
 class AdService {
   static final AdService instance = AdService._internal();
@@ -68,7 +68,14 @@ class AdService {
     );
   }
 
-  void showAppOpenAd() {
+  Future<void> showAppOpenAd() async {
+    // Check consent before showing ads
+    final canRequestAds = await ConsentService().checkCanRequestAds();
+    if (!canRequestAds) {
+      debugPrint("🔒 AdService - Cannot show app open ad: no consent");
+      return;
+    }
+
     if (_appOpenAd == null) {
       debugPrint("⚠️ Tried to show before loaded");
       return;
@@ -145,6 +152,13 @@ class AdService {
   }
 
   Future<void> showInterstitial() async {
+    // Check consent before showing ads
+    final canRequestAds = await ConsentService().checkCanRequestAds();
+    if (!canRequestAds) {
+      debugPrint("🔒 AdService - Cannot show interstitial ad: no consent");
+      return;
+    }
+
     final ad = _interstitialAd;
     if (ad == null) return;
     ad.fullScreenContentCallback = FullScreenContentCallback(
@@ -165,6 +179,13 @@ class AdService {
   Future<void> showRewarded({
     required void Function(RewardItem) onReward,
   }) async {
+    // Check consent before showing ads
+    final canRequestAds = await ConsentService().checkCanRequestAds();
+    if (!canRequestAds) {
+      debugPrint("🔒 AdService - Cannot show rewarded ad: no consent");
+      return;
+    }
+
     final ad = _rewardedAd;
     if (ad == null) return;
     ad.fullScreenContentCallback = FullScreenContentCallback(
@@ -183,6 +204,16 @@ class AdService {
   }
 
   Future<void> showAppResumeAd(BuildContext context) async {
+    // Check consent before showing ads
+    final canRequestAds = await ConsentService().checkCanRequestAds();
+    if (!canRequestAds) {
+      debugPrint("🔒 AdService - Cannot show app resume ad: no consent");
+      if (context.mounted) {
+        Navigator.pop(context);
+      }
+      return;
+    }
+
     final ad = _rewardedInterstitialAd;
     if (ad == null) return;
     ad.fullScreenContentCallback = FullScreenContentCallback(

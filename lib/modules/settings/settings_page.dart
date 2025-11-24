@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:news/modules/settings/pages/push_notification_page.dart';
+import 'package:news/widgets/privacy_options_button.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:news/core/theme/app_palette.dart';
 import 'package:news/core/theme/theme_service.dart';
@@ -11,9 +12,9 @@ import 'package:news/modules/settings/pages/about_page.dart';
 import 'package:news/modules/settings/pages/privacy_policy_page.dart';
 import 'package:news/modules/settings/pages/publisher_info_page.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:app_settings/app_settings.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../core/state/blog_store.dart';
+import '../../core/consent/consent_service.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -59,6 +60,8 @@ class SettingsPage extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
             children: [
+              const PrivacyOptionsButton(),
+
               _SectionCard(
                 initiallyExpanded: true,
                 headerTitle: 'General',
@@ -172,6 +175,23 @@ class SettingsPage extends StatelessWidget {
                         content: settings.publisher_info ?? "Not available",
                       ),
                     ),
+                  ),
+                  _SimpleTile(
+                    title: 'Privacy Settings',
+                    subtitle: 'Manage your privacy preferences',
+                    onTap: () async {
+                      try {
+                        await ConsentService().showPrivacyOptionsForm();
+                      } catch (e) {
+                        debugPrint(
+                          "🔒 Settings - Error showing privacy options: $e",
+                        );
+                        _snack(
+                          'Privacy Settings',
+                          'Failed to open privacy settings',
+                        );
+                      }
+                    },
                   ),
                 ],
               ),
