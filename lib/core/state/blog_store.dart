@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:rivo_tech/models/app_Setting.dart';
+import 'package:abayjobs/models/app_Setting.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/post.dart';
 import '../../models/category.dart';

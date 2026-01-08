@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:get/get.dart';
-import 'package:rivo_tech/core/services/fcm_service.dart';
+import 'package:abayjobs/core/services/fcm_service.dart';
 
 class PushNotificationPage extends StatefulWidget {
   const PushNotificationPage({super.key});

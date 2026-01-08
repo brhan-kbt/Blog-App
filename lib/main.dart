@@ -6,19 +6,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:rivo_tech/core/consent/consent_service.dart';
-import 'package:rivo_tech/core/services/fcm_service.dart';
-import 'package:rivo_tech/firebase_options.dart';
-import 'package:rivo_tech/widgets/adabtiveBanner.dart';
+import 'package:abayjobs/core/consent/consent_service.dart';
+import 'package:abayjobs/core/services/fcm_service.dart';
+import 'package:abayjobs/firebase_options.dart';
+import 'package:abayjobs/widgets/adabtiveBanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import 'package:rivo_tech/core/theme/app_palette.dart';
-import 'package:rivo_tech/core/theme/theme_service.dart';
-import 'package:rivo_tech/core/services/connectivity_service.dart';
-import 'package:rivo_tech/core/services/performance_service.dart';
-import 'package:rivo_tech/core/services/version_check_service.dart';
-import 'package:rivo_tech/core/services/version_check_controller.dart';
-import 'package:rivo_tech/routes/app_pages.dart';
+import 'package:abayjobs/core/theme/app_palette.dart';
+import 'package:abayjobs/core/theme/theme_service.dart';
+import 'package:abayjobs/core/services/connectivity_service.dart';
+import 'package:abayjobs/core/services/performance_service.dart';
+import 'package:abayjobs/core/services/version_check_service.dart';
+import 'package:abayjobs/core/services/version_check_controller.dart';
+import 'package:abayjobs/routes/app_pages.dart';
 import 'core/state/blog_store.dart';
 import 'core/theme/app_theme.dart';
 import 'modules/category/category_page.dart';
@@ -58,7 +58,7 @@ Future<void> main() async {
   // Initialize other services in background to speed up startup
   _initializeBackgroundServices();
 
-  runApp(const RivoTechApp());
+  runApp(const AbayJobsApp());
 }
 
 Future<void> _initializeThemeService() async {
@@ -161,8 +161,8 @@ void _initializeBackgroundServices() {
   });
 }
 
-class RivoTechApp extends StatelessWidget {
-  const RivoTechApp({super.key});
+class AbayJobsApp extends StatelessWidget {
+  const AbayJobsApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -170,12 +170,12 @@ class RivoTechApp extends StatelessWidget {
 
     return Obx(() {
       debugPrint(
-        "🎨 RivoTechApp - Building with theme mode: ${themeSvc.mode.value}",
+        "🎨 AbayJobsApp - Building with theme mode: ${themeSvc.mode.value}",
       );
-      debugPrint("🎨 RivoTechApp - IsDark: ${themeSvc.isDark}");
+      debugPrint("🎨 AbayJobsApp - IsDark: ${themeSvc.isDark}");
 
       return GetMaterialApp(
-        title: 'Rivo Tech',
+        title: 'Abay Jobs',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.light,
         darkTheme: AppTheme.dark,

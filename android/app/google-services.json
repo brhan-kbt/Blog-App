@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "787443288557",
-    "project_id": "rivo-tech",
-    "storage_bucket": "rivo-tech.firebasestorage.app"
+    "project_number": "440856738338",
+    "project_id": "abay-jobs-01",
+    "storage_bucket": "abay-jobs-01.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:787443288557:android:9bccd40b0d613928c6ffe4",
+        "mobilesdk_app_id": "1:440856738338:android:4cbd814988fedc06fae87b",
         "android_client_info": {
-          "package_name": "com.brhan.rivotech"
+          "package_name": "com.brhan.abayjobs"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBTJY_cMcrFqWiQe8zp_p3_kAZQ2EUU74Q"
+          "current_key": "AIzaSyBxwRYP18FR5aiYF48xAiJC8Zkf4b-ZfzU"
         }
       ],
       "services": {

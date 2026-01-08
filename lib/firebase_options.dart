@@ -41,46 +41,47 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAgDUGYLtBTASKPpwGTgSvDNq6sH0_Vb8Y',
-    appId: '1:787443288557:web:c49781b9c8a4e48bc6ffe4',
-    messagingSenderId: '787443288557',
-    projectId: 'rivo-tech',
-    authDomain: 'rivo-tech.firebaseapp.com',
-    storageBucket: 'rivo-tech.firebasestorage.app',
+    apiKey: 'AIzaSyBazpThj6oJdHJ8K4cazzz88B2ufgGvZl4',
+    appId: '1:440856738338:web:9f1e3761a9815b99fae87b',
+    messagingSenderId: '440856738338',
+    projectId: 'abay-jobs-01',
+    authDomain: 'abay-jobs-01.firebaseapp.com',
+    storageBucket: 'abay-jobs-01.firebasestorage.app',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBTJY_cMcrFqWiQe8zp_p3_kAZQ2EUU74Q',
-    appId: '1:787443288557:android:9bccd40b0d613928c6ffe4',
-    messagingSenderId: '787443288557',
-    projectId: 'rivo-tech',
-    storageBucket: 'rivo-tech.firebasestorage.app',
+    apiKey: 'AIzaSyBxwRYP18FR5aiYF48xAiJC8Zkf4b-ZfzU',
+    appId: '1:440856738338:android:4cbd814988fedc06fae87b',
+    messagingSenderId: '440856738338',
+    projectId: 'abay-jobs-01',
+    storageBucket: 'abay-jobs-01.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDqI2bSFr32crrUnZ9pVeoIEhTYTXn-9y4',
-    appId: '1:787443288557:ios:6179a64d4448ee64c6ffe4',
-    messagingSenderId: '787443288557',
-    projectId: 'rivo-tech',
-    storageBucket: 'rivo-tech.firebasestorage.app',
-    iosBundleId: 'com.brhan.rivotech',
+    apiKey: 'AIzaSyCQnD_t31QVbJc1N6_RXskZndiDx1SD6u4',
+    appId: '1:440856738338:ios:e926325cf62e8aedfae87b',
+    messagingSenderId: '440856738338',
+    projectId: 'abay-jobs-01',
+    storageBucket: 'abay-jobs-01.firebasestorage.app',
+    iosBundleId: 'com.brhan.abayjobs',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyDqI2bSFr32crrUnZ9pVeoIEhTYTXn-9y4',
-    appId: '1:787443288557:ios:6179a64d4448ee64c6ffe4',
-    messagingSenderId: '787443288557',
-    projectId: 'rivo-tech',
-    storageBucket: 'rivo-tech.firebasestorage.app',
-    iosBundleId: 'com.brhan.rivotech',
+    apiKey: 'AIzaSyCQnD_t31QVbJc1N6_RXskZndiDx1SD6u4',
+    appId: '1:440856738338:ios:e926325cf62e8aedfae87b',
+    messagingSenderId: '440856738338',
+    projectId: 'abay-jobs-01',
+    storageBucket: 'abay-jobs-01.firebasestorage.app',
+    iosBundleId: 'com.brhan.abayjobs',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyAgDUGYLtBTASKPpwGTgSvDNq6sH0_Vb8Y',
-    appId: '1:787443288557:web:0b559c5131175c60c6ffe4',
-    messagingSenderId: '787443288557',
-    projectId: 'rivo-tech',
-    authDomain: 'rivo-tech.firebaseapp.com',
-    storageBucket: 'rivo-tech.firebasestorage.app',
+    apiKey: 'AIzaSyBazpThj6oJdHJ8K4cazzz88B2ufgGvZl4',
+    appId: '1:440856738338:web:91c8f36b516086e8fae87b',
+    messagingSenderId: '440856738338',
+    projectId: 'abay-jobs-01',
+    authDomain: 'abay-jobs-01.firebaseapp.com',
+    storageBucket: 'abay-jobs-01.firebasestorage.app',
   );
+
 }

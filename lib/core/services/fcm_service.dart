@@ -8,11 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:rivo_tech/core/config/api_config.dart';
-import 'package:rivo_tech/core/config/fcm_config.dart';
-import 'package:rivo_tech/firebase_options.dart';
-import 'package:rivo_tech/modules/category/category_listing_page.dart';
-import 'package:rivo_tech/modules/post_detail/post_detail_page.dart';
+import 'package:abayjobs/core/config/api_config.dart';
+import 'package:abayjobs/core/config/fcm_config.dart';
+import 'package:abayjobs/firebase_options.dart';
+import 'package:abayjobs/modules/category/category_listing_page.dart';
+import 'package:abayjobs/modules/post_detail/post_detail_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// FCM Service for handling push notifications
