@@ -1,4 +1,4 @@
-package com.brhan.abayjobs
+package com.brhan.kingtech
 
 import io.flutter.embedding.android.FlutterActivity
 
