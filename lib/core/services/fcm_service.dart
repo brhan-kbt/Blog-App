@@ -112,6 +112,24 @@ class FCMService extends GetxService {
       initializationSettings,
       onDidReceiveNotificationResponse: _onNotificationTapped,
     );
+
+    
+    // 🔴 Create Android notification channel
+    const AndroidNotificationChannel channel = AndroidNotificationChannel(
+      FCMConfig.defaultNotificationChannel,
+      FCMConfig.defaultNotificationChannelName,
+      description: FCMConfig.defaultNotificationChannelDescription,
+      importance: Importance.max, // 🔥 Heads-up notification
+    );
+
+    final androidPlugin = _localNotifications
+        .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin
+        >();
+
+    await androidPlugin?.createNotificationChannel(channel);
+
+    debugPrint("✅ FCM - Notification channel created");
   }
 
   /// Request FCM permission and get token

@@ -1,3 +1,4 @@
+import 'package:abayjobs/core/config/api_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -84,9 +85,8 @@ Future<void> showPostOptionsSheet(BuildContext context, Post post) async {
               onTap: () async {
                 HapticFeedback.selectionClick();
                 Navigator.pop(ctx);
-                final text =
-                    '${post.title}\n${post.subtitle}\n\nRead more in Abay Jobs.';
-                await Share.share(text);
+                final url = '${ApiConfig.baseUrl1}/blogs/${post.slug}/${post.id}';
+                await Share.share(url);
               },
             ),
 
