@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:abayjobs/modules/post_detail/post_detail_page.dart';
+import 'package:kingtech/modules/post_detail/post_detail_page.dart';
 import 'package:app_links/app_links.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -8,19 +8,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:abayjobs/core/consent/consent_service.dart';
-import 'package:abayjobs/core/services/fcm_service.dart';
-import 'package:abayjobs/firebase_options.dart';
-import 'package:abayjobs/widgets/adabtiveBanner.dart';
+import 'package:kingtech/core/consent/consent_service.dart';
+import 'package:kingtech/core/services/fcm_service.dart';
+import 'package:kingtech/firebase_options.dart';
+import 'package:kingtech/widgets/adabtiveBanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import 'package:abayjobs/core/theme/app_palette.dart';
-import 'package:abayjobs/core/theme/theme_service.dart';
-import 'package:abayjobs/core/services/connectivity_service.dart';
-import 'package:abayjobs/core/services/performance_service.dart';
-import 'package:abayjobs/core/services/version_check_service.dart';
-import 'package:abayjobs/core/services/version_check_controller.dart';
-import 'package:abayjobs/routes/app_pages.dart';
+import 'package:kingtech/core/theme/app_palette.dart';
+import 'package:kingtech/core/theme/theme_service.dart';
+import 'package:kingtech/core/services/connectivity_service.dart';
+import 'package:kingtech/core/services/performance_service.dart';
+import 'package:kingtech/core/services/version_check_service.dart';
+import 'package:kingtech/core/services/version_check_controller.dart';
+import 'package:kingtech/routes/app_pages.dart';
 import 'core/state/blog_store.dart';
 import 'core/theme/app_theme.dart';
 import 'modules/category/category_page.dart';
@@ -63,14 +63,13 @@ Future<void> main() async {
   // Initialize other services in background to speed up startup
   _initializeBackgroundServices();
 
-  runApp(const AbayJobsApp());
+  runApp(const kingtechApp());
 }
-
 
 void _handleDeepLink(Uri uri, BlogStore store) {
   debugPrint('🔗 Deep Link received: $uri');
 
-  final segments = uri.pathSegments; 
+  final segments = uri.pathSegments;
   // Example: ["blogs", "my-first-blog", "25"]
 
   final postIndex = segments.indexOf('blogs');
@@ -103,7 +102,6 @@ void _handleDeepLink(Uri uri, BlogStore store) {
     debugPrint("❌ Invalid post deep link format");
   }
 }
-
 
 void initDeepLinks() async {
   // Placeholder for deep link initialization logic
@@ -222,8 +220,8 @@ void _initializeBackgroundServices() {
   });
 }
 
-class AbayJobsApp extends StatelessWidget {
-  const AbayJobsApp({super.key});
+class kingtechApp extends StatelessWidget {
+  const kingtechApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -231,12 +229,12 @@ class AbayJobsApp extends StatelessWidget {
 
     return Obx(() {
       debugPrint(
-        "🎨 AbayJobsApp - Building with theme mode: ${themeSvc.mode.value}",
+        "🎨 kingtechApp - Building with theme mode: ${themeSvc.mode.value}",
       );
-      debugPrint("🎨 AbayJobsApp - IsDark: ${themeSvc.isDark}");
+      debugPrint("🎨 kingtechApp - IsDark: ${themeSvc.isDark}");
 
       return GetMaterialApp(
-        title: 'Abay Jobs',
+        title: 'King Tech',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.light,
         darkTheme: AppTheme.dark,
@@ -631,17 +629,17 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
           NavigationDestination(
             icon: Icon(Icons.home_outlined),
             selectedIcon: Icon(Icons.explore),
-            label: 'Explore',
+            label: 'Home',
           ),
           NavigationDestination(
             icon: Icon(Icons.grid_view_rounded),
             selectedIcon: Icon(Icons.grid_view_rounded),
-            label: 'Category',
+            label: 'Groups',
           ),
           NavigationDestination(
             icon: Icon(Icons.favorite_border),
             selectedIcon: Icon(Icons.favorite),
-            label: 'Favorite',
+            label: 'Bookmarks',
           ),
         ],
       ),

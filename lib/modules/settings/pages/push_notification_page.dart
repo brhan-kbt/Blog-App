@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:get/get.dart';
-import 'package:abayjobs/core/services/fcm_service.dart';
+import 'package:kingtech/core/services/fcm_service.dart';
 
 class PushNotificationPage extends StatefulWidget {
   const PushNotificationPage({super.key});
@@ -197,7 +197,7 @@ class _PushNotificationPageState extends State<PushNotificationPage> {
             ),
             const SizedBox(height: 12),
             const Text(
-              "To enable or disable push notifications for Abay Tech App, "
+              "To enable or disable push notifications for KingTech App, "
               "please use your phone's system settings or the buttons below.",
             ),
             const SizedBox(height: 24),

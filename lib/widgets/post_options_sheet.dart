@@ -1,8 +1,8 @@
-import 'package:abayjobs/core/config/api_config.dart';
+import 'package:kingtech/core/config/api_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:abayjobs/core/theme/app_palette.dart';
+import 'package:kingtech/core/theme/app_palette.dart';
 import 'package:share_plus/share_plus.dart';
 import '../core/state/blog_store.dart';
 import '../models/post.dart';
@@ -85,7 +85,8 @@ Future<void> showPostOptionsSheet(BuildContext context, Post post) async {
               onTap: () async {
                 HapticFeedback.selectionClick();
                 Navigator.pop(ctx);
-                final url = '${ApiConfig.baseUrl1}/blogs/${post.slug}/${post.id}';
+                final url =
+                    '${ApiConfig.baseUrl1}/blogs/${post.slug}/${post.id}';
                 await Share.share(url);
               },
             ),

@@ -1,21 +1,40 @@
 {
   "project_info": {
-    "project_number": "440856738338",
-    "project_id": "abay-jobs-01",
-    "storage_bucket": "abay-jobs-01.firebasestorage.app"
+    "project_number": "1086474687592",
+    "project_id": "king-tech-01",
+    "storage_bucket": "king-tech-01.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:440856738338:android:4cbd814988fedc06fae87b",
+        "mobilesdk_app_id": "1:1086474687592:android:1ed55e2f42047eb82557dd",
         "android_client_info": {
-          "package_name": "com.brhan.abayjobs"
+          "package_name": "com.brhan.king_tech"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBxwRYP18FR5aiYF48xAiJC8Zkf4b-ZfzU"
+          "current_key": "AIzaSyCKU_DEeAYA1bu2T-5pE73IERJfzwW3KKE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1086474687592:android:be72cd4c78498ade2557dd",
+        "android_client_info": {
+          "package_name": "com.brhan.kingtech"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKU_DEeAYA1bu2T-5pE73IERJfzwW3KKE"
         }
       ],
       "services": {

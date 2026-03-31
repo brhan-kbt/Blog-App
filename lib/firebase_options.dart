@@ -41,47 +41,47 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBazpThj6oJdHJ8K4cazzz88B2ufgGvZl4',
-    appId: '1:440856738338:web:9f1e3761a9815b99fae87b',
-    messagingSenderId: '440856738338',
-    projectId: 'abay-jobs-01',
-    authDomain: 'abay-jobs-01.firebaseapp.com',
-    storageBucket: 'abay-jobs-01.firebasestorage.app',
+    apiKey: 'AIzaSyB5zJ6Fx-5zz0oyjRI6xxk_gGkol9fKWcA',
+    appId: '1:1086474687592:web:f20057cb16148d192557dd',
+    messagingSenderId: '1086474687592',
+    projectId: 'king-tech-01',
+    authDomain: 'king-tech-01.firebaseapp.com',
+    storageBucket: 'king-tech-01.firebasestorage.app',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBxwRYP18FR5aiYF48xAiJC8Zkf4b-ZfzU',
-    appId: '1:440856738338:android:4cbd814988fedc06fae87b',
-    messagingSenderId: '440856738338',
-    projectId: 'abay-jobs-01',
-    storageBucket: 'abay-jobs-01.firebasestorage.app',
+    apiKey: 'AIzaSyCKU_DEeAYA1bu2T-5pE73IERJfzwW3KKE',
+    appId: '1:1086474687592:android:be72cd4c78498ade2557dd',
+    messagingSenderId: '1086474687592',
+    projectId: 'king-tech-01',
+    storageBucket: 'king-tech-01.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCQnD_t31QVbJc1N6_RXskZndiDx1SD6u4',
-    appId: '1:440856738338:ios:e926325cf62e8aedfae87b',
-    messagingSenderId: '440856738338',
-    projectId: 'abay-jobs-01',
-    storageBucket: 'abay-jobs-01.firebasestorage.app',
-    iosBundleId: 'com.brhan.abayjobs',
+    apiKey: 'AIzaSyAVgpvOdwEC-FUjq7fQjA4ECeC7aLCNGfM',
+    appId: '1:1086474687592:ios:1518ab31ccb58f252557dd',
+    messagingSenderId: '1086474687592',
+    projectId: 'king-tech-01',
+    storageBucket: 'king-tech-01.firebasestorage.app',
+    iosBundleId: 'com.brhan.kingtech',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCQnD_t31QVbJc1N6_RXskZndiDx1SD6u4',
-    appId: '1:440856738338:ios:e926325cf62e8aedfae87b',
-    messagingSenderId: '440856738338',
-    projectId: 'abay-jobs-01',
-    storageBucket: 'abay-jobs-01.firebasestorage.app',
-    iosBundleId: 'com.brhan.abayjobs',
+    apiKey: 'AIzaSyAVgpvOdwEC-FUjq7fQjA4ECeC7aLCNGfM',
+    appId: '1:1086474687592:ios:1518ab31ccb58f252557dd',
+    messagingSenderId: '1086474687592',
+    projectId: 'king-tech-01',
+    storageBucket: 'king-tech-01.firebasestorage.app',
+    iosBundleId: 'com.brhan.kingtech',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyBazpThj6oJdHJ8K4cazzz88B2ufgGvZl4',
-    appId: '1:440856738338:web:91c8f36b516086e8fae87b',
-    messagingSenderId: '440856738338',
-    projectId: 'abay-jobs-01',
-    authDomain: 'abay-jobs-01.firebaseapp.com',
-    storageBucket: 'abay-jobs-01.firebasestorage.app',
+    apiKey: 'AIzaSyB5zJ6Fx-5zz0oyjRI6xxk_gGkol9fKWcA',
+    appId: '1:1086474687592:web:25d585d9153af3f22557dd',
+    messagingSenderId: '1086474687592',
+    projectId: 'king-tech-01',
+    authDomain: 'king-tech-01.firebaseapp.com',
+    storageBucket: 'king-tech-01.firebasestorage.app',
   );
 
 }

@@ -22,24 +22,24 @@ class AppPalette extends ThemeExtension<AppPalette> {
 
   /// Explicit LIGHT palette (tweak to taste)
   static const AppPalette light = AppPalette(
-    primary: Color(0xfff46720), // e94873
-    searchBg: Color.fromARGB(255, 255, 205, 179), // soft blue-tint chip
+    primary: Color.fromARGB(255, 0, 120, 200), // e94873
+    searchBg: Color.fromARGB(255, 179, 228, 255), // soft blue-tint chip
     searchOutline: Color.fromARGB(255, 255, 205, 179), // slate-300-ish hairline
-    searchIcon: Color(0xfff46720), // slate-600
-    chipBg: Color.fromARGB(255, 255, 179, 141), // slate-50/100
+    searchIcon: Color.fromARGB(255, 33, 130, 228), // slate-600
+    chipBg: Color.fromARGB(255, 141, 211, 255), // slate-50/100
     cardBg: Colors.white, // cards, tiles
-    favoriteActive: Color.fromARGB(255, 255, 204, 176), // matches your seed
+    favoriteActive: Color.fromARGB(255, 176, 230, 255), // matches your seed
   );
 
   /// Explicit DARK palette
   static const AppPalette dark = AppPalette(
-    primary: Color(0xfff46720),
+    primary: Color.fromARGB(255, 0, 120, 200), // e94873
     searchBg: Color.fromARGB(255, 26, 15, 9), // soft blue-tint chip
-    searchOutline: Color.fromARGB(255, 255, 205, 179), // slate-300-ish hairline
-    searchIcon: Color.fromARGB(255, 255, 208, 184), // slate-600
-    chipBg: Color(0xFF2E303C),
+    searchOutline: Color.fromARGB(255, 179, 227, 255), // slate-300-ish hairline
+    searchIcon: Color.fromARGB(255, 184, 227, 255), // slate-600
+    chipBg: Color.fromARGB(255, 46, 48, 60),
     cardBg: Color.fromARGB(255, 11, 9, 36),
-    favoriteActive: Color.fromARGB(255, 164, 69, 21), // matches your seed
+    favoriteActive: Color.fromARGB(255, 21, 116, 164), // matches your seed
   );
 
   /// Optional: build from an existing ThemeData (used as a safe fallback)

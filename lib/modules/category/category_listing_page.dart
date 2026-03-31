@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:abayjobs/models/post.dart';
-import 'package:abayjobs/widgets/adabtiveBanner.dart';
-import 'package:abayjobs/widgets/hero_card.dart';
-import 'package:abayjobs/widgets/post_options_sheet.dart';
-import 'package:abayjobs/widgets/shimmer_widgets.dart';
+import 'package:kingtech/models/post.dart';
+import 'package:kingtech/widgets/adabtiveBanner.dart';
+import 'package:kingtech/widgets/hero_card.dart';
+import 'package:kingtech/widgets/post_options_sheet.dart';
+import 'package:kingtech/widgets/shimmer_widgets.dart';
 import '../../core/state/blog_store.dart';
 import '../../widgets/post_tile.dart';
 import '../post_detail/post_detail_page.dart';

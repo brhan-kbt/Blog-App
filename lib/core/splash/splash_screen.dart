@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:abayjobs/core/services/connectivity_service.dart';
-import 'package:abayjobs/core/services/fcm_service.dart';
-import 'package:abayjobs/core/state/blog_store.dart';
-import 'package:abayjobs/core/theme/theme_service.dart';
+import 'package:kingtech/core/services/connectivity_service.dart';
+import 'package:kingtech/core/services/fcm_service.dart';
+import 'package:kingtech/core/state/blog_store.dart';
+import 'package:kingtech/core/theme/theme_service.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -13,358 +13,160 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen>
-    with TickerProviderStateMixin {
-  late AnimationController _logoController;
-  late AnimationController _loadingController;
-  late Animation<double> _logoAnimation;
-  late Animation<double> _loadingAnimation;
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _scale;
+  late Animation<double> _fade;
 
   @override
   void initState() {
     super.initState();
-    _initializeAnimations();
-    _initializeApp();
+    _initAnimation();
+    _initApp();
   }
 
-  void _initializeAnimations() {
-    _logoController = AnimationController(
-      duration: const Duration(milliseconds: 1500),
+  void _initAnimation() {
+    _controller = AnimationController(
       vsync: this,
+      duration: const Duration(milliseconds: 1200),
     );
 
-    _loadingController = AnimationController(
-      duration: const Duration(milliseconds: 1000),
-      vsync: this,
+    _scale = Tween(begin: 0.8, end: 1.0).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeOutBack),
     );
 
-    _logoAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _logoController, curve: Curves.elasticOut),
+    _fade = Tween(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeIn),
     );
 
-    _loadingAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _loadingController, curve: Curves.easeInOut),
-    );
-
-    _logoController.forward();
-    _loadingController.repeat();
+    _controller.forward();
   }
 
-  Future<void> _initializeApp() async {
+  Future<void> _initApp() async {
     try {
-      // Check if we're already on home page (user navigated back)
-      final currentRoute = Get.currentRoute;
-      if (currentRoute == '/home') {
-        debugPrint("🔥 Splash - Already on home page, skipping initialization");
-        return;
-      }
+      // Avoid duplicate navigation
+      if (Get.currentRoute == '/home') return;
 
-      // Check if FCM service indicates we should navigate to home
+      // FCM check
       if (Get.isRegistered<FCMService>()) {
-        final fcmService = Get.find<FCMService>();
-        if (fcmService.hasNavigatedFromNotification) {
-          debugPrint(
-            "🔥 Splash - FCM indicates navigation to home, skipping splash",
-          );
+        final fcm = Get.find<FCMService>();
+        if (fcm.hasNavigatedFromNotification) {
           Get.offAllNamed('/home');
           return;
         }
       }
 
-      // Initialize connectivity service
+      // Services
       Get.put(ConnectivityService(), permanent: true);
+      final connectivity = Get.find<ConnectivityService>();
+      await connectivity.checkConnectivity();
 
-      // Check connectivity
-      final connectivityService = Get.find<ConnectivityService>();
-      await connectivityService.checkConnectivity();
-
-      // Initialize blog store and fetch initial data
       final blogStore = Get.find<BlogStore>();
 
-      // Only fetch data if connected
-      if (connectivityService.isConnected) {
+      if (connectivity.isConnected) {
         await Future.wait([
           blogStore.fetchPosts(),
           blogStore.fetchCategories(),
         ]);
       }
 
-      // Add minimum splash duration for better UX
-      await Future.delayed(const Duration(milliseconds: 1000));
+      // Check notifications
+      await _handleNotifications();
 
-      if (mounted) {
-        // Check if there's a pending notification before navigating to home
-        await _checkForPendingNotification();
+      await Future.delayed(const Duration(milliseconds: 800));
 
-        // Only navigate to home if no notification navigation occurred
-        if (mounted) {
-          // Check if FCM service has navigated from notification
-          if (Get.isRegistered<FCMService>()) {
-            final fcmService = Get.find<FCMService>();
-            if (fcmService.hasNavigatedFromNotification) {
-              debugPrint(
-                "🔥 Splash - Notification navigation occurred, checking current route",
-              );
+      if (!mounted) return;
 
-              // Check if we're currently on a detail page
-              if (fcmService.isOnDetailPage()) {
-                debugPrint(
-                  "🔥 Splash - Currently on detail page, skipping home navigation",
-                );
-                return;
-              } else {
-                debugPrint(
-                  "🔥 Splash - Not on detail page, proceeding to home",
-                );
-                // Reset the notification flag since we're navigating to home
-                fcmService.resetNotificationFlag();
-              }
-            }
-          }
-
-          debugPrint(
-            "🔥 Splash - No notification navigation, proceeding to home",
-          );
-
-          // Only navigate to home if we're not already on a detail page
-          if (Get.isRegistered<FCMService>()) {
-            final fcmService = Get.find<FCMService>();
-            if (fcmService.isOnDetailPage()) {
-              debugPrint(
-                "🔥 Splash - Currently on detail page, skipping home navigation",
-              );
-              return;
-            }
-          }
-
-          // Use Get.offAllNamed to clear the navigation stack and go to home
-          Get.offAllNamed('/home');
-        }
+      // Prevent override if already navigated
+      if (Get.isRegistered<FCMService>()) {
+        final fcm = Get.find<FCMService>();
+        if (fcm.isOnDetailPage()) return;
       }
+
+      Get.offAllNamed('/home');
     } catch (e) {
-      debugPrint('Error initializing app: $e');
-      // Still navigate to home even if there's an error
-      if (mounted) {
-        Get.offAllNamed('/home');
-      }
+      debugPrint("Splash Error: $e");
+      if (mounted) Get.offAllNamed('/home');
     }
   }
 
-  /// Check for pending notifications and handle them
-  Future<void> _checkForPendingNotification() async {
-    try {
-      // Check if FCM service is available
-      if (Get.isRegistered<FCMService>()) {
-        final fcmService = Get.find<FCMService>();
+  Future<void> _handleNotifications() async {
+    if (!Get.isRegistered<FCMService>()) return;
 
-        // Check if there are pending notifications
-        final hasPending = await fcmService.hasPendingNotifications();
-        if (hasPending) {
-          debugPrint("🔥 Splash - Found pending notifications, processing...");
-          await fcmService.checkPendingNotifications();
-          debugPrint("🔥 Splash - Pending notifications processed");
-        } else {
-          debugPrint("🔥 Splash - No pending notifications found");
-        }
-      } else {
-        debugPrint("🔥 Splash - FCM service not available yet");
-      }
-    } catch (e) {
-      debugPrint("❌ Error checking pending notifications in splash: $e");
+    final fcm = Get.find<FCMService>();
+
+    if (await fcm.hasPendingNotifications()) {
+      await fcm.checkPendingNotifications();
     }
   }
 
   @override
   void dispose() {
-    _logoController.dispose();
-    _loadingController.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final themeService = Get.find<ThemeService>();
 
     return Obx(() {
       final isDark = themeService.isDark;
-      debugPrint(
-        '🎨 Splash Screen - Theme Mode: ${themeService.mode.value}, IsDark: $isDark',
-      );
 
       return Scaffold(
-        backgroundColor: const Color(0xfff46720),
-        body: Container(
-          width: double.infinity,
-          height: double.infinity,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: isDark
-                  ? [
-                      const Color.fromARGB(255, 103, 42, 12),
-                      const Color(0xfff46720),
-                      const Color.fromARGB(255, 85, 35, 10),
-                    ]
-                  : [
-                      const Color.fromARGB(255, 103, 42, 12),
-                      const Color(0xfff46720),
-                      const Color.fromARGB(255, 85, 35, 10),
-                    ],
-            ),
-          ),
-          child: SafeArea(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SizedBox(height: MediaQuery.of(context).padding.top),
-                // App Logo
-                AnimatedBuilder(
-                  animation: _logoAnimation,
-                  builder: (context, child) {
-                    return Transform.scale(
-                      scale: _logoAnimation.value,
-                      child: Container(
-                        width: 140,
-                        height: 140,
-                        // decoration: BoxDecoration(
-                        //   color: Colors.white,
-                        //   borderRadius: BorderRadius.circular(35),
-                        //   boxShadow: [
-                        //     BoxShadow(
-                        //       color: Colors.black.withOpacity(0.2),
-                        //       blurRadius: 30,
-                        //       offset: const Offset(0, 15),
-                        //       spreadRadius: 5,
-                        //     ),
-                        //     BoxShadow(
-                        //       color: Colors.white.withOpacity(0.1),
-                        //       blurRadius: 10,
-                        //       offset: const Offset(0, -5),
-                        //       spreadRadius: 2,
-                        //     ),
-                        //   ],
-                        // ),
-                        child: Container(
-                          margin: const EdgeInsets.all(8),
-                          // decoration: BoxDecoration(
-                          //   color: Colors.white,
-                          //   borderRadius: BorderRadius.circular(27),
-                          //   border: Border.all(
-                          //     color: const Color(0xFFff6221).withOpacity(0.1),
-                          //     width: 2,
-                          //   ),
-                          // ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(27),
-                            child: Image.asset(
-                              'assets/abayjobs_logo.png',
-                              fit: BoxFit.contain,
-                              errorBuilder: (context, error, stackTrace) {
-                                return Container(
-                                  decoration: BoxDecoration(
-                                    color: const Color(
-                                      0xFFff6221,
-                                    ).withOpacity(0.1),
-                                    borderRadius: BorderRadius.circular(27),
-                                  ),
-                                  child: Icon(
-                                    Icons.article_outlined,
-                                    size: 70,
-                                    color: const Color(0xFFff6221),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-
-                Spacer(flex: 2),
-
-                // const SizedBox(height: 24),
-
-                // App Name
-                Text(
-                  'Abay Jobs',
-                  style: theme.textTheme.headlineMedium?.copyWith(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 36,
-                    fontFamily: 'Pacifico',
-                    color: Colors.white,
-                    shadows: [
-                      Shadow(
-                        color: Colors.black.withOpacity(0.3),
-                        offset: const Offset(0, 2),
-                        blurRadius: 4,
-                      ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(height: 12),
-
-                const Spacer(flex: 2),
-
-                // Loading Indicator
-                AnimatedBuilder(
-                  animation: _loadingAnimation,
-                  builder: (context, child) {
-                    return Column(
-                      children: [
-                        Container(
-                          width: 50,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.2),
-                            borderRadius: BorderRadius.circular(25),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.1),
-                                blurRadius: 10,
-                                offset: const Offset(0, 5),
-                              ),
-                            ],
-                          ),
-                          child: SizedBox(
-                            width: 40,
-                            height: 40,
-                            child: CircularProgressIndicator(
-                              value: _loadingAnimation.value,
-                              strokeWidth: 4,
-                              valueColor: const AlwaysStoppedAnimation<Color>(
-                                Colors.white,
-                              ),
-                              backgroundColor: Colors.white.withOpacity(0.3),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        Text(
-                          'Loading...',
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16,
-                            color: Colors.white,
-                            shadows: [
-                              Shadow(
-                                color: Colors.black.withOpacity(0.3),
-                                offset: const Offset(0, 1),
-                                blurRadius: 2,
-                              ),
-                            ],
-                          ),
-                        ),
+        backgroundColor: isDark ? Colors.black : Colors.white,
+        body: Center(
+          child: FadeTransition(
+            opacity: _fade,
+            child: ScaleTransition(
+              scale: _scale,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // LOGO
+                  Container(
+                    width: 110,
+                    height: 110,
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: isDark ? Colors.grey[900] : Colors.white,
+                      borderRadius: BorderRadius.circular(28),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          blurRadius: 20,
+                          offset: const Offset(0, 10),
+                        )
                       ],
-                    );
-                  },
-                ),
+                    ),
+                    child: Image.asset(
+                      'assets/kingtech_logo.png',
+                      fit: BoxFit.contain,
+                    ),
+                  ),
 
-                const SizedBox(height: 40),
-              ],
+                  const SizedBox(height: 24),
+
+                  // TITLE
+                  Text(
+                    "King Tech",
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      color: isDark ? Colors.white : Colors.black,
+                    ),
+                  ),
+
+                  const SizedBox(height: 30),
+
+                  // LOADER
+                  const SizedBox(
+                    width: 28,
+                    height: 28,
+                    child: CircularProgressIndicator(strokeWidth: 3),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

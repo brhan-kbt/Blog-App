@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:abayjobs/core/config/api_config.dart';
-import 'package:abayjobs/widgets/post_options_sheet.dart';
+import 'package:kingtech/core/config/api_config.dart';
+import 'package:kingtech/widgets/post_options_sheet.dart';
 import '../core/theme/app_palette.dart';
 import '../models/post.dart';
 
