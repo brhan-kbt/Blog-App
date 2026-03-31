@@ -1,4 +1,4 @@
-package com.brhan.kingtech
+package com.tekopia.smarttips
 
 import io.flutter.embedding.android.FlutterActivity
 

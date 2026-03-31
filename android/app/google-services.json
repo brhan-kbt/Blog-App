@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "1086474687592",
-    "project_id": "king-tech-01",
-    "storage_bucket": "king-tech-01.firebasestorage.app"
+    "project_number": "109450963960",
+    "project_id": "smart-tips01",
+    "storage_bucket": "smart-tips01.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1086474687592:android:1ed55e2f42047eb82557dd",
+        "mobilesdk_app_id": "1:109450963960:android:83f866edf562ed6f29c40d",
         "android_client_info": {
-          "package_name": "com.brhan.king_tech"
+          "package_name": "com.tekopia.smart_tips"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCKU_DEeAYA1bu2T-5pE73IERJfzwW3KKE"
+          "current_key": "AIzaSyCnkL9VMfpAu3oNykAPTCHmbiBY5OylSrw"
         }
       ],
       "services": {
@@ -26,15 +26,15 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1086474687592:android:be72cd4c78498ade2557dd",
+        "mobilesdk_app_id": "1:109450963960:android:65418b430bf9bbe729c40d",
         "android_client_info": {
-          "package_name": "com.brhan.kingtech"
+          "package_name": "com.tekopia.smarttips"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCKU_DEeAYA1bu2T-5pE73IERJfzwW3KKE"
+          "current_key": "AIzaSyCnkL9VMfpAu3oNykAPTCHmbiBY5OylSrw"
         }
       ],
       "services": {

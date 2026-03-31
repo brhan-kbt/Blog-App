@@ -1,4 +1,4 @@
-# King Tech 
+# Smart Tips 
 
 A new Flutter project.
 

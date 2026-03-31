@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:kingtech/core/consent/consent_service.dart';
+import 'package:smart_tips/core/consent/consent_service.dart';
 
 import '../core/ads/ad_service.dart';
 

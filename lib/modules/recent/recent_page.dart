@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kingtech/widgets/adabtiveBanner.dart';
-import 'package:kingtech/widgets/shimmer_widgets.dart';
+import 'package:smart_tips/widgets/adabtiveBanner.dart';
+import 'package:smart_tips/widgets/shimmer_widgets.dart';
 import '../../core/state/blog_store.dart';
 import '../../models/post.dart';
 import '../../widgets/post_tile.dart';

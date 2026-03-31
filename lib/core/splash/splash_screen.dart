@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kingtech/core/services/connectivity_service.dart';
-import 'package:kingtech/core/services/fcm_service.dart';
-import 'package:kingtech/core/state/blog_store.dart';
-import 'package:kingtech/core/theme/theme_service.dart';
+import 'package:smart_tips/core/services/connectivity_service.dart';
+import 'package:smart_tips/core/services/fcm_service.dart';
+import 'package:smart_tips/core/state/blog_store.dart';
+import 'package:smart_tips/core/theme/theme_service.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -12,34 +12,11 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _scale;
-  late Animation<double> _fade;
-
+class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    _initAnimation();
     _initApp();
-  }
-
-  void _initAnimation() {
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1200),
-    );
-
-    _scale = Tween(begin: 0.8, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeOutBack),
-    );
-
-    _fade = Tween(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeIn),
-    );
-
-    _controller.forward();
   }
 
   Future<void> _initApp() async {
@@ -73,7 +50,7 @@ class _SplashScreenState extends State<SplashScreen>
       // Check notifications
       await _handleNotifications();
 
-      await Future.delayed(const Duration(milliseconds: 800));
+      await Future.delayed(const Duration(milliseconds: 500));
 
       if (!mounted) return;
 
@@ -101,12 +78,6 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final themeService = Get.find<ThemeService>();
 
@@ -114,59 +85,130 @@ class _SplashScreenState extends State<SplashScreen>
       final isDark = themeService.isDark;
 
       return Scaffold(
-        backgroundColor: isDark ? Colors.black : Colors.white,
-        body: Center(
-          child: FadeTransition(
-            opacity: _fade,
-            child: ScaleTransition(
-              scale: _scale,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // LOGO
-                  Container(
-                    width: 110,
-                    height: 110,
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: isDark ? Colors.grey[900] : Colors.white,
-                      borderRadius: BorderRadius.circular(28),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          blurRadius: 20,
-                          offset: const Offset(0, 10),
-                        )
-                      ],
+        body: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: isDark
+                  ? [
+                      Color.fromARGB(255, 8, 8, 41),
+                      Color.fromARGB(255, 13, 20, 39),
+                    ]
+                  : [
+                      Color.fromARGB(255, 167, 179, 232),
+                      Color.fromARGB(255, 92, 92, 104),
+                    ],
+            ),
+          ),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // Logo with different shape
+                Container(
+                  width: 120,
+                  height: 120,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: LinearGradient(
+                      colors: isDark
+                          ? [Colors.blue[700]!, Colors.purple[700]!]
+                          : [Colors.white, Colors.white70],
                     ),
-                    child: Image.asset(
-                      'assets/kingtech_logo.png',
-                      fit: BoxFit.contain,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        blurRadius: 30,
+                        spreadRadius: 5,
+                      ),
+                    ],
+                  ),
+                  child: ClipOval(
+                    // This actually clips the child to circle
+                    child: Container(
+                      color: isDark ? Colors.white24 : Colors.white,
+                      child: Image.asset(
+                        'assets/smart_tips_logo.png',
+                        fit: BoxFit
+                            .contain, // Use contain to keep logo fully visible
+                        width: 120,
+                        height: 120,
+                      ),
                     ),
                   ),
+                ),
 
-                  const SizedBox(height: 24),
+                const SizedBox(height: 32),
 
-                  // TITLE
-                  Text(
-                    "King Tech",
-                    style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      color: isDark ? Colors.white : Colors.black,
+                // Title with different style
+                Text(
+                  "Smart Tips",
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 1.2,
+                    color: isDark ? Colors.white : Colors.white,
+                    shadows: [
+                      Shadow(
+                        blurRadius: 10,
+                        color: Colors.black.withOpacity(0.2),
+                        offset: const Offset(2, 2),
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 16),
+
+                // Different divider style
+                Container(
+                  width: 50,
+                  height: 3,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: isDark
+                          ? [Colors.blue[400]!, Colors.purple[400]!]
+                          : [Colors.white, Colors.white70],
+                    ),
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+
+                const SizedBox(height: 48),
+
+                // Different loader style
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: isDark ? Colors.white24 : Colors.white,
+                      width: 2,
                     ),
                   ),
-
-                  const SizedBox(height: 30),
-
-                  // LOADER
-                  const SizedBox(
-                    width: 28,
-                    height: 28,
-                    child: CircularProgressIndicator(strokeWidth: 3),
+                  child: const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                    ),
                   ),
-                ],
-              ),
+                ),
+
+                const SizedBox(height: 32),
+
+                // Optional loading text
+                Text(
+                  "Loading...",
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: isDark ? Colors.grey[500] : Colors.white70,
+                    letterSpacing: 0.5,
+                  ),
+                ),
+              ],
             ),
           ),
         ),

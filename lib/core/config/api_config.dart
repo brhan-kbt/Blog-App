@@ -1,7 +1,7 @@
 class ApiConfig {
-  static const String baseUrl1 = "https://kingtech.birhanu.et";
-  static const String baseUrl = "https://kingtech.birhanu.et/api/v1";
-  static const String imageUrl = "https://kingtech.birhanu.et/storage/";
+  static const String baseUrl1 = "https://smarttips.birhanu.et";
+  static const String baseUrl = "https://smarttips.birhanu.et/api/v1";
+  static const String imageUrl = "https://smarttips.birhanu.et/storage/";
 
   // Endpoints
   static String posts = "$baseUrl/posts";

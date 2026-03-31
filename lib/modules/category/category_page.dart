@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kingtech/core/config/api_config.dart';
-import 'package:kingtech/core/theme/app_palette.dart';
-import 'package:kingtech/models/category.dart';
-import 'package:kingtech/widgets/shimmer_widgets.dart';
+import 'package:smart_tips/core/config/api_config.dart';
+import 'package:smart_tips/core/theme/app_palette.dart';
+import 'package:smart_tips/models/category.dart';
+import 'package:smart_tips/widgets/shimmer_widgets.dart';
 import '../../core/state/blog_store.dart';
 import 'category_listing_page.dart';
 
