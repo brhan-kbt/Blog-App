@@ -41,47 +41,47 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyB5zJ6Fx-5zz0oyjRI6xxk_gGkol9fKWcA',
-    appId: '1:1086474687592:web:f20057cb16148d192557dd',
-    messagingSenderId: '1086474687592',
-    projectId: 'king-tech-01',
-    authDomain: 'king-tech-01.firebaseapp.com',
-    storageBucket: 'king-tech-01.firebasestorage.app',
+    apiKey: 'AIzaSyA5RebC2zzvI9bKkxUXXwegQgDKNnXhUmM',
+    appId: '1:766608554905:web:9e93a7c1f97bfd87207108',
+    messagingSenderId: '766608554905',
+    projectId: 'risa-tech01',
+    authDomain: 'risa-tech01.firebaseapp.com',
+    storageBucket: 'risa-tech01.firebasestorage.app',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCKU_DEeAYA1bu2T-5pE73IERJfzwW3KKE',
-    appId: '1:1086474687592:android:be72cd4c78498ade2557dd',
-    messagingSenderId: '1086474687592',
-    projectId: 'king-tech-01',
-    storageBucket: 'king-tech-01.firebasestorage.app',
+    apiKey: 'AIzaSyCMDEqQz8cgXy3t0zRDFPGVBOsg44UHGwo',
+    appId: '1:766608554905:android:3300f4597fdf73bc207108',
+    messagingSenderId: '766608554905',
+    projectId: 'risa-tech01',
+    storageBucket: 'risa-tech01.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAVgpvOdwEC-FUjq7fQjA4ECeC7aLCNGfM',
-    appId: '1:1086474687592:ios:1518ab31ccb58f252557dd',
-    messagingSenderId: '1086474687592',
-    projectId: 'king-tech-01',
-    storageBucket: 'king-tech-01.firebasestorage.app',
-    iosBundleId: 'com.brhan.kingtech',
+    apiKey: 'AIzaSyB5niiq2zFfqDPnvjo5ZvVxN-T7s7TrSDc',
+    appId: '1:766608554905:ios:56267f82dd6cec0c207108',
+    messagingSenderId: '766608554905',
+    projectId: 'risa-tech01',
+    storageBucket: 'risa-tech01.firebasestorage.app',
+    iosBundleId: 'com.tekopia.risatech',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAVgpvOdwEC-FUjq7fQjA4ECeC7aLCNGfM',
-    appId: '1:1086474687592:ios:1518ab31ccb58f252557dd',
-    messagingSenderId: '1086474687592',
-    projectId: 'king-tech-01',
-    storageBucket: 'king-tech-01.firebasestorage.app',
-    iosBundleId: 'com.brhan.kingtech',
+    apiKey: 'AIzaSyB5niiq2zFfqDPnvjo5ZvVxN-T7s7TrSDc',
+    appId: '1:766608554905:ios:56267f82dd6cec0c207108',
+    messagingSenderId: '766608554905',
+    projectId: 'risa-tech01',
+    storageBucket: 'risa-tech01.firebasestorage.app',
+    iosBundleId: 'com.tekopia.risatech',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyB5zJ6Fx-5zz0oyjRI6xxk_gGkol9fKWcA',
-    appId: '1:1086474687592:web:25d585d9153af3f22557dd',
-    messagingSenderId: '1086474687592',
-    projectId: 'king-tech-01',
-    authDomain: 'king-tech-01.firebaseapp.com',
-    storageBucket: 'king-tech-01.firebasestorage.app',
+    apiKey: 'AIzaSyA5RebC2zzvI9bKkxUXXwegQgDKNnXhUmM',
+    appId: '1:766608554905:web:1f4301a515633649207108',
+    messagingSenderId: '766608554905',
+    projectId: 'risa-tech01',
+    authDomain: 'risa-tech01.firebaseapp.com',
+    storageBucket: 'risa-tech01.firebasestorage.app',
   );
 
 }

@@ -1,5 +1,5 @@
 import 'package:intl/intl.dart';
-import 'package:kingtech/models/user_ref.dart';
+import 'package:risatech/models/user_ref.dart';
 import 'category.dart';
 
 class Post {

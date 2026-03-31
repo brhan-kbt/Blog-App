@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kingtech/core/services/fcm_service.dart';
+import 'package:risatech/core/services/fcm_service.dart';
 
 /// Helper class for testing FCM functionality
 class FCMTestHelper {

@@ -3,14 +3,14 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:in_app_review/in_app_review.dart';
-import 'package:kingtech/modules/settings/pages/push_notification_page.dart';
+import 'package:risatech/modules/settings/pages/push_notification_page.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:kingtech/core/theme/app_palette.dart';
-import 'package:kingtech/core/theme/theme_service.dart';
-import 'package:kingtech/modules/settings/pages/about_page.dart';
-import 'package:kingtech/modules/settings/pages/privacy_policy_page.dart';
-import 'package:kingtech/modules/settings/pages/publisher_info_page.dart';
-import 'package:kingtech/widgets/privacy_options_button.dart';
+import 'package:risatech/core/theme/app_palette.dart';
+import 'package:risatech/core/theme/theme_service.dart';
+import 'package:risatech/modules/settings/pages/about_page.dart';
+import 'package:risatech/modules/settings/pages/privacy_policy_page.dart';
+import 'package:risatech/modules/settings/pages/publisher_info_page.dart';
+import 'package:risatech/widgets/privacy_options_button.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:app_settings/app_settings.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -230,13 +230,13 @@ class SettingsPage extends StatelessWidget {
     if (await inAppReview.isAvailable()) {
       inAppReview.requestReview();
     } else {
-      inAppReview.openStoreListing(appStoreId: "com.brhan.kingtech");
+      inAppReview.openStoreListing(appStoreId: "com.tekopia.risatech");
     }
   }
 
   void _shareApp() {
     Share.share(
-      "Check out King Tech App - Your ultimate tech companion! https://play.google.com/store/apps/details?id=com.brhan.kingtech",
+      "Check out Risa Tech App - Your ultimate tech companion! https://play.google.com/store/apps/details?id=com.tekopia.risatech",
     );
   }
 

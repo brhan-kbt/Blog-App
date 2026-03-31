@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:kingtech/modules/post_detail/post_detail_page.dart';
+import 'package:risatech/modules/post_detail/post_detail_page.dart';
 import 'package:app_links/app_links.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -8,19 +8,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:kingtech/core/consent/consent_service.dart';
-import 'package:kingtech/core/services/fcm_service.dart';
-import 'package:kingtech/firebase_options.dart';
-import 'package:kingtech/widgets/adabtiveBanner.dart';
+import 'package:risatech/core/consent/consent_service.dart';
+import 'package:risatech/core/services/fcm_service.dart';
+import 'package:risatech/firebase_options.dart';
+import 'package:risatech/widgets/adabtiveBanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import 'package:kingtech/core/theme/app_palette.dart';
-import 'package:kingtech/core/theme/theme_service.dart';
-import 'package:kingtech/core/services/connectivity_service.dart';
-import 'package:kingtech/core/services/performance_service.dart';
-import 'package:kingtech/core/services/version_check_service.dart';
-import 'package:kingtech/core/services/version_check_controller.dart';
-import 'package:kingtech/routes/app_pages.dart';
+import 'package:risatech/core/theme/app_palette.dart';
+import 'package:risatech/core/theme/theme_service.dart';
+import 'package:risatech/core/services/connectivity_service.dart';
+import 'package:risatech/core/services/performance_service.dart';
+import 'package:risatech/core/services/version_check_service.dart';
+import 'package:risatech/core/services/version_check_controller.dart';
+import 'package:risatech/routes/app_pages.dart';
 import 'core/state/blog_store.dart';
 import 'core/theme/app_theme.dart';
 import 'modules/category/category_page.dart';
@@ -63,7 +63,7 @@ Future<void> main() async {
   // Initialize other services in background to speed up startup
   _initializeBackgroundServices();
 
-  runApp(const kingtechApp());
+  runApp(const risatechApp());
 }
 
 void _handleDeepLink(Uri uri, BlogStore store) {
@@ -220,8 +220,8 @@ void _initializeBackgroundServices() {
   });
 }
 
-class kingtechApp extends StatelessWidget {
-  const kingtechApp({super.key});
+class risatechApp extends StatelessWidget {
+  const risatechApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -229,12 +229,12 @@ class kingtechApp extends StatelessWidget {
 
     return Obx(() {
       debugPrint(
-        "🎨 kingtechApp - Building with theme mode: ${themeSvc.mode.value}",
+        "🎨 risatechApp - Building with theme mode: ${themeSvc.mode.value}",
       );
-      debugPrint("🎨 kingtechApp - IsDark: ${themeSvc.isDark}");
+      debugPrint("🎨 risatechApp - IsDark: ${themeSvc.isDark}");
 
       return GetMaterialApp(
-        title: 'King Tech',
+        title: 'Risa Tech',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.light,
         darkTheme: AppTheme.dark,
@@ -629,12 +629,12 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
           NavigationDestination(
             icon: Icon(Icons.home_outlined),
             selectedIcon: Icon(Icons.explore),
-            label: 'Home',
+            label: 'Explore',
           ),
           NavigationDestination(
             icon: Icon(Icons.grid_view_rounded),
             selectedIcon: Icon(Icons.grid_view_rounded),
-            label: 'Groups',
+            label: 'Category',
           ),
           NavigationDestination(
             icon: Icon(Icons.favorite_border),

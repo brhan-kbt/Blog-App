@@ -1,4 +1,4 @@
-package com.brhan.kingtech
+package com.tekopia.risatech
 
 import io.flutter.embedding.android.FlutterActivity
 
