@@ -13,114 +13,182 @@ class CategoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final store = Get.find<BlogStore>();
-
     final theme = Theme.of(context);
     final palette =
         theme.extension<AppPalette>() ?? AppPalette.fromTheme(theme);
 
     return Obx(() {
+      // 🔄 Loading State
       if (store.isLoadingCategories.value) {
         return GridView.builder(
+          padding: const EdgeInsets.all(20),
           itemCount: 6,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 3,
             mainAxisExtent: 120,
-            crossAxisSpacing: 18,
-            mainAxisSpacing: 18,
+            crossAxisSpacing: 16,
+            mainAxisSpacing: 16,
           ),
           itemBuilder: (_, __) => const CategoryShimmer(),
         );
       }
 
+      // ❌ Empty/Error State (Modern)
       if (store.categories.isEmpty) {
-        // i want a way to refresh the categories here
-        return Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+        return RefreshIndicator(
+          onRefresh: () => store.fetchCategories(),
+          child: ListView(
             children: [
-              const Text("Sorry, something went wrong."),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () {
-                  store.fetchCategories();
-                },
-                child: const Text("Refresh"),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.6,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.cloud_off_rounded,
+                      size: 64,
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      "No categories found",
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      "Pull down to refresh",
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: theme.colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                    const SizedBox(height: 14),
+                    ElevatedButton.icon(
+                      onPressed: store.fetchCategories,
+                      icon: const Icon(Icons.refresh),
+                      label: const Text("Try Again"),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
         );
       }
+
+      // 🔍 Filter
       final q = store.query.value.trim().toLowerCase();
       final List<Category> cats = store.categories;
-      final byQuery = q.isEmpty
+      final filtered = q.isEmpty
           ? cats
           : cats.where((c) => c.name.toLowerCase().contains(q)).toList();
 
-      return GridView.builder(
-        padding: const EdgeInsets.fromLTRB(24, 16, 24, 32),
-        itemCount: byQuery.length,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          mainAxisExtent: 120,
-          crossAxisSpacing: 18,
-          mainAxisSpacing: 18,
+      return RefreshIndicator(
+        onRefresh: () => store.fetchCategories(),
+        child: GridView.builder(
+          padding: const EdgeInsets.fromLTRB(20, 16, 20, 30),
+          itemCount: filtered.length,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,
+            mainAxisExtent: 120,
+            crossAxisSpacing: 16,
+            mainAxisSpacing: 16,
+          ),
+          itemBuilder: (_, i) {
+            final cat = filtered[i];
+
+            return _CategoryCard(
+              category: cat,
+              palette: palette,
+              onTap: () => Get.to(
+                () => CategoryListingPage(catId: cat.id, title: cat.name),
+              ),
+            );
+          },
         ),
-        itemBuilder: (c, i) {
-          final cat = byQuery[i];
-          return InkWell(
-            borderRadius: BorderRadius.circular(16),
-            onTap: () => Get.to(
-              () => CategoryListingPage(catId: cat.id, title: cat.name),
+      );
+    });
+  }
+}
+
+// 🔥 Extracted modern card widget
+class _CategoryCard extends StatelessWidget {
+  final Category category;
+  final VoidCallback onTap;
+  final AppPalette palette;
+
+  const _CategoryCard({
+    required this.category,
+    required this.onTap,
+    required this.palette,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return InkWell(
+      borderRadius: BorderRadius.circular(18),
+      onTap: onTap,
+      child: Ink(
+        decoration: BoxDecoration(
+          color: palette.cardBg,
+          borderRadius: BorderRadius.circular(18),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(.05),
+              blurRadius: 10,
+              offset: const Offset(0, 4),
             ),
-            child: Column(
-              children: [
-                Container(
-                  height: 68,
-                  width: 68,
-                  decoration: BoxDecoration(
-                    color: Brightness.light == theme.brightness
-                        ? Colors.white
-                        : Colors.black,
-                    border: Border.all(color: palette.searchOutline, width: 1),
-                    borderRadius: BorderRadius.circular(18),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(.06),
-                        blurRadius: 12,
-                        offset: const Offset(0, 6),
-                      ),
-                    ],
-                  ),
-                  child: cat.image != null && cat.image!.isNotEmpty
-                      ? ClipRRect(
-                          borderRadius: BorderRadius.circular(18),
-                          child: Image.network(
-                            "${ApiConfig.imageUrl}${cat.image!}",
-                            fit: BoxFit.cover,
-                          ),
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // 🖼 Icon container
+              Container(
+                height: 56,
+                width: 56,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(14),
+                  color: theme.colorScheme.surface,
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(14),
+                  child: category.image != null && category.image!.isNotEmpty
+                      ? Image.network(
+                          "${ApiConfig.imageUrl}${category.image!}",
+                          fit: BoxFit.cover,
+                          errorBuilder: (_, __, ___) =>
+                              const Icon(Icons.folder_outlined),
                         )
                       : Icon(
                           Icons.folder_outlined,
-                          size: 36,
-                          color:
-                              Brightness.light == Theme.of(context).brightness
-                              ? Colors.blueGrey
-                              : Colors.white,
+                          color: theme.colorScheme.onSurfaceVariant,
                         ),
                 ),
-                const SizedBox(height: 10),
-                Text(
-                  cat.name,
-                  textAlign: TextAlign.center,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontWeight: FontWeight.w600),
+              ),
+
+              const SizedBox(height: 10),
+
+              // 📝 Name
+              Text(
+                category.name,
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  fontWeight: FontWeight.w600,
+                  height: 1.2,
                 ),
-              ],
-            ),
-          );
-        },
-      );
-    });
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

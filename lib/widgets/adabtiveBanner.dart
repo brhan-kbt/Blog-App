@@ -5,6 +5,7 @@ import '../core/ads/ad_service.dart';
 
 class AdaptiveBannerAdWidget extends StatefulWidget {
   final EdgeInsetsGeometry? margin;
+
   const AdaptiveBannerAdWidget({super.key, this.margin});
 
   @override
@@ -13,44 +14,59 @@ class AdaptiveBannerAdWidget extends StatefulWidget {
 
 class _AdaptiveBannerAdWidgetState extends State<AdaptiveBannerAdWidget> {
   BannerAd? _ad;
-  bool _loaded = false;
+  bool _isLoaded = false;
+  bool _isLoading = false;
+  double _opacity = 0;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void initState() {
+    super.initState();
     _loadAd();
   }
 
   Future<void> _loadAd() async {
+    if (_isLoading) return;
+    _isLoading = true;
+
     final canRequestAds = await ConsentService().checkCanRequestAds();
     if (!canRequestAds) {
-      debugPrint("🔒 AdaptiveBannerAdWidget - Cannot load ad: no consent");
+      debugPrint("🔒 No consent for ads");
       return;
     }
-    final AnchoredAdaptiveBannerAdSize? size =
-        await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
-          MediaQuery.of(context).size.width.truncate(),
-        );
+
+    final width = MediaQuery.of(context).size.width.truncate();
+
+    final size = await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
+      width,
+    );
 
     if (size == null) {
-      debugPrint("❌ Unable to get adaptive banner size.");
+      debugPrint("❌ Failed to get adaptive size");
       return;
     }
 
-    final BannerAd ad = BannerAd(
+    final ad = BannerAd(
       size: size,
-      adUnitId: AdService.bannerId, // your AdMob unit id
+      adUnitId: AdService.bannerId,
+      request: const AdRequest(),
       listener: BannerAdListener(
-        onAdLoaded: (ad) => setState(() => _loaded = true),
+        onAdLoaded: (ad) {
+          setState(() {
+            _isLoaded = true;
+            _opacity = 1;
+          });
+        },
         onAdFailedToLoad: (ad, error) {
-          debugPrint("❌ Failed to load adaptive banner: $error");
+          debugPrint("❌ Ad failed: $error");
           ad.dispose();
         },
       ),
-      request: const AdRequest(),
     );
 
     await ad.load();
+
+    if (!mounted) return;
+
     setState(() {
       _ad = ad;
     });
@@ -64,14 +80,38 @@ class _AdaptiveBannerAdWidgetState extends State<AdaptiveBannerAdWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (!_loaded || _ad == null) return const SizedBox.shrink();
+    // 🚫 Don't render anything if not ready
+    if (_ad == null) {
+      return _buildPlaceholder();
+    }
 
+    return AnimatedOpacity(
+      duration: const Duration(milliseconds: 500),
+      opacity: _opacity,
+      child: Container(
+        margin: widget.margin ?? const EdgeInsets.symmetric(vertical: 10),
+        alignment: Alignment.center,
+        width: _ad!.size.width.toDouble(),
+        height: _ad!.size.height.toDouble(),
+        child: AdWidget(ad: _ad!),
+      ),
+    );
+  }
+
+  // ✨ Minimal modern placeholder (skeleton style)
+  Widget _buildPlaceholder() {
     return Container(
-      margin: widget.margin ?? const EdgeInsets.symmetric(vertical: 8),
+      margin: widget.margin ?? const EdgeInsets.symmetric(vertical: 10),
+      height: 60,
       alignment: Alignment.center,
-      width: _ad!.size.width.toDouble(),
-      height: _ad!.size.height.toDouble(),
-      child: AdWidget(ad: _ad!),
+      child: Container(
+        width: double.infinity,
+        height: 50,
+        decoration: BoxDecoration(
+          color: Colors.grey.withOpacity(0.15),
+          borderRadius: BorderRadius.circular(12),
+        ),
+      ),
     );
   }
 }

@@ -18,7 +18,7 @@ class FavoritePage extends StatelessWidget {
           icon: Icons.favorite,
           title: 'Whoops!',
           message:
-              "Your favorite list is empty because you didn't add any news in the favorite menu.",
+              "Save your favorite posts in the favorite menu. Your favorite list is empty because you didn't add any news in the favorite menu.",
         );
       }
       return ListView.builder(

@@ -23,7 +23,7 @@ class AppPalette extends ThemeExtension<AppPalette> {
   /// Explicit LIGHT palette (tweak to taste)
   static const AppPalette light = AppPalette(
     primary: Color.fromARGB(255, 2, 96, 159), // e94873
-    searchBg: Color.fromARGB(255, 179, 228, 255), // soft blue-tint chip
+    searchBg: Color.fromARGB(255, 206, 226, 237), // soft blue-tint chip
     searchOutline: Color.fromARGB(255, 255, 205, 179), // slate-300-ish hairline
     searchIcon: Color.fromARGB(255, 3, 72, 142), // slate-600
     chipBg: Color.fromARGB(255, 141, 211, 255), // slate-50/100
