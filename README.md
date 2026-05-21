@@ -1,4 +1,4 @@
-# Smart Tips 
+# Nova Pro 
 
 A new Flutter project.
 

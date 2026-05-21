@@ -41,47 +41,47 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBUv1X8hI_j2ULGcVVatpux1_0pv11Z49U',
-    appId: '1:109450963960:web:7b7c461b36b23cf729c40d',
-    messagingSenderId: '109450963960',
-    projectId: 'smart-tips01',
-    authDomain: 'smart-tips01.firebaseapp.com',
-    storageBucket: 'smart-tips01.firebasestorage.app',
+    apiKey: 'AIzaSyDFAY0ze0I-GG4VkVb-YEaiVyVfcG3RAdA',
+    appId: '1:23824317990:web:47e23cafa1c44a2aeab0e7',
+    messagingSenderId: '23824317990',
+    projectId: 'nova-pro-01',
+    authDomain: 'nova-pro-01.firebaseapp.com',
+    storageBucket: 'nova-pro-01.firebasestorage.app',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCnkL9VMfpAu3oNykAPTCHmbiBY5OylSrw',
-    appId: '1:109450963960:android:65418b430bf9bbe729c40d',
-    messagingSenderId: '109450963960',
-    projectId: 'smart-tips01',
-    storageBucket: 'smart-tips01.firebasestorage.app',
+    apiKey: 'AIzaSyAU_cVjeQ7M5uMaZUT1waPIEUEAkTW5jes',
+    appId: '1:23824317990:android:a295908a8d72d043eab0e7',
+    messagingSenderId: '23824317990',
+    projectId: 'nova-pro-01',
+    storageBucket: 'nova-pro-01.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCng8kWZ2A99r9QfGVWLcNdC6269IKMsqM',
-    appId: '1:109450963960:ios:e04eadc2915051da29c40d',
-    messagingSenderId: '109450963960',
-    projectId: 'smart-tips01',
-    storageBucket: 'smart-tips01.firebasestorage.app',
-    iosBundleId: 'com.tekopia.smarttips',
+    apiKey: 'AIzaSyCZiJlKpJIk8caLnUFRZSMCGJ28NUU_HaA',
+    appId: '1:23824317990:ios:2809138dee6c7c5eeab0e7',
+    messagingSenderId: '23824317990',
+    projectId: 'nova-pro-01',
+    storageBucket: 'nova-pro-01.firebasestorage.app',
+    iosBundleId: 'com.techomia.novapro',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCng8kWZ2A99r9QfGVWLcNdC6269IKMsqM',
-    appId: '1:109450963960:ios:e04eadc2915051da29c40d',
-    messagingSenderId: '109450963960',
-    projectId: 'smart-tips01',
-    storageBucket: 'smart-tips01.firebasestorage.app',
-    iosBundleId: 'com.tekopia.smarttips',
+    apiKey: 'AIzaSyCZiJlKpJIk8caLnUFRZSMCGJ28NUU_HaA',
+    appId: '1:23824317990:ios:2809138dee6c7c5eeab0e7',
+    messagingSenderId: '23824317990',
+    projectId: 'nova-pro-01',
+    storageBucket: 'nova-pro-01.firebasestorage.app',
+    iosBundleId: 'com.techomia.novapro',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyBUv1X8hI_j2ULGcVVatpux1_0pv11Z49U',
-    appId: '1:109450963960:web:ad7c79e3805cba9c29c40d',
-    messagingSenderId: '109450963960',
-    projectId: 'smart-tips01',
-    authDomain: 'smart-tips01.firebaseapp.com',
-    storageBucket: 'smart-tips01.firebasestorage.app',
+    apiKey: 'AIzaSyDFAY0ze0I-GG4VkVb-YEaiVyVfcG3RAdA',
+    appId: '1:23824317990:web:44bdbda23e42d2d3eab0e7',
+    messagingSenderId: '23824317990',
+    projectId: 'nova-pro-01',
+    authDomain: 'nova-pro-01.firebaseapp.com',
+    storageBucket: 'nova-pro-01.firebasestorage.app',
   );
 
 }

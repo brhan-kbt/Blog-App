@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:smart_tips/core/config/api_config.dart';
-import 'package:smart_tips/widgets/post_options_sheet.dart';
+import 'package:novapro/core/config/api_config.dart';
+import 'package:novapro/widgets/post_options_sheet.dart';
 import '../core/theme/app_palette.dart';
 import '../models/post.dart';
 
@@ -136,7 +136,7 @@ class HeroCard extends StatelessWidget {
                     //           palette.primary?.withOpacity(0.2) ??
                     //           Colors.grey.shade300,
                     //       child: Text(
-                    //         'ST',
+                    //         'NP',
                     //         style: TextStyle(
                     //           fontSize: 12,
                     //           fontWeight: FontWeight.w600,
@@ -151,7 +151,7 @@ class HeroCard extends StatelessWidget {
                     //         crossAxisAlignment: CrossAxisAlignment.start,
                     //         children: [
                     //           Text(
-                    //             'Smart Tips',
+                    //             'Nova Pro',
                     //             style: theme.textTheme.bodySmall?.copyWith(
                     //               fontWeight: FontWeight.w600,
                     //             ),
