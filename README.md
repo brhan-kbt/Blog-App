@@ -1,4 +1,4 @@
-# Smart Tips 
+# Kinor Tech 
 
 A new Flutter project.
 

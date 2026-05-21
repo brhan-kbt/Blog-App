@@ -41,47 +41,47 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBUv1X8hI_j2ULGcVVatpux1_0pv11Z49U',
-    appId: '1:109450963960:web:7b7c461b36b23cf729c40d',
-    messagingSenderId: '109450963960',
-    projectId: 'smart-tips01',
-    authDomain: 'smart-tips01.firebaseapp.com',
-    storageBucket: 'smart-tips01.firebasestorage.app',
+    apiKey: 'AIzaSyDS9BMVFSEUd5NysyP2c9d66ZH3NM1Yd1Y',
+    appId: '1:679435049516:web:84469e7a85947ae09ccf89',
+    messagingSenderId: '679435049516',
+    projectId: 'kinor-tech-01',
+    authDomain: 'kinor-tech-01.firebaseapp.com',
+    storageBucket: 'kinor-tech-01.firebasestorage.app',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCnkL9VMfpAu3oNykAPTCHmbiBY5OylSrw',
-    appId: '1:109450963960:android:65418b430bf9bbe729c40d',
-    messagingSenderId: '109450963960',
-    projectId: 'smart-tips01',
-    storageBucket: 'smart-tips01.firebasestorage.app',
+    apiKey: 'AIzaSyDWR1e8toYFlzo9TrvnNzlSwXR7n09MmLY',
+    appId: '1:679435049516:android:805d21b81b1ef5679ccf89',
+    messagingSenderId: '679435049516',
+    projectId: 'kinor-tech-01',
+    storageBucket: 'kinor-tech-01.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCng8kWZ2A99r9QfGVWLcNdC6269IKMsqM',
-    appId: '1:109450963960:ios:e04eadc2915051da29c40d',
-    messagingSenderId: '109450963960',
-    projectId: 'smart-tips01',
-    storageBucket: 'smart-tips01.firebasestorage.app',
-    iosBundleId: 'com.tekopia.smarttips',
+    apiKey: 'AIzaSyCbnRipYIGrbTddeRQUkSDIj1BGrsvDE7o',
+    appId: '1:679435049516:ios:666896bfccb96e369ccf89',
+    messagingSenderId: '679435049516',
+    projectId: 'kinor-tech-01',
+    storageBucket: 'kinor-tech-01.firebasestorage.app',
+    iosBundleId: 'com.techomia.kinortech',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCng8kWZ2A99r9QfGVWLcNdC6269IKMsqM',
-    appId: '1:109450963960:ios:e04eadc2915051da29c40d',
-    messagingSenderId: '109450963960',
-    projectId: 'smart-tips01',
-    storageBucket: 'smart-tips01.firebasestorage.app',
-    iosBundleId: 'com.tekopia.smarttips',
+    apiKey: 'AIzaSyCbnRipYIGrbTddeRQUkSDIj1BGrsvDE7o',
+    appId: '1:679435049516:ios:666896bfccb96e369ccf89',
+    messagingSenderId: '679435049516',
+    projectId: 'kinor-tech-01',
+    storageBucket: 'kinor-tech-01.firebasestorage.app',
+    iosBundleId: 'com.techomia.kinortech',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyBUv1X8hI_j2ULGcVVatpux1_0pv11Z49U',
-    appId: '1:109450963960:web:ad7c79e3805cba9c29c40d',
-    messagingSenderId: '109450963960',
-    projectId: 'smart-tips01',
-    authDomain: 'smart-tips01.firebaseapp.com',
-    storageBucket: 'smart-tips01.firebasestorage.app',
+    apiKey: 'AIzaSyDS9BMVFSEUd5NysyP2c9d66ZH3NM1Yd1Y',
+    appId: '1:679435049516:web:f199282ec097cbbc9ccf89',
+    messagingSenderId: '679435049516',
+    projectId: 'kinor-tech-01',
+    authDomain: 'kinor-tech-01.firebaseapp.com',
+    storageBucket: 'kinor-tech-01.firebasestorage.app',
   );
 
 }

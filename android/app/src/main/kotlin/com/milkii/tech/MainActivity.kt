@@ -1,4 +1,4 @@
-package com.tekopia.smarttips
+package com.techomia.kinortech
 
 import io.flutter.embedding.android.FlutterActivity
 

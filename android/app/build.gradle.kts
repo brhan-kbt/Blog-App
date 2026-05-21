@@ -19,7 +19,7 @@ plugins {
 }
 
 android {
-    namespace = "com.tekopia.smarttips"
+    namespace = "com.techomia.kinortech"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -35,7 +35,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.tekopia.smarttips"
+        applicationId = "com.techomia.kinortech"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
