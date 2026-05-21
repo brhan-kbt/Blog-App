@@ -1,4 +1,4 @@
-# Smart Tips 
+# Qalbi Tech 
 
 A new Flutter project.
 

@@ -3,14 +3,14 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:in_app_review/in_app_review.dart';
-import 'package:smart_tips/modules/settings/pages/push_notification_page.dart';
+import 'package:qalbitech/modules/settings/pages/push_notification_page.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:smart_tips/core/theme/app_palette.dart';
-import 'package:smart_tips/core/theme/theme_service.dart';
-import 'package:smart_tips/modules/settings/pages/about_page.dart';
-import 'package:smart_tips/modules/settings/pages/privacy_policy_page.dart';
-import 'package:smart_tips/modules/settings/pages/publisher_info_page.dart';
-import 'package:smart_tips/widgets/privacy_options_button.dart';
+import 'package:qalbitech/core/theme/app_palette.dart';
+import 'package:qalbitech/core/theme/theme_service.dart';
+import 'package:qalbitech/modules/settings/pages/about_page.dart';
+import 'package:qalbitech/modules/settings/pages/privacy_policy_page.dart';
+import 'package:qalbitech/modules/settings/pages/publisher_info_page.dart';
+import 'package:qalbitech/widgets/privacy_options_button.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:app_settings/app_settings.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -230,13 +230,13 @@ class SettingsPage extends StatelessWidget {
     if (await inAppReview.isAvailable()) {
       inAppReview.requestReview();
     } else {
-      inAppReview.openStoreListing(appStoreId: "com.tekopia.smarttips");
+      inAppReview.openStoreListing(appStoreId: "com.techomia.qalbitech");
     }
   }
 
   void _shareApp() {
     Share.share(
-      "Check out Smart Tips App - Your ultimate tech companion! https://play.google.com/store/apps/details?id=com.tekopia.smarttips",
+      "Check out Qalbi Tech App - Your ultimate tech companion! https://play.google.com/store/apps/details?id=com.techomia.qalbitech",
     );
   }
 

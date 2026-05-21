@@ -41,47 +41,47 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBUv1X8hI_j2ULGcVVatpux1_0pv11Z49U',
-    appId: '1:109450963960:web:7b7c461b36b23cf729c40d',
-    messagingSenderId: '109450963960',
-    projectId: 'smart-tips01',
-    authDomain: 'smart-tips01.firebaseapp.com',
-    storageBucket: 'smart-tips01.firebasestorage.app',
+    apiKey: 'AIzaSyBdABKM7kqaXo6NmxlahvUuSEtx5TchfI0',
+    appId: '1:651934205281:web:a0c1f3b7b3fde257c9b120',
+    messagingSenderId: '651934205281',
+    projectId: 'qalbi-tech-01',
+    authDomain: 'qalbi-tech-01.firebaseapp.com',
+    storageBucket: 'qalbi-tech-01.firebasestorage.app',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCnkL9VMfpAu3oNykAPTCHmbiBY5OylSrw',
-    appId: '1:109450963960:android:65418b430bf9bbe729c40d',
-    messagingSenderId: '109450963960',
-    projectId: 'smart-tips01',
-    storageBucket: 'smart-tips01.firebasestorage.app',
+    apiKey: 'AIzaSyAUKIa5sc0gLxWj_P30E1xb58ew8tnaIPo',
+    appId: '1:651934205281:android:8443baa84d6ba1d1c9b120',
+    messagingSenderId: '651934205281',
+    projectId: 'qalbi-tech-01',
+    storageBucket: 'qalbi-tech-01.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCng8kWZ2A99r9QfGVWLcNdC6269IKMsqM',
-    appId: '1:109450963960:ios:e04eadc2915051da29c40d',
-    messagingSenderId: '109450963960',
-    projectId: 'smart-tips01',
-    storageBucket: 'smart-tips01.firebasestorage.app',
-    iosBundleId: 'com.tekopia.smarttips',
+    apiKey: 'AIzaSyChkaa6UCCZR1yT63EiSyfkdzYpkq3rwM4',
+    appId: '1:651934205281:ios:41a5b1ad20eedd36c9b120',
+    messagingSenderId: '651934205281',
+    projectId: 'qalbi-tech-01',
+    storageBucket: 'qalbi-tech-01.firebasestorage.app',
+    iosBundleId: 'com.techomia.qalbitech',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCng8kWZ2A99r9QfGVWLcNdC6269IKMsqM',
-    appId: '1:109450963960:ios:e04eadc2915051da29c40d',
-    messagingSenderId: '109450963960',
-    projectId: 'smart-tips01',
-    storageBucket: 'smart-tips01.firebasestorage.app',
-    iosBundleId: 'com.tekopia.smarttips',
+    apiKey: 'AIzaSyChkaa6UCCZR1yT63EiSyfkdzYpkq3rwM4',
+    appId: '1:651934205281:ios:41a5b1ad20eedd36c9b120',
+    messagingSenderId: '651934205281',
+    projectId: 'qalbi-tech-01',
+    storageBucket: 'qalbi-tech-01.firebasestorage.app',
+    iosBundleId: 'com.techomia.qalbitech',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyBUv1X8hI_j2ULGcVVatpux1_0pv11Z49U',
-    appId: '1:109450963960:web:ad7c79e3805cba9c29c40d',
-    messagingSenderId: '109450963960',
-    projectId: 'smart-tips01',
-    authDomain: 'smart-tips01.firebaseapp.com',
-    storageBucket: 'smart-tips01.firebasestorage.app',
+    apiKey: 'AIzaSyBdABKM7kqaXo6NmxlahvUuSEtx5TchfI0',
+    appId: '1:651934205281:web:8723172127345a9fc9b120',
+    messagingSenderId: '651934205281',
+    projectId: 'qalbi-tech-01',
+    authDomain: 'qalbi-tech-01.firebaseapp.com',
+    storageBucket: 'qalbi-tech-01.firebasestorage.app',
   );
 
 }
