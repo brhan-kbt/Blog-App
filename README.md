@@ -1,4 +1,4 @@
-# Smart Tips 
+# Kelo Tech 
 
 A new Flutter project.
 

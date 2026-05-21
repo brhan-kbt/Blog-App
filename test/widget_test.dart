@@ -8,14 +8,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:smart_tips/main.dart';
+import 'package:kelotech/main.dart';
 
 void main() {
   testWidgets('App loads successfully', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const smart_tipsApp());
+    await tester.pumpWidget(const kelotechApp());
 
     // Verify that the app loads without crashing
-    expect(find.byType(smart_tipsApp), findsOneWidget);
+    expect(find.byType(kelotechApp), findsOneWidget);
   });
 }

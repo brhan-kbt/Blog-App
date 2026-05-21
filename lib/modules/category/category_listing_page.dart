@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:smart_tips/models/post.dart';
-import 'package:smart_tips/widgets/adabtiveBanner.dart';
-import 'package:smart_tips/widgets/hero_card.dart';
-import 'package:smart_tips/widgets/post_options_sheet.dart';
-import 'package:smart_tips/widgets/shimmer_widgets.dart';
+import 'package:kelotech/models/post.dart';
+import 'package:kelotech/widgets/adabtiveBanner.dart';
+import 'package:kelotech/widgets/hero_card.dart';
+import 'package:kelotech/widgets/post_options_sheet.dart';
+import 'package:kelotech/widgets/shimmer_widgets.dart';
 import '../../core/state/blog_store.dart';
 import '../../widgets/post_tile.dart';
 import '../post_detail/post_detail_page.dart';
