@@ -1,40 +1,21 @@
 {
   "project_info": {
-    "project_number": "109450963960",
-    "project_id": "smart-tips01",
-    "storage_bucket": "smart-tips01.firebasestorage.app"
+    "project_number": "947768860284",
+    "project_id": "qaro-tech-01",
+    "storage_bucket": "qaro-tech-01.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:109450963960:android:83f866edf562ed6f29c40d",
+        "mobilesdk_app_id": "1:947768860284:android:763570288da6e8af9873f9",
         "android_client_info": {
-          "package_name": "com.tekopia.smart_tips"
+          "package_name": "com.techomia.qarotech"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCnkL9VMfpAu3oNykAPTCHmbiBY5OylSrw"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:109450963960:android:65418b430bf9bbe729c40d",
-        "android_client_info": {
-          "package_name": "com.tekopia.smarttips"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCnkL9VMfpAu3oNykAPTCHmbiBY5OylSrw"
+          "current_key": "AIzaSyCSqwTHkt9OFPPyCK2-6DOqae2-DPOXhl4"
         }
       ],
       "services": {

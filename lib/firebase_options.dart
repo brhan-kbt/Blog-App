@@ -41,47 +41,47 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBUv1X8hI_j2ULGcVVatpux1_0pv11Z49U',
-    appId: '1:109450963960:web:7b7c461b36b23cf729c40d',
-    messagingSenderId: '109450963960',
-    projectId: 'smart-tips01',
-    authDomain: 'smart-tips01.firebaseapp.com',
-    storageBucket: 'smart-tips01.firebasestorage.app',
+    apiKey: 'AIzaSyApXJoCRlHfRrXdsfuAsm1aHAwLDRiofGA',
+    appId: '1:947768860284:web:e103ab2fd8b52f139873f9',
+    messagingSenderId: '947768860284',
+    projectId: 'qaro-tech-01',
+    authDomain: 'qaro-tech-01.firebaseapp.com',
+    storageBucket: 'qaro-tech-01.firebasestorage.app',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCnkL9VMfpAu3oNykAPTCHmbiBY5OylSrw',
-    appId: '1:109450963960:android:65418b430bf9bbe729c40d',
-    messagingSenderId: '109450963960',
-    projectId: 'smart-tips01',
-    storageBucket: 'smart-tips01.firebasestorage.app',
+    apiKey: 'AIzaSyCSqwTHkt9OFPPyCK2-6DOqae2-DPOXhl4',
+    appId: '1:947768860284:android:763570288da6e8af9873f9',
+    messagingSenderId: '947768860284',
+    projectId: 'qaro-tech-01',
+    storageBucket: 'qaro-tech-01.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCng8kWZ2A99r9QfGVWLcNdC6269IKMsqM',
-    appId: '1:109450963960:ios:e04eadc2915051da29c40d',
-    messagingSenderId: '109450963960',
-    projectId: 'smart-tips01',
-    storageBucket: 'smart-tips01.firebasestorage.app',
-    iosBundleId: 'com.tekopia.smarttips',
+    apiKey: 'AIzaSyB9bLqzE-iyuo8PVG3pUDv8RIehsYns9KI',
+    appId: '1:947768860284:ios:ebb64abdf922dca09873f9',
+    messagingSenderId: '947768860284',
+    projectId: 'qaro-tech-01',
+    storageBucket: 'qaro-tech-01.firebasestorage.app',
+    iosBundleId: 'com.techomia.qarotech',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCng8kWZ2A99r9QfGVWLcNdC6269IKMsqM',
-    appId: '1:109450963960:ios:e04eadc2915051da29c40d',
-    messagingSenderId: '109450963960',
-    projectId: 'smart-tips01',
-    storageBucket: 'smart-tips01.firebasestorage.app',
-    iosBundleId: 'com.tekopia.smarttips',
+    apiKey: 'AIzaSyB9bLqzE-iyuo8PVG3pUDv8RIehsYns9KI',
+    appId: '1:947768860284:ios:ebb64abdf922dca09873f9',
+    messagingSenderId: '947768860284',
+    projectId: 'qaro-tech-01',
+    storageBucket: 'qaro-tech-01.firebasestorage.app',
+    iosBundleId: 'com.techomia.qarotech',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyBUv1X8hI_j2ULGcVVatpux1_0pv11Z49U',
-    appId: '1:109450963960:web:ad7c79e3805cba9c29c40d',
-    messagingSenderId: '109450963960',
-    projectId: 'smart-tips01',
-    authDomain: 'smart-tips01.firebaseapp.com',
-    storageBucket: 'smart-tips01.firebasestorage.app',
+    apiKey: 'AIzaSyApXJoCRlHfRrXdsfuAsm1aHAwLDRiofGA',
+    appId: '1:947768860284:web:f18e16a06fd6ee7a9873f9',
+    messagingSenderId: '947768860284',
+    projectId: 'qaro-tech-01',
+    authDomain: 'qaro-tech-01.firebaseapp.com',
+    storageBucket: 'qaro-tech-01.firebasestorage.app',
   );
 
 }

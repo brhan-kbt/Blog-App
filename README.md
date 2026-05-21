@@ -1,4 +1,4 @@
-# Smart Tips 
+# Qaro Tech 
 
 A new Flutter project.
 

@@ -8,11 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:smart_tips/core/config/api_config.dart';
-import 'package:smart_tips/core/config/fcm_config.dart';
-import 'package:smart_tips/firebase_options.dart';
-import 'package:smart_tips/modules/category/category_listing_page.dart';
-import 'package:smart_tips/modules/post_detail/post_detail_page.dart';
+import 'package:qarotech/core/config/api_config.dart';
+import 'package:qarotech/core/config/fcm_config.dart';
+import 'package:qarotech/firebase_options.dart';
+import 'package:qarotech/modules/category/category_listing_page.dart';
+import 'package:qarotech/modules/post_detail/post_detail_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// FCM Service for handling push notifications
