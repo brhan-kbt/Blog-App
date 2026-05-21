@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:smart_tips/modules/post_detail/post_detail_page.dart';
+import 'package:superpro/modules/post_detail/post_detail_page.dart';
 import 'package:app_links/app_links.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -8,19 +8,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:smart_tips/core/consent/consent_service.dart';
-import 'package:smart_tips/core/services/fcm_service.dart';
-import 'package:smart_tips/firebase_options.dart';
-import 'package:smart_tips/widgets/adabtiveBanner.dart';
+import 'package:superpro/core/consent/consent_service.dart';
+import 'package:superpro/core/services/fcm_service.dart';
+import 'package:superpro/firebase_options.dart';
+import 'package:superpro/widgets/adabtiveBanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import 'package:smart_tips/core/theme/app_palette.dart';
-import 'package:smart_tips/core/theme/theme_service.dart';
-import 'package:smart_tips/core/services/connectivity_service.dart';
-import 'package:smart_tips/core/services/performance_service.dart';
-import 'package:smart_tips/core/services/version_check_service.dart';
-import 'package:smart_tips/core/services/version_check_controller.dart';
-import 'package:smart_tips/routes/app_pages.dart';
+import 'package:superpro/core/theme/app_palette.dart';
+import 'package:superpro/core/theme/theme_service.dart';
+import 'package:superpro/core/services/connectivity_service.dart';
+import 'package:superpro/core/services/performance_service.dart';
+import 'package:superpro/core/services/version_check_service.dart';
+import 'package:superpro/core/services/version_check_controller.dart';
+import 'package:superpro/routes/app_pages.dart';
 import 'core/state/blog_store.dart';
 import 'core/theme/app_theme.dart';
 import 'modules/category/category_page.dart';
@@ -63,7 +63,7 @@ Future<void> main() async {
   // Initialize other services in background to speed up startup
   _initializeBackgroundServices();
 
-  runApp(const smart_tipsApp());
+  runApp(const superproApp());
 }
 
 void _handleDeepLink(Uri uri, BlogStore store) {
@@ -220,8 +220,8 @@ void _initializeBackgroundServices() {
   });
 }
 
-class smart_tipsApp extends StatelessWidget {
-  const smart_tipsApp({super.key});
+class superproApp extends StatelessWidget {
+  const superproApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -229,12 +229,12 @@ class smart_tipsApp extends StatelessWidget {
 
     return Obx(() {
       debugPrint(
-        "🎨 smart_tipsApp - Building with theme mode: ${themeSvc.mode.value}",
+        "🎨 superproApp - Building with theme mode: ${themeSvc.mode.value}",
       );
-      debugPrint("🎨 smart_tipsApp - IsDark: ${themeSvc.isDark}");
+      debugPrint("🎨 superproApp - IsDark: ${themeSvc.isDark}");
 
       return GetMaterialApp(
-        title: 'Smart Tips',
+        title: 'Super Pro',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.light,
         darkTheme: AppTheme.dark,
@@ -629,7 +629,7 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
           NavigationDestination(
             icon: Icon(Icons.home_outlined),
             selectedIcon: Icon(Icons.explore),
-            label: 'Home',
+            label: 'Super',
           ),
           NavigationDestination(
             icon: Icon(Icons.grid_view_rounded),
@@ -639,7 +639,7 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
           NavigationDestination(
             icon: Icon(Icons.favorite_border),
             selectedIcon: Icon(Icons.favorite),
-            label: 'Bookmarks',
+            label: 'Favorites',
           ),
         ],
       ),

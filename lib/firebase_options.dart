@@ -41,47 +41,47 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBUv1X8hI_j2ULGcVVatpux1_0pv11Z49U',
-    appId: '1:109450963960:web:7b7c461b36b23cf729c40d',
-    messagingSenderId: '109450963960',
-    projectId: 'smart-tips01',
-    authDomain: 'smart-tips01.firebaseapp.com',
-    storageBucket: 'smart-tips01.firebasestorage.app',
+    apiKey: 'AIzaSyD5GkmdAs5gbAeJOe596NceLPkrJK86dNc',
+    appId: '1:953049909187:web:dde918f2445cd8f4b6df76',
+    messagingSenderId: '953049909187',
+    projectId: 'super-pro-01',
+    authDomain: 'super-pro-01.firebaseapp.com',
+    storageBucket: 'super-pro-01.firebasestorage.app',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCnkL9VMfpAu3oNykAPTCHmbiBY5OylSrw',
-    appId: '1:109450963960:android:65418b430bf9bbe729c40d',
-    messagingSenderId: '109450963960',
-    projectId: 'smart-tips01',
-    storageBucket: 'smart-tips01.firebasestorage.app',
+    apiKey: 'AIzaSyBRupvJhglw1yrzj70BjHWINZiWR_PIFGI',
+    appId: '1:953049909187:android:70febfb5bb0d2829b6df76',
+    messagingSenderId: '953049909187',
+    projectId: 'super-pro-01',
+    storageBucket: 'super-pro-01.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCng8kWZ2A99r9QfGVWLcNdC6269IKMsqM',
-    appId: '1:109450963960:ios:e04eadc2915051da29c40d',
-    messagingSenderId: '109450963960',
-    projectId: 'smart-tips01',
-    storageBucket: 'smart-tips01.firebasestorage.app',
-    iosBundleId: 'com.tekopia.smarttips',
+    apiKey: 'AIzaSyDEDqpZM-872-2x62EPJtFf8yroIECw3mc',
+    appId: '1:953049909187:ios:c15bf29325cb746db6df76',
+    messagingSenderId: '953049909187',
+    projectId: 'super-pro-01',
+    storageBucket: 'super-pro-01.firebasestorage.app',
+    iosBundleId: 'com.techomia.superpro',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCng8kWZ2A99r9QfGVWLcNdC6269IKMsqM',
-    appId: '1:109450963960:ios:e04eadc2915051da29c40d',
-    messagingSenderId: '109450963960',
-    projectId: 'smart-tips01',
-    storageBucket: 'smart-tips01.firebasestorage.app',
-    iosBundleId: 'com.tekopia.smarttips',
+    apiKey: 'AIzaSyDEDqpZM-872-2x62EPJtFf8yroIECw3mc',
+    appId: '1:953049909187:ios:c15bf29325cb746db6df76',
+    messagingSenderId: '953049909187',
+    projectId: 'super-pro-01',
+    storageBucket: 'super-pro-01.firebasestorage.app',
+    iosBundleId: 'com.techomia.superpro',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyBUv1X8hI_j2ULGcVVatpux1_0pv11Z49U',
-    appId: '1:109450963960:web:ad7c79e3805cba9c29c40d',
-    messagingSenderId: '109450963960',
-    projectId: 'smart-tips01',
-    authDomain: 'smart-tips01.firebaseapp.com',
-    storageBucket: 'smart-tips01.firebasestorage.app',
+    apiKey: 'AIzaSyD5GkmdAs5gbAeJOe596NceLPkrJK86dNc',
+    appId: '1:953049909187:web:d50cf6547bcdee97b6df76',
+    messagingSenderId: '953049909187',
+    projectId: 'super-pro-01',
+    authDomain: 'super-pro-01.firebaseapp.com',
+    storageBucket: 'super-pro-01.firebasestorage.app',
   );
 
 }

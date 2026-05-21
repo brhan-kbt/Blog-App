@@ -1,8 +1,8 @@
-import 'package:smart_tips/core/config/api_config.dart';
+import 'package:superpro/core/config/api_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:smart_tips/core/theme/app_palette.dart';
+import 'package:superpro/core/theme/app_palette.dart';
 import 'package:share_plus/share_plus.dart';
 import '../core/state/blog_store.dart';
 import '../models/post.dart';
