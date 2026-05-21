@@ -1,4 +1,4 @@
-# Smart Tips 
+# Apple Tips 
 
 A new Flutter project.
 

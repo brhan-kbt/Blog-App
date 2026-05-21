@@ -1,5 +1,5 @@
 import 'package:intl/intl.dart';
-import 'package:smart_tips/models/user_ref.dart';
+import 'package:appletips/models/user_ref.dart';
 import 'category.dart';
 
 class Post {

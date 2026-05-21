@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:smart_tips/core/services/connectivity_service.dart';
-import 'package:smart_tips/core/services/fcm_service.dart';
-import 'package:smart_tips/core/state/blog_store.dart';
-import 'package:smart_tips/core/theme/theme_service.dart';
+import 'package:appletips/core/services/connectivity_service.dart';
+import 'package:appletips/core/services/fcm_service.dart';
+import 'package:appletips/core/state/blog_store.dart';
+import 'package:appletips/core/theme/theme_service.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -50,7 +50,7 @@ class _SplashScreenState extends State<SplashScreen> {
       // Check notifications
       await _handleNotifications();
 
-      await Future.delayed(const Duration(milliseconds: 500));
+      await Future.delayed(const Duration(milliseconds: 800));
 
       if (!mounted) return;
 
@@ -92,127 +92,155 @@ class _SplashScreenState extends State<SplashScreen> {
               end: Alignment.bottomRight,
               colors: isDark
                   ? [
-                      Color.fromARGB(255, 8, 8, 41),
-                      Color.fromARGB(255, 13, 20, 39),
+                      const Color(0xFF1A1A2E),
+                      const Color(0xFF16213E),
+                      const Color(0xFF0F3460),
                     ]
                   : [
-                      Color.fromARGB(255, 167, 179, 232),
-                      Color.fromARGB(255, 92, 92, 104),
+                      const Color(0xFFE8F0FE),
+                      const Color(0xFFE0E7FF),
+                      const Color(0xFFF3E8FF),
                     ],
             ),
           ),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // Logo with different shape
-                Container(
-                  width: 120,
-                  height: 120,
+          child: Stack(
+            children: [
+              // Decorative circles
+              Positioned(
+                top: -100,
+                right: -100,
+                child: Container(
+                  width: 250,
+                  height: 250,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    gradient: LinearGradient(
-                      colors: isDark
-                          ? [Colors.blue[700]!, Colors.purple[700]!]
-                          : [Colors.white, Colors.white70],
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
-                        blurRadius: 30,
-                        spreadRadius: 5,
-                      ),
-                    ],
-                  ),
-                  child: ClipOval(
-                    // This actually clips the child to circle
-                    child: Container(
-                      color: isDark ? Colors.white24 : Colors.white,
-                      child: Image.asset(
-                        'assets/smart_tips_logo.png',
-                        fit: BoxFit
-                            .contain, // Use contain to keep logo fully visible
-                        width: 120,
-                        height: 120,
-                      ),
-                    ),
+                    color: isDark
+                        ? Colors.blue.withOpacity(0.1)
+                        : Colors.purple.withOpacity(0.1),
                   ),
                 ),
-
-                const SizedBox(height: 32),
-
-                // Title with different style
-                Text(
-                  "Smart Tips",
-                  style: TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.w600,
-                    letterSpacing: 1.2,
-                    color: isDark ? Colors.white : Colors.white,
-                    shadows: [
-                      Shadow(
-                        blurRadius: 10,
-                        color: Colors.black.withOpacity(0.2),
-                        offset: const Offset(2, 2),
-                      ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(height: 16),
-
-                // Different divider style
-                Container(
-                  width: 50,
-                  height: 3,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: isDark
-                          ? [Colors.blue[400]!, Colors.purple[400]!]
-                          : [Colors.white, Colors.white70],
-                    ),
-                    borderRadius: BorderRadius.circular(2),
-                  ),
-                ),
-
-                const SizedBox(height: 48),
-
-                // Different loader style
-                Container(
-                  width: 40,
-                  height: 40,
+              ),
+              Positioned(
+                bottom: -50,
+                left: -50,
+                child: Container(
+                  width: 200,
+                  height: 200,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    border: Border.all(
-                      color: isDark ? Colors.white24 : Colors.white,
-                      width: 2,
-                    ),
-                  ),
-                  child: const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                    ),
+                    color: isDark
+                        ? Colors.purple.withOpacity(0.1)
+                        : Colors.blue.withOpacity(0.1),
                   ),
                 ),
+              ),
 
-                const SizedBox(height: 32),
+              // Main content
+              Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // Glassmorphism logo container
+                    Container(
+                      width: 130,
+                      height: 130,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: isDark
+                            ? Colors.white.withOpacity(0.05)
+                            : Colors.white.withOpacity(0.5),
+                        border: Border.all(
+                          color: isDark
+                              ? Colors.white.withOpacity(0.1)
+                              : Colors.white,
+                          width: 1,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            blurRadius: 20,
+                            spreadRadius: 5,
+                          ),
+                        ],
+                      ),
+                      child: ClipOval(
+                        child: Image.asset(
+                          'assets/appletips_logo.png',
+                          fit: BoxFit.contain,
+                          width: 90,
+                          height: 90,
+                        ),
+                      ),
+                    ),
 
-                // Optional loading text
-                Text(
-                  "Loading...",
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: isDark ? Colors.grey[500] : Colors.white70,
-                    letterSpacing: 0.5,
-                  ),
+                    const SizedBox(height: 40),
+
+                    // App name with modern font weight
+                    Text(
+                      "Apple Tips",
+                      style: TextStyle(
+                        fontSize: 26,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: 5,
+                        color: isDark ? Colors.white : Colors.black87,
+                      ),
+                    ),
+
+                    const SizedBox(height: 12),
+
+                    // Subtitle
+                    Text(
+                      "Powered by Innovation",
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w300,
+                        letterSpacing: 2,
+                        color: isDark ? Colors.white54 : Colors.black54,
+                      ),
+                    ),
+
+                    const SizedBox(height: 80),
+
+                    // Modern loading dots
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        _buildLoadingDot(isDark, 0),
+                        const SizedBox(width: 8),
+                        _buildLoadingDot(isDark, 1),
+                        const SizedBox(width: 8),
+                        _buildLoadingDot(isDark, 2),
+                      ],
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       );
     });
+  }
+
+  Widget _buildLoadingDot(bool isDark, int index) {
+    return StatefulBuilder(
+      builder: (context, setState) {
+        Future.delayed(Duration(milliseconds: 300 * index), () {
+          if (mounted) {
+            setState(() {});
+          }
+        });
+
+        return AnimatedContainer(
+          duration: const Duration(milliseconds: 600),
+          width: 6,
+          height: 6,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: isDark ? Colors.white : Colors.black,
+          ),
+        );
+      },
+    );
   }
 }
