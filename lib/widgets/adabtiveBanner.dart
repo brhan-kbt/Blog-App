@@ -1,3 +1,4 @@
+import 'package:abayjobs/core/services/reward_service.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:abayjobs/core/consent/consent_service.dart';
@@ -22,6 +23,13 @@ class _AdaptiveBannerAdWidgetState extends State<AdaptiveBannerAdWidget> {
   }
 
   Future<void> _loadAd() async {
+    // Check if user has ad-free status
+    if (RewardService().isAdFree()) {
+      debugPrint(
+        "🔒 AdaptiveBannerAdWidget - User has ad-free status, skipping ad",
+      );
+      return;
+    }
     final canRequestAds = await ConsentService().checkCanRequestAds();
     if (!canRequestAds) {
       debugPrint("🔒 AdaptiveBannerAdWidget - Cannot load ad: no consent");
