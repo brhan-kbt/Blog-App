@@ -507,9 +507,9 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final choice = Random().nextInt(3); // 0 none, 1 interstitial, 2 rewarded
+    // final choice = Random().nextInt(3); // 0 none, 1 interstitial, 2 rewarded
 
-    print("Random choice: $choice");
+    // print("Random choice: $choice");
 
     final palette =
         theme.extension<AppPalette>() ?? AppPalette.fromTheme(theme);

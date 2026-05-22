@@ -23,6 +23,7 @@ class BlogStore extends GetxController {
   final isLoadingSettings = false.obs;
 
   final settings = Rxn<AppSettings>();
+  final adpExist = false.obs;
 
   // recent searches (persisted)
   final recentSearches = <String>[].obs;
@@ -38,6 +39,7 @@ class BlogStore extends GetxController {
     fetchPosts();
     fetchCategories();
     loadSettings(); // load settings at startup
+    fetchAppConfig();
   }
 
   List<Post> get filtered =>
@@ -60,6 +62,21 @@ class BlogStore extends GetxController {
     }
   }
 
+  Future<void> fetchAppConfig() async {
+    try {
+      final response = await http.get(Uri.parse(ApiConfig.appConfig));
+      if (response.statusCode == 200) {
+        final jsonBody = jsonDecode(response.body);
+        final data = (jsonBody is Map && jsonBody.containsKey('data') && jsonBody['data'] is Map) 
+            ? jsonBody['data'] 
+            : jsonBody;
+        adpExist.value = data['adp_exist'] == true || data['adp_exist'] == 'true' || data['adp_exist'] == 1;
+      }
+    } catch (e) {
+      debugPrint("Error fetching app config: $e");
+    }
+  }
+  
   static Future<AppSettings> fetchSettings() async {
     final response = await http.get(Uri.parse(ApiConfig.settings));
 

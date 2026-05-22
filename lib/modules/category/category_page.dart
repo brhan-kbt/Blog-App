@@ -38,7 +38,7 @@ class CategoryPage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text("Sorry, something went wrong."),
+              const Text("Sorry, something went wrong. Please try again."),
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
