@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sheger_tech/core/ads/ad_service.dart';
 import 'package:sheger_tech/core/config/api_config.dart';
-import 'package:sheger_tech/core/services/fcm_service.dart';
 import 'package:sheger_tech/core/theme/app_palette.dart';
 import 'package:sheger_tech/widgets/adabtiveBanner.dart';
-import 'package:sheger_tech/widgets/banner_ad_widget.dart';
 import 'package:sheger_tech/widgets/post_detail_shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../core/state/blog_store.dart';
 import '../../models/post.dart';
 import '../../widgets/post_tile.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:sheger_tech/core/ads/ad_service.dart';
+import 'package:sheger_tech/widgets/banner_ad_widget.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:sheger_tech/core/services/fcm_service.dart';
 
 class PostDetailPage extends StatefulWidget {
   final int postId;
@@ -28,13 +28,16 @@ class _PostDetailPageState extends State<PostDetailPage> {
   Post? post;
   List<Post> suggested = [];
   bool loading = true;
+  bool get policy => store.adpExist.value;
 
   @override
   void initState() {
     super.initState();
     _fetchPost();
     // Randomly show interstitial or rewarded (or none) on open
-    AdService.instance.showRandomOpenAd();
+    if (!policy) {
+      AdService.instance.showRandomOpenAd();
+    }
   }
 
   void _handleBackNavigation() {
@@ -224,7 +227,8 @@ class _PostDetailPageState extends State<PostDetailPage> {
                   ),
                 ),
                 // Large banner below the button
-                const BannerAdWidget(size: AdSize(width: 380, height: 280)),
+                if (!policy)
+                  const BannerAdWidget(size: AdSize(width: 380, height: 280)),
                 const SizedBox(height: 24),
 
                 if (suggested.isNotEmpty)
