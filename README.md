@@ -1,4 +1,4 @@
-# Habesha Tech 
+# Sheger Tech 
 
 A new Flutter project.
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:habesha_tech/modules/category/category_title_list.dart';
-import 'package:habesha_tech/widgets/adabtiveBanner.dart';
-import 'package:habesha_tech/widgets/shimmer_widgets.dart';
+import 'package:sheger_tech/modules/category/category_title_list.dart';
+import 'package:sheger_tech/widgets/adabtiveBanner.dart';
+import 'package:sheger_tech/widgets/shimmer_widgets.dart';
 import '../../core/state/blog_store.dart';
 import '../../models/post.dart';
 import '../../widgets/post_tile.dart';
@@ -46,7 +46,7 @@ class RecentPage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text("Sorry, something went wrong."),
+              const Text("Sorry, something went wrong.Please try again!"),
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {

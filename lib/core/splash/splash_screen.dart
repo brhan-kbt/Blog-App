@@ -2,10 +2,10 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:habesha_tech/core/services/connectivity_service.dart';
-import 'package:habesha_tech/core/services/fcm_service.dart';
-import 'package:habesha_tech/core/state/blog_store.dart';
-import 'package:habesha_tech/core/theme/theme_service.dart';
+import 'package:sheger_tech/core/services/connectivity_service.dart';
+import 'package:sheger_tech/core/services/fcm_service.dart';
+import 'package:sheger_tech/core/state/blog_store.dart';
+import 'package:sheger_tech/core/theme/theme_service.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -37,13 +37,9 @@ class _SplashScreenState extends State<SplashScreen>
       duration: const Duration(seconds: 4),
     )..repeat(reverse: true);
 
-    _patternAnimation = Tween<double>(
-      begin: -0.2,
-      end: 0.2,
-    ).animate(CurvedAnimation(
-      parent: _patternController,
-      curve: Curves.easeInOut,
-    ));
+    _patternAnimation = Tween<double>(begin: -0.2, end: 0.2).animate(
+      CurvedAnimation(parent: _patternController, curve: Curves.easeInOut),
+    );
 
     // Text reveal animation
     _textRevealController = AnimationController(
@@ -51,13 +47,12 @@ class _SplashScreenState extends State<SplashScreen>
       duration: const Duration(milliseconds: 1800),
     );
 
-    _textAnimation = Tween<double>(
-      begin: 0,
-      end: 1,
-    ).animate(CurvedAnimation(
-      parent: _textRevealController,
-      curve: Curves.easeOutCubic,
-    ));
+    _textAnimation = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: _textRevealController,
+        curve: Curves.easeOutCubic,
+      ),
+    );
 
     // Ethiopian symbol animation
     _ethiopianSymbolController = AnimationController(
@@ -65,13 +60,12 @@ class _SplashScreenState extends State<SplashScreen>
       duration: const Duration(seconds: 2),
     );
 
-    _symbolAnimation = Tween<double>(
-      begin: 0,
-      end: 1,
-    ).animate(CurvedAnimation(
-      parent: _ethiopianSymbolController,
-      curve: Curves.elasticOut,
-    ));
+    _symbolAnimation = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: _ethiopianSymbolController,
+        curve: Curves.elasticOut,
+      ),
+    );
 
     // Start sequenced animations
     _startAnimationSequence();
@@ -205,9 +199,7 @@ class _SplashScreenState extends State<SplashScreen>
           child: SizedBox(
             width: double.infinity,
             height: 150,
-            child: CustomPaint(
-              painter: _FullWidthEthiopianPatternPainter(),
-            ),
+            child: CustomPaint(painter: _FullWidthEthiopianPatternPainter()),
           ),
         );
       },
@@ -217,9 +209,7 @@ class _SplashScreenState extends State<SplashScreen>
   // Full-width Tech Circuit Background
   Widget _buildFullWidthTechCircuit() {
     return Positioned.fill(
-      child: CustomPaint(
-        painter: _FullWidthTechCircuitPainter(),
-      ),
+      child: CustomPaint(painter: _FullWidthTechCircuitPainter()),
     );
   }
 
@@ -237,10 +227,7 @@ class _SplashScreenState extends State<SplashScreen>
               height: 100,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: Border.all(
-                  color: Colors.amber,
-                  width: 3,
-                ),
+                border: Border.all(color: Colors.amber, width: 3),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.amber.withOpacity(0.4),
@@ -249,9 +236,7 @@ class _SplashScreenState extends State<SplashScreen>
                   ),
                 ],
               ),
-              child: CustomPaint(
-                painter: _EthiopianCrossPainter(),
-              ),
+              child: CustomPaint(painter: _EthiopianCrossPainter()),
             ),
           ),
         );
@@ -263,7 +248,7 @@ class _SplashScreenState extends State<SplashScreen>
   Widget build(BuildContext context) {
     final themeService = Get.find<ThemeService>();
     final screenWidth = MediaQuery.of(context).size.width;
-    
+
     return Scaffold(
       body: Obx(() {
         final isDark = themeService.isDark;
@@ -279,16 +264,16 @@ class _SplashScreenState extends State<SplashScreen>
                   end: Alignment.bottomRight,
                   colors: isDark
                       ? [
-                          const Color(0xff0a1a1c),
-                          const Color(0xff0d2a2d),
-                          const Color(0xff123437),
-                          const Color(0xff0a1f21),
+                          const Color(0xff143d5f),
+                          const Color(0xff143d5f),
+                          const Color(0xff143d5f),
+                          const Color(0xff143d5f),
                         ]
                       : [
-                          const Color(0xff195158),
-                          const Color(0xff32a1af),
-                          const Color(0xff1a5d66),
-                          const Color(0xff0d2a2d),
+                          const Color(0xff143d5f),
+                          const Color(0xff143d5f),
+                          const Color(0xff143d5f),
+                          const Color(0xff143d5f),
                         ],
                   stops: const [0.0, 0.3, 0.7, 1.0],
                 ),
@@ -324,10 +309,7 @@ class _SplashScreenState extends State<SplashScreen>
               bottom: 0,
               child: Transform.rotate(
                 angle: 1.5708, // 90 degrees
-                child: SizedBox(
-                  width: 150,
-                  child: _buildFullWidthPattern(),
-                ),
+                child: SizedBox(width: 150, child: _buildFullWidthPattern()),
               ),
             ),
 
@@ -337,10 +319,7 @@ class _SplashScreenState extends State<SplashScreen>
               bottom: 0,
               child: Transform.rotate(
                 angle: -1.5708, // -90 degrees
-                child: SizedBox(
-                  width: 150,
-                  child: _buildFullWidthPattern(),
-                ),
+                child: SizedBox(width: 150, child: _buildFullWidthPattern()),
               ),
             ),
 
@@ -369,12 +348,12 @@ class _SplashScreenState extends State<SplashScreen>
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 border: Border.all(
-                                  color: Colors.amber.withOpacity(0.8),
+                                  color: Color(0xff143d5f).withOpacity(0.3),
                                   width: 2,
                                 ),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.amber.withOpacity(0.4),
+                                    color: Colors.amber.withOpacity(0.05),
                                     blurRadius: 25,
                                     spreadRadius: 5,
                                   ),
@@ -398,7 +377,8 @@ class _SplashScreenState extends State<SplashScreen>
                           final angle = (index / 12) * 2 * 3.14159;
                           final distance = screenWidth * 0.18;
                           return Positioned(
-                            left: distance * cos(angle) + screenWidth * 0.5 - 50,
+                            left:
+                                distance * cos(angle) + screenWidth * 0.5 - 50,
                             top: distance * sin(angle) + screenWidth * 0.2,
                             child: AnimatedBuilder(
                               animation: _patternController,
@@ -408,18 +388,20 @@ class _SplashScreenState extends State<SplashScreen>
                                   height: 8,
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
-                                    color: index % 3 == 0 
-                                      ? Colors.green 
-                                      : index % 3 == 1 
-                                        ? Colors.amber 
+                                    color: index % 3 == 0
+                                        ? Colors.green
+                                        : index % 3 == 1
+                                        ? Colors.amber
                                         : Colors.red,
                                     boxShadow: [
                                       BoxShadow(
-                                        color: (index % 3 == 0 
-                                          ? Colors.green 
-                                          : index % 3 == 1 
-                                            ? Colors.amber 
-                                            : Colors.red).withOpacity(0.7),
+                                        color:
+                                            (index % 3 == 0
+                                                    ? Colors.green
+                                                    : index % 3 == 1
+                                                    ? Colors.amber
+                                                    : Colors.red)
+                                                .withOpacity(0.7),
                                         blurRadius: 10,
                                       ),
                                     ],
@@ -447,7 +429,7 @@ class _SplashScreenState extends State<SplashScreen>
                                   alignment: Alignment.center,
                                   widthFactor: _textAnimation.value,
                                   child: Text(
-                                    "HABESHA TECH",
+                                    "Sheger Tech",
                                     style: TextStyle(
                                       fontSize: screenWidth * 0.08,
                                       fontWeight: FontWeight.w900,
@@ -520,7 +502,10 @@ class _SplashScreenState extends State<SplashScreen>
                             animation: _patternController,
                             builder: (context, child) {
                               return Container(
-                                width: screenWidth * 0.6 * _patternController.value,
+                                width:
+                                    screenWidth *
+                                    0.6 *
+                                    _patternController.value,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(3),
                                   gradient: const LinearGradient(
@@ -593,7 +578,7 @@ class _FullWidthEthiopianPatternPainter extends CustomPainter {
 
         // Draw interconnected Ethiopian cross pattern
         final path = Path();
-        
+
         // Main cross
         path.moveTo(x + patternSize / 2, y);
         path.lineTo(x + patternSize, y + patternSize / 2);
@@ -681,7 +666,7 @@ class _EthiopianCrossPainter extends CustomPainter {
 
     // Draw elaborate Ethiopian cross
     final path = Path();
-    
+
     // Main cross arms
     path.moveTo(center.dx, center.dy - crossSize / 2);
     path.lineTo(center.dx + crossSize / 3, center.dy - crossSize / 6);

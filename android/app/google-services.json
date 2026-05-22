@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "487945867113",
-    "project_id": "habesha-tech1",
-    "storage_bucket": "habesha-tech1.firebasestorage.app"
+    "project_number": "772037062668",
+    "project_id": "sheger-tech01",
+    "storage_bucket": "sheger-tech01.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:487945867113:android:d45355b26fd7fc619b77f8",
+        "mobilesdk_app_id": "1:772037062668:android:9e91da57b469eb8627be29",
         "android_client_info": {
-          "package_name": "com.tekopia.habesha_tech"
+          "package_name": "com.tekopia.sheger_tech"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyA6wmNHyJfy99mfgIZk5ouNST-or-DmD6U"
+          "current_key": "AIzaSyDyRJsjmxt6sDCvtzw7F7swgEb6hG86NB8"
         }
       ],
       "services": {
