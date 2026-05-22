@@ -1,4 +1,5 @@
 class ApiConfig {
+  static const String baseUrl1 = "https://abayjobs.birhanu.et";
   static const String baseUrl = "https://abayjobs.birhanu.et/api/v1";
   static const String imageUrl = "https://abayjobs.birhanu.et/storage/";
 
