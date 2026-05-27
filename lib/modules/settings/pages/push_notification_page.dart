@@ -92,6 +92,8 @@ class _PushNotificationPageState extends State<PushNotificationPage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Push Notifications'),
@@ -168,7 +170,7 @@ class _PushNotificationPageState extends State<PushNotificationPage> {
                       Container(
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
-                          color: Colors.grey[100],
+                          color: isDark ? Colors.grey[700] : Colors.grey[100],
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: SelectableText(
