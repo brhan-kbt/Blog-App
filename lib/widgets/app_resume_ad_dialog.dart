@@ -65,7 +65,7 @@ class _AppResumeAdDialogState extends State<AppResumeAdDialog> {
                   const Icon(Icons.apps, size: 24),
                   const SizedBox(width: 8),
                   const Text(
-                    'Fidel Tech',
+                    'Kelo Tech',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                   ),
                   const Spacer(),
