@@ -31,6 +31,7 @@ class _PostDetailPageState extends State<PostDetailPage>
   Post? post;
   List<Post> suggested = [];
   bool loading = true;
+  bool get policy => store.adpExist.value;
   bool _isFavorite = false;
   ScrollController _scrollController = ScrollController();
   bool _showBackToTop = false;
@@ -39,8 +40,10 @@ class _PostDetailPageState extends State<PostDetailPage>
   void initState() {
     super.initState();
     _fetchPost();
-    AdService.instance.showRandomOpenAd();
-
+    // AdService.instance.showRandomOpenAd();
+    if (!policy) {
+      AdService.instance.showRandomOpenAd();
+    }
     _fabAnimationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 300),
@@ -158,7 +161,10 @@ class _PostDetailPageState extends State<PostDetailPage>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _buildPostContent(theme, palette),
-                    const BannerAdWidget(size: AdSize(width: 380, height: 280)),
+                    if (!policy)
+                      const BannerAdWidget(
+                        size: AdSize(width: 380, height: 280),
+                      ),
                     const SizedBox(height: 24),
                     if (suggested.isNotEmpty) _buildSuggestedHeader(),
                   ],

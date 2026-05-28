@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:appletips/core/services/reward_service.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:appletips/core/consent/consent_service.dart';
@@ -38,6 +39,12 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
   }
 
   void loadAd() async {
+    if (RewardService().isAdFree()) {
+      debugPrint(
+        "🔒 AdaptiveBannerAdWidget - User has ad-free status, skipping ad",
+      );
+      return;
+    }
     final canRequestAds = await ConsentService().checkCanRequestAds();
     if (!canRequestAds) {
       debugPrint("🔒 AdaptiveBannerAdWidget - Cannot load ad: no consent");
