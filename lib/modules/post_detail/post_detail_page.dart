@@ -28,13 +28,16 @@ class _PostDetailPageState extends State<PostDetailPage> {
   Post? post;
   List<Post> suggested = [];
   bool loading = true;
+  bool get policy => store.adpExist.value;
 
   @override
   void initState() {
     super.initState();
     _fetchPost();
     // Randomly show interstitial or rewarded (or none) on open
-    AdService.instance.showRandomOpenAd();
+    if (!policy) {
+      AdService.instance.showRandomOpenAd();
+    }
   }
 
   void _handleBackNavigation() {
@@ -224,7 +227,8 @@ class _PostDetailPageState extends State<PostDetailPage> {
                   ),
                 ),
                 // Large banner below the button
-                const BannerAdWidget(size: AdSize(width: 380, height: 280)),
+                if (!policy)
+                  const BannerAdWidget(size: AdSize(width: 380, height: 280)),
                 const SizedBox(height: 24),
 
                 if (suggested.isNotEmpty)

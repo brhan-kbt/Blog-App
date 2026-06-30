@@ -4,13 +4,27 @@ import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
+import '../state/blog_store.dart';
 
 import '../config/ad_config.dart';
 import '../consent/consent_service.dart';
+import '../services/reward_service.dart';
 
 class AdService {
   static final AdService instance = AdService._internal();
   AdService._internal();
+
+  bool get policy {
+    try {
+      if (Get.isRegistered<BlogStore>()) {
+        return Get.find<BlogStore>().adpExist.value;
+      }
+      return false;
+    } catch (_) {
+      return false;
+    }
+  }
 
   InterstitialAd? _interstitialAd;
   RewardedAd? _rewardedAd;
@@ -73,6 +87,14 @@ class AdService {
     final canRequestAds = await ConsentService().checkCanRequestAds();
     if (!canRequestAds) {
       debugPrint("🔒 AdService - Cannot show app open ad: no consent");
+      return;
+    }
+
+    // Check if user has ad-free status
+    if (RewardService().isAdFree()) {
+      debugPrint(
+        "🔒 AdService - User has ad-free status, skipping app open ad",
+      );
       return;
     }
 
@@ -159,8 +181,20 @@ class AdService {
       return;
     }
 
+    // Check if user has ad-free status
+    if (RewardService().isAdFree()) {
+      debugPrint(
+        "🔒 AdService - User has ad-free status, skipping interstitial",
+      );
+      return;
+    }
+
     final ad = _interstitialAd;
-    if (ad == null) return;
+    if (ad == null) {
+      debugPrint("⚠️ AdService - Interstitial ad not loaded yet");
+      return;
+    }
+
     ad.fullScreenContentCallback = FullScreenContentCallback(
       onAdDismissedFullScreenContent: (ad) {
         ad.dispose();
@@ -187,7 +221,10 @@ class AdService {
     }
 
     final ad = _rewardedAd;
-    if (ad == null) return;
+    if (ad == null) {
+      debugPrint("⚠️ AdService - Rewarded ad not loaded yet");
+      return;
+    }
     ad.fullScreenContentCallback = FullScreenContentCallback(
       onAdDismissedFullScreenContent: (ad) {
         ad.dispose();
@@ -200,7 +237,21 @@ class AdService {
         _loadRewarded();
       },
     );
-    await ad.show(onUserEarnedReward: (_, reward) => onReward(reward));
+    if (policy) {
+      // Show ad and grant reward when user completes it
+      await ad.show(
+        onUserEarnedReward: (_, reward) {
+          debugPrint(
+            "✅ AdService - User earned reward: ${reward.amount} ${reward.type}",
+          );
+          // Grant 60 minutes (1 hour) of ad-free experience
+          RewardService().grantAdFreePeriod(60);
+          onReward(reward);
+        },
+      );
+    } else {
+      await ad.show(onUserEarnedReward: (_, reward) => onReward(reward));
+    }
   }
 
   Future<void> showAppResumeAd(BuildContext context) async {
@@ -232,5 +283,45 @@ class AdService {
     if (context.mounted) {
       Navigator.pop(context);
     }
+  }
+
+  /// Show interstitial ad between content transitions
+  /// This is acceptable per AdMob policy when shown after user actions
+  /// (e.g., after reading multiple articles)
+  Future<void> showInterstitialAfterContentTransition() async {
+    // Check consent before showing ads
+    final canRequestAds = await ConsentService().checkCanRequestAds();
+    if (!canRequestAds) {
+      debugPrint("🔒 AdService - Cannot show interstitial ad: no consent");
+      return;
+    }
+
+    // Check if user has ad-free status
+    if (RewardService().isAdFree()) {
+      debugPrint(
+        "🔒 AdService - User has ad-free status, skipping interstitial",
+      );
+      return;
+    }
+
+    final ad = _interstitialAd;
+    if (ad == null) {
+      debugPrint("⚠️ AdService - Interstitial ad not loaded yet");
+      return;
+    }
+
+    ad.fullScreenContentCallback = FullScreenContentCallback(
+      onAdDismissedFullScreenContent: (ad) {
+        ad.dispose();
+        _interstitialAd = null;
+        _loadInterstitial();
+      },
+      onAdFailedToShowFullScreenContent: (ad, _) {
+        ad.dispose();
+        _interstitialAd = null;
+        _loadInterstitial();
+      },
+    );
+    await ad.show();
   }
 }
