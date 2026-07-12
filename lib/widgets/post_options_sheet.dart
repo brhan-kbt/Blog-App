@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:sheger_tech/core/config/api_config.dart';
 import 'package:sheger_tech/core/theme/app_palette.dart';
 import 'package:share_plus/share_plus.dart';
 import '../core/state/blog_store.dart';
@@ -84,9 +85,9 @@ Future<void> showPostOptionsSheet(BuildContext context, Post post) async {
               onTap: () async {
                 HapticFeedback.selectionClick();
                 Navigator.pop(ctx);
-                final text =
-                    '${post.title}\n${post.subtitle}\n\nRead more in Sheger Tech  Tech.';
-                await Share.share(text);
+                final url =
+                    '${ApiConfig.baseUrl1}/blogs/${post.slug}/${post.id}';
+                await Share.share(url);
               },
             ),
 

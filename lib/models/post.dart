@@ -7,6 +7,7 @@ class Post {
   final String title;
   final String? subtitle;
   final String body;
+  final String? slug;
   final String? image;
   final int views;
   final int likes;
@@ -20,6 +21,7 @@ class Post {
     required this.title,
     this.subtitle,
     required this.body,
+    this.slug,
     this.image,
     this.link,
     required this.views,
@@ -35,6 +37,7 @@ class Post {
       title: json['title'] ?? '',
       subtitle: json['subtitle'],
       body: json['body'] ?? '',
+      slug: json['slug'],
       image: json['image'],
       link: json['link'],
       views: json['views'] ?? 0,
@@ -51,6 +54,7 @@ class Post {
       'title': title,
       'subtitle': subtitle,
       'body': body,
+      'slug': slug,
       'image': image,
       'link': link,
       'views': views,

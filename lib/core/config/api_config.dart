@@ -1,4 +1,5 @@
 class ApiConfig {
+  static const String baseUrl1 = "https://shegertech.birhanu.et";
   static const String baseUrl = "https://shegertech.birhanu.et/api/v1";
   static const String imageUrl = "https://shegertech.birhanu.et/storage/";
 

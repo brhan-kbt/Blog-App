@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:sheger_tech/modules/post_detail/post_detail_page.dart';
+import 'package:app_links/app_links.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -55,10 +57,69 @@ Future<void> main() async {
   await _initializeBlogStore();
   await _initializeConsentService();
 
+  // Initialize deep links
+  initDeepLinks();
+
   // Initialize other services in background to speed up startup
   _initializeBackgroundServices();
 
   runApp(const ShegerTechApp());
+}
+
+
+void _handleDeepLink(Uri uri, BlogStore store) {
+  debugPrint('🔗 Deep Link received: $uri');
+
+  final segments = uri.pathSegments; 
+  // Example: ["blogs", "my-first-blog", "25"]
+
+  final postIndex = segments.indexOf('blogs');
+
+  if (postIndex != -1 && postIndex + 2 < segments.length) {
+    final postIdStr = segments[postIndex + 2]; // 👈 get ID, not slug
+    final postId = int.tryParse(postIdStr);
+
+    debugPrint('🔗 Extracted postId: $postId');
+
+    if (postId != null) {
+      store.addView(postId); // Increment views
+
+      // Always navigate via Home page first
+      Get.offAll(
+        () => Shell(),
+        binding: BindingsBuilder(() {
+          Get.put(store);
+        }),
+      );
+
+      // Push PostDetail on top after a short delay
+      Future.delayed(const Duration(milliseconds: 200), () {
+        if (Get.isRegistered<BlogStore>()) {
+          Get.to(() => PostDetailPage(postId: postId));
+        }
+      });
+    }
+  } else {
+    debugPrint("❌ Invalid post deep link format");
+  }
+}
+
+
+void initDeepLinks() async {
+  // Placeholder for deep link initialization logic
+  final appLinks = AppLinks(); // AppLinks is singleton
+
+  // Subscribe to all events (initial link and further)
+  appLinks.uriLinkStream.listen(
+    (uri) {
+      debugPrint('🔗 Deep Link received: $uri');
+      // Handle the deep link URI as needed
+      _handleDeepLink(uri, Get.find<BlogStore>());
+    },
+    onError: (err) {
+      debugPrint('🔗 Deep Link error: $err');
+    },
+  );
 }
 
 Future<void> _initializeThemeService() async {
@@ -329,7 +390,6 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
       } catch (e) {
         debugPrint("⚠️ Error checking pending notifications on resume: $e");
       }
-
       // Show app open ad with error handling
       try {
         await AdService.instance.showAppOpenAd();
@@ -372,7 +432,6 @@ class _ShellState extends State<Shell> with WidgetsBindingObserver {
 
         if (result.isGranted) {
           debugPrint("✅ Notification permission granted");
-          // Initialize FCM after permission is granted
           try {
             await FCMService.instance.initialize();
           } catch (e) {
