@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:appletips/core/services/connectivity_service.dart';
-import 'package:appletips/core/services/fcm_service.dart';
-import 'package:appletips/core/state/blog_store.dart';
-import 'package:appletips/core/theme/theme_service.dart';
+import 'package:totalpro/core/services/connectivity_service.dart';
+import 'package:totalpro/core/services/fcm_service.dart';
+import 'package:totalpro/core/state/blog_store.dart';
+import 'package:totalpro/core/theme/theme_service.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -12,19 +12,55 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation<double> _fadeAnimation;
+  late Animation<double> _scaleAnimation;
+
+  // Red primary palette
+  static const Color _primaryRed = Color(0xFFE53935);
+  static const Color _darkRed = Color(0xFFB71C1C);
+  static const Color _lightRed = Color(0xFFFFEBEE);
+
   @override
   void initState() {
     super.initState();
+
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1200),
+    );
+
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: const Interval(0.0, 0.6, curve: Curves.easeOut),
+      ),
+    );
+
+    _scaleAnimation = Tween<double>(begin: 0.7, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: const Interval(0.0, 0.7, curve: Curves.easeOutBack),
+      ),
+    );
+
+    _animationController.forward();
+
     _initApp();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
   }
 
   Future<void> _initApp() async {
     try {
-      // Avoid duplicate navigation
       if (Get.currentRoute == '/home') return;
 
-      // FCM check
       if (Get.isRegistered<FCMService>()) {
         final fcm = Get.find<FCMService>();
         if (fcm.hasNavigatedFromNotification) {
@@ -33,7 +69,6 @@ class _SplashScreenState extends State<SplashScreen> {
         }
       }
 
-      // Services
       Get.put(ConnectivityService(), permanent: true);
       final connectivity = Get.find<ConnectivityService>();
       await connectivity.checkConnectivity();
@@ -47,14 +82,12 @@ class _SplashScreenState extends State<SplashScreen> {
         ]);
       }
 
-      // Check notifications
       await _handleNotifications();
 
       await Future.delayed(const Duration(milliseconds: 800));
 
       if (!mounted) return;
 
-      // Prevent override if already navigated
       if (Get.isRegistered<FCMService>()) {
         final fcm = Get.find<FCMService>();
         if (fcm.isOnDetailPage()) return;
@@ -88,131 +121,191 @@ class _SplashScreenState extends State<SplashScreen> {
         body: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
               colors: isDark
                   ? [
-                      const Color(0xFF1A1A2E),
-                      const Color(0xFF16213E),
-                      const Color(0xFF0F3460),
+                      const Color(0xFF1A0A0A),
+                      const Color(0xFF2D0F0F),
+                      const Color(0xFF4A1515),
                     ]
-                  : [
-                      const Color(0xFFE8F0FE),
-                      const Color(0xFFE0E7FF),
-                      const Color(0xFFF3E8FF),
-                    ],
+                  : [Colors.white, _lightRed, const Color(0xFFFFCDD2)],
             ),
           ),
           child: Stack(
             children: [
-              // Decorative circles
+              // Top-right diagonal accent shape
               Positioned(
-                top: -100,
-                right: -100,
-                child: Container(
-                  width: 250,
-                  height: 250,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: isDark
-                        ? Colors.blue.withOpacity(0.1)
-                        : Colors.purple.withOpacity(0.1),
+                top: -120,
+                right: -80,
+                child: Transform.rotate(
+                  angle: 0.4,
+                  child: Container(
+                    width: 300,
+                    height: 300,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(60),
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: isDark
+                            ? [
+                                _primaryRed.withOpacity(0.15),
+                                _darkRed.withOpacity(0.05),
+                              ]
+                            : [
+                                _primaryRed.withOpacity(0.12),
+                                _primaryRed.withOpacity(0.03),
+                              ],
+                      ),
+                    ),
                   ),
                 ),
               ),
+
+              // Bottom-left circle accent
               Positioned(
-                bottom: -50,
-                left: -50,
+                bottom: -100,
+                left: -100,
                 child: Container(
-                  width: 200,
-                  height: 200,
+                  width: 260,
+                  height: 260,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: isDark
-                        ? Colors.purple.withOpacity(0.1)
-                        : Colors.blue.withOpacity(0.1),
+                    gradient: RadialGradient(
+                      colors: [
+                        _primaryRed.withOpacity(isDark ? 0.15 : 0.10),
+                        _primaryRed.withOpacity(0.0),
+                      ],
+                    ),
                   ),
                 ),
+              ),
+
+              // Small floating red dots
+              Positioned(
+                top: 120,
+                left: 40,
+                child: _buildFloatingDot(8, isDark),
+              ),
+              Positioned(
+                top: 200,
+                right: 50,
+                child: _buildFloatingDot(5, isDark),
+              ),
+              Positioned(
+                bottom: 180,
+                right: 80,
+                child: _buildFloatingDot(6, isDark),
               ),
 
               // Main content
               Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // Glassmorphism logo container
-                    Container(
-                      width: 130,
-                      height: 130,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: isDark
-                            ? Colors.white.withOpacity(0.05)
-                            : Colors.white.withOpacity(0.5),
-                        border: Border.all(
+                child: AnimatedBuilder(
+                  animation: _animationController,
+                  builder: (context, child) {
+                    return FadeTransition(
+                      opacity: _fadeAnimation,
+                      child: ScaleTransition(
+                        scale: _scaleAnimation,
+                        child: child,
+                      ),
+                    );
+                  },
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // Logo container with red ring
+                      Container(
+                        width: 150,
+                        height: 150,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
                           color: isDark
-                              ? Colors.white.withOpacity(0.1)
+                              ? const Color(0xFF2D0F0F)
                               : Colors.white,
-                          width: 1,
+                          border: Border.all(color: _primaryRed, width: 3),
+                          boxShadow: [
+                            BoxShadow(
+                              color: _primaryRed.withOpacity(0.35),
+                              blurRadius: 30,
+                              spreadRadius: 4,
+                            ),
+                          ],
                         ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
-                            blurRadius: 20,
-                            spreadRadius: 5,
+                        padding: const EdgeInsets.all(8),
+                        child: ClipOval(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [
+                                  _primaryRed.withOpacity(0.1),
+                                  _darkRed.withOpacity(0.05),
+                                ],
+                              ),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(12),
+                              child: Image.asset(
+                                'assets/totalpro_logo.png',
+                                fit: BoxFit.contain,
+                              ),
+                            ),
                           ),
-                        ],
-                      ),
-                      child: ClipOval(
-                        child: Image.asset(
-                          'assets/appletips_logo.png',
-                          fit: BoxFit.contain,
-                          width: 90,
-                          height: 90,
                         ),
                       ),
-                    ),
 
-                    const SizedBox(height: 40),
+                      const SizedBox(height: 36),
 
-                    // App name with modern font weight
-                    Text(
-                      "Apple Tips",
-                      style: TextStyle(
-                        fontSize: 26,
-                        fontWeight: FontWeight.w700,
-                        letterSpacing: 5,
-                        color: isDark ? Colors.white : Colors.black87,
+                      // App name
+                      Text(
+                        "Total Pro",
+                        style: TextStyle(
+                          fontSize: 32,
+                          fontWeight: FontWeight.w800,
+                          letterSpacing: 4,
+                          color: isDark ? Colors.white : _darkRed,
+                        ),
                       ),
-                    ),
 
-                    const SizedBox(height: 12),
+                      const SizedBox(height: 10),
 
-                    // Subtitle
-                    Text(
-                      "Powered by Innovation",
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w300,
-                        letterSpacing: 2,
-                        color: isDark ? Colors.white54 : Colors.black54,
+                      // Red divider line
+                      Container(
+                        width: 50,
+                        height: 3,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(2),
+                          gradient: const LinearGradient(
+                            colors: [_primaryRed, _darkRed],
+                          ),
+                        ),
                       ),
-                    ),
 
-                    const SizedBox(height: 80),
+                      const SizedBox(height: 12),
 
-                    // Modern loading dots
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        _buildLoadingDot(isDark, 0),
-                        const SizedBox(width: 8),
-                        _buildLoadingDot(isDark, 1),
-                        const SizedBox(width: 8),
-                        _buildLoadingDot(isDark, 2),
-                      ],
-                    ),
-                  ],
+                      // Subtitle
+                      Text(
+                        "Powered by Innovation",
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                          letterSpacing: 3,
+                          color: isDark
+                              ? Colors.white.withOpacity(0.6)
+                              : Colors.black.withOpacity(0.5),
+                        ),
+                      ),
+
+                      const SizedBox(height: 80),
+
+                      // Loading indicator
+                      _buildLoadingIndicator(isDark),
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -222,25 +315,28 @@ class _SplashScreenState extends State<SplashScreen> {
     });
   }
 
-  Widget _buildLoadingDot(bool isDark, int index) {
-    return StatefulBuilder(
-      builder: (context, setState) {
-        Future.delayed(Duration(milliseconds: 300 * index), () {
-          if (mounted) {
-            setState(() {});
-          }
-        });
+  Widget _buildFloatingDot(double size, bool isDark) {
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: _primaryRed.withOpacity(isDark ? 0.4 : 0.3),
+      ),
+    );
+  }
 
-        return AnimatedContainer(
-          duration: const Duration(milliseconds: 600),
-          width: 6,
-          height: 6,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: isDark ? Colors.white : Colors.black,
-          ),
-        );
-      },
+  Widget _buildLoadingIndicator(bool isDark) {
+    return SizedBox(
+      width: 40,
+      height: 40,
+      child: CircularProgressIndicator(
+        strokeWidth: 3,
+        valueColor: AlwaysStoppedAnimation<Color>(
+          _primaryRed.withOpacity(isDark ? 0.9 : 0.8),
+        ),
+        backgroundColor: isDark ? Colors.white.withOpacity(0.1) : _lightRed,
+      ),
     );
   }
 }

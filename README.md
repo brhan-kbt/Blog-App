@@ -1,4 +1,4 @@
-# Apple Tips 
+# Total Pro 
 
 A new Flutter project.
 

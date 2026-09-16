@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:appletips/models/app_Setting.dart';
+import 'package:totalpro/models/app_Setting.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../models/post.dart';
 import '../../models/category.dart';
@@ -62,16 +62,21 @@ class BlogStore extends GetxController {
     }
   }
 
-
   Future<void> fetchAppConfig() async {
     try {
       final response = await http.get(Uri.parse(ApiConfig.appConfig));
       if (response.statusCode == 200) {
         final jsonBody = jsonDecode(response.body);
-        final data = (jsonBody is Map && jsonBody.containsKey('data') && jsonBody['data'] is Map) 
-            ? jsonBody['data'] 
+        final data =
+            (jsonBody is Map &&
+                jsonBody.containsKey('data') &&
+                jsonBody['data'] is Map)
+            ? jsonBody['data']
             : jsonBody;
-        adpExist.value = data['adp_exist'] == true || data['adp_exist'] == 'true' || data['adp_exist'] == 1;
+        adpExist.value =
+            data['adp_exist'] == true ||
+            data['adp_exist'] == 'true' ||
+            data['adp_exist'] == 1;
       }
     } catch (e) {
       debugPrint("Error fetching app config: $e");

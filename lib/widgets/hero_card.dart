@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:appletips/core/config/api_config.dart';
-import 'package:appletips/widgets/post_options_sheet.dart';
+import 'package:totalpro/core/config/api_config.dart';
+import 'package:totalpro/widgets/post_options_sheet.dart';
 import '../core/theme/app_palette.dart';
 import '../models/post.dart';
 
@@ -151,7 +151,7 @@ class HeroCard extends StatelessWidget {
                     //         crossAxisAlignment: CrossAxisAlignment.start,
                     //         children: [
                     //           Text(
-                    //             'Apple Tips',
+                    //             'Total Pro',
                     //             style: theme.textTheme.bodySmall?.copyWith(
                     //               fontWeight: FontWeight.w600,
                     //             ),

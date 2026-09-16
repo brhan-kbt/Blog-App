@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "1084692163536",
-    "project_id": "apple-tips-01",
-    "storage_bucket": "apple-tips-01.firebasestorage.app"
+    "project_number": "280182367475",
+    "project_id": "total-pro-01",
+    "storage_bucket": "total-pro-01.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1084692163536:android:a11b817d6530607e60e7d5",
+        "mobilesdk_app_id": "1:280182367475:android:930a88738c36cbd82c4386",
         "android_client_info": {
-          "package_name": "com.techomia.appletips"
+          "package_name": "com.techomia.totalpro"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDjblFl46vJPA_mnO2fGoCQL83RZwsWx7Y"
+          "current_key": "AIzaSyBknl7dPTjDieF2Rq4D2sHZHwahCHNfIl8"
         }
       ],
       "services": {
