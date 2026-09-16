@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:appletips/modules/post_detail/post_detail_page.dart';
+import 'package:ethiopro/modules/post_detail/post_detail_page.dart';
 import 'package:app_links/app_links.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -8,19 +8,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:appletips/core/consent/consent_service.dart';
-import 'package:appletips/core/services/fcm_service.dart';
-import 'package:appletips/firebase_options.dart';
-import 'package:appletips/widgets/adabtiveBanner.dart';
+import 'package:ethiopro/core/consent/consent_service.dart';
+import 'package:ethiopro/core/services/fcm_service.dart';
+import 'package:ethiopro/firebase_options.dart';
+import 'package:ethiopro/widgets/adabtiveBanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import 'package:appletips/core/theme/app_palette.dart';
-import 'package:appletips/core/theme/theme_service.dart';
-import 'package:appletips/core/services/connectivity_service.dart';
-import 'package:appletips/core/services/performance_service.dart';
-import 'package:appletips/core/services/version_check_service.dart';
-import 'package:appletips/core/services/version_check_controller.dart';
-import 'package:appletips/routes/app_pages.dart';
+import 'package:ethiopro/core/theme/app_palette.dart';
+import 'package:ethiopro/core/theme/theme_service.dart';
+import 'package:ethiopro/core/services/connectivity_service.dart';
+import 'package:ethiopro/core/services/performance_service.dart';
+import 'package:ethiopro/core/services/version_check_service.dart';
+import 'package:ethiopro/core/services/version_check_controller.dart';
+import 'package:ethiopro/routes/app_pages.dart';
 import 'core/state/blog_store.dart';
 import 'core/theme/app_theme.dart';
 import 'modules/category/category_page.dart';
@@ -63,7 +63,7 @@ Future<void> main() async {
   // Initialize other services in background to speed up startup
   _initializeBackgroundServices();
 
-  runApp(const appletipsApp());
+  runApp(const EthioProApp());
 }
 
 void _handleDeepLink(Uri uri, BlogStore store) {
@@ -220,8 +220,8 @@ void _initializeBackgroundServices() {
   });
 }
 
-class appletipsApp extends StatelessWidget {
-  const appletipsApp({super.key});
+class EthioProApp extends StatelessWidget {
+  const EthioProApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -229,12 +229,12 @@ class appletipsApp extends StatelessWidget {
 
     return Obx(() {
       debugPrint(
-        "🎨 appletipsApp - Building with theme mode: ${themeSvc.mode.value}",
+        "🎨 EthioProApp - Building with theme mode: ${themeSvc.mode.value}",
       );
-      debugPrint("🎨 appletipsApp - IsDark: ${themeSvc.isDark}");
+      debugPrint("🎨 EthioProApp - IsDark: ${themeSvc.isDark}");
 
       return GetMaterialApp(
-        title: 'Apple Tips',
+        title: 'Ethio Pro',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.light,
         darkTheme: AppTheme.dark,

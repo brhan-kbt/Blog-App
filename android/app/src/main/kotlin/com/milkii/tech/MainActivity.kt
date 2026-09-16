@@ -1,4 +1,4 @@
-package com.techomia.appletips
+package com.techomia.ethiopro
 
 import io.flutter.embedding.android.FlutterActivity
 

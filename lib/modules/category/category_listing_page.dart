@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:appletips/models/post.dart';
-import 'package:appletips/widgets/adabtiveBanner.dart';
-import 'package:appletips/widgets/hero_card.dart';
-import 'package:appletips/widgets/post_options_sheet.dart';
-import 'package:appletips/widgets/shimmer_widgets.dart';
+import 'package:ethiopro/models/post.dart';
+import 'package:ethiopro/widgets/adabtiveBanner.dart';
+import 'package:ethiopro/widgets/hero_card.dart';
+import 'package:ethiopro/widgets/post_options_sheet.dart';
+import 'package:ethiopro/widgets/shimmer_widgets.dart';
 import '../../core/state/blog_store.dart';
 import '../../widgets/post_tile.dart';
 import '../post_detail/post_detail_page.dart';

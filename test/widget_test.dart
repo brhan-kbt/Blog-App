@@ -8,14 +8,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:appletips/main.dart';
+import 'package:ethiopro/main.dart';
 
 void main() {
   testWidgets('App loads successfully', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const appletipsApp());
+    await tester.pumpWidget(const EthioProApp());
 
     // Verify that the app loads without crashing
-    expect(find.byType(appletipsApp), findsOneWidget);
+    expect(find.byType(EthioProApp), findsOneWidget);
   });
 }

@@ -1,4 +1,4 @@
-# Apple Tips 
+# Ethio Pro 
 
 A new Flutter project.
 

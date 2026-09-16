@@ -1,7 +1,7 @@
-import 'package:appletips/core/services/reward_service.dart';
+import 'package:ethiopro/core/services/reward_service.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:appletips/core/consent/consent_service.dart';
+import 'package:ethiopro/core/consent/consent_service.dart';
 import '../core/ads/ad_service.dart';
 
 class AdaptiveBannerAdWidget extends StatefulWidget {
