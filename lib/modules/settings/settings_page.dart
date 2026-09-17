@@ -1,18 +1,18 @@
-import 'package:appletips/core/ads/ad_service.dart';
-import 'package:appletips/core/services/reward_service.dart';
+import 'package:melatech/core/ads/ad_service.dart';
+import 'package:melatech/core/services/reward_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:in_app_review/in_app_review.dart';
-import 'package:appletips/modules/settings/pages/push_notification_page.dart';
+import 'package:melatech/modules/settings/pages/push_notification_page.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:appletips/core/theme/app_palette.dart';
-import 'package:appletips/core/theme/theme_service.dart';
-import 'package:appletips/modules/settings/pages/about_page.dart';
-import 'package:appletips/modules/settings/pages/privacy_policy_page.dart';
-import 'package:appletips/modules/settings/pages/publisher_info_page.dart';
-import 'package:appletips/widgets/privacy_options_button.dart';
+import 'package:melatech/core/theme/app_palette.dart';
+import 'package:melatech/core/theme/theme_service.dart';
+import 'package:melatech/modules/settings/pages/about_page.dart';
+import 'package:melatech/modules/settings/pages/privacy_policy_page.dart';
+import 'package:melatech/modules/settings/pages/publisher_info_page.dart';
+import 'package:melatech/widgets/privacy_options_button.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:app_settings/app_settings.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -246,13 +246,13 @@ class SettingsPage extends StatelessWidget {
     if (await inAppReview.isAvailable()) {
       inAppReview.requestReview();
     } else {
-      inAppReview.openStoreListing(appStoreId: "com.techomia.appletips");
+      inAppReview.openStoreListing(appStoreId: "com.techomia.melatech");
     }
   }
 
   void _shareApp() {
     Share.share(
-      "Check out Apple Tips App - Your ultimate tech companion! https://play.google.com/store/apps/details?id=com.techomia.appletips",
+      "Check out Mela Tech App - Your ultimate tech companion! https://play.google.com/store/apps/details?id=com.techomia.melatech",
     );
   }
 

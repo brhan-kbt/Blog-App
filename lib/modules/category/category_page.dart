@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:appletips/core/config/api_config.dart';
-import 'package:appletips/core/theme/app_palette.dart';
-import 'package:appletips/models/category.dart';
-import 'package:appletips/widgets/shimmer_widgets.dart';
+import 'package:melatech/core/config/api_config.dart';
+import 'package:melatech/core/theme/app_palette.dart';
+import 'package:melatech/models/category.dart';
+import 'package:melatech/widgets/shimmer_widgets.dart';
 import '../../core/state/blog_store.dart';
 import 'category_listing_page.dart';
 

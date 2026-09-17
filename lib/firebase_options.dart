@@ -41,46 +41,47 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCer5LgPg60IilJ5XVEgooGoMfMyuxS39M',
-    appId: '1:1084692163536:web:5ecb01dad615bdff60e7d5',
-    messagingSenderId: '1084692163536',
-    projectId: 'apple-tips-01',
-    authDomain: 'apple-tips-01.firebaseapp.com',
-    storageBucket: 'apple-tips-01.firebasestorage.app',
+    apiKey: 'AIzaSyAr_eCR1_-KWBwueYa0YLUXERAhp7AtvHw',
+    appId: '1:117297292958:web:0bb4790c8ea866639ffd8f',
+    messagingSenderId: '117297292958',
+    projectId: 'mela-tech-01',
+    authDomain: 'mela-tech-01.firebaseapp.com',
+    storageBucket: 'mela-tech-01.firebasestorage.app',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDjblFl46vJPA_mnO2fGoCQL83RZwsWx7Y',
-    appId: '1:1084692163536:android:a11b817d6530607e60e7d5',
-    messagingSenderId: '1084692163536',
-    projectId: 'apple-tips-01',
-    storageBucket: 'apple-tips-01.firebasestorage.app',
+    apiKey: 'AIzaSyBWcW2Mx_3s1w9m_4OYhpz4lUNf9chjeHM',
+    appId: '1:117297292958:android:390af0a257cc65439ffd8f',
+    messagingSenderId: '117297292958',
+    projectId: 'mela-tech-01',
+    storageBucket: 'mela-tech-01.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBZJJbCGmBMO9bbs_62ADZkLjNrt-pyyvA',
-    appId: '1:1084692163536:ios:624260a402b3f43a60e7d5',
-    messagingSenderId: '1084692163536',
-    projectId: 'apple-tips-01',
-    storageBucket: 'apple-tips-01.firebasestorage.app',
-    iosBundleId: 'com.techomia.appletips',
+    apiKey: 'AIzaSyC8bvlqSc65PFwlqpk9zujQlD-c-GRdqaQ',
+    appId: '1:117297292958:ios:d4eb1b1185cdea089ffd8f',
+    messagingSenderId: '117297292958',
+    projectId: 'mela-tech-01',
+    storageBucket: 'mela-tech-01.firebasestorage.app',
+    iosBundleId: 'com.techomia.melatech',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyBZJJbCGmBMO9bbs_62ADZkLjNrt-pyyvA',
-    appId: '1:1084692163536:ios:624260a402b3f43a60e7d5',
-    messagingSenderId: '1084692163536',
-    projectId: 'apple-tips-01',
-    storageBucket: 'apple-tips-01.firebasestorage.app',
-    iosBundleId: 'com.techomia.appletips',
+    apiKey: 'AIzaSyC8bvlqSc65PFwlqpk9zujQlD-c-GRdqaQ',
+    appId: '1:117297292958:ios:d4eb1b1185cdea089ffd8f',
+    messagingSenderId: '117297292958',
+    projectId: 'mela-tech-01',
+    storageBucket: 'mela-tech-01.firebasestorage.app',
+    iosBundleId: 'com.techomia.melatech',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyCer5LgPg60IilJ5XVEgooGoMfMyuxS39M',
-    appId: '1:1084692163536:web:3bfe5fd3f346f0c960e7d5',
-    messagingSenderId: '1084692163536',
-    projectId: 'apple-tips-01',
-    authDomain: 'apple-tips-01.firebaseapp.com',
-    storageBucket: 'apple-tips-01.firebasestorage.app',
+    apiKey: 'AIzaSyAr_eCR1_-KWBwueYa0YLUXERAhp7AtvHw',
+    appId: '1:117297292958:web:4d3b5f2a7eaf7fcc9ffd8f',
+    messagingSenderId: '117297292958',
+    projectId: 'mela-tech-01',
+    authDomain: 'mela-tech-01.firebaseapp.com',
+    storageBucket: 'mela-tech-01.firebasestorage.app',
   );
+
 }

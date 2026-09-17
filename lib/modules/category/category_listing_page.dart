@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:appletips/models/post.dart';
-import 'package:appletips/widgets/adabtiveBanner.dart';
-import 'package:appletips/widgets/hero_card.dart';
-import 'package:appletips/widgets/post_options_sheet.dart';
-import 'package:appletips/widgets/shimmer_widgets.dart';
+import 'package:melatech/models/post.dart';
+import 'package:melatech/widgets/adabtiveBanner.dart';
+import 'package:melatech/widgets/hero_card.dart';
+import 'package:melatech/widgets/post_options_sheet.dart';
+import 'package:melatech/widgets/shimmer_widgets.dart';
 import '../../core/state/blog_store.dart';
 import '../../widgets/post_tile.dart';
 import '../post_detail/post_detail_page.dart';
@@ -53,7 +53,9 @@ class CategoryListingPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text("Sorry, something went wrong. Please try again later."),
+                const Text(
+                  "Sorry, something went wrong. Please try again later.",
+                ),
                 const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () {
