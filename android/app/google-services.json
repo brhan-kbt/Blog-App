@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "1084692163536",
-    "project_id": "apple-tips-01",
-    "storage_bucket": "apple-tips-01.firebasestorage.app"
+    "project_number": "1088465578214",
+    "project_id": "fresh-tips-01",
+    "storage_bucket": "fresh-tips-01.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1084692163536:android:a11b817d6530607e60e7d5",
+        "mobilesdk_app_id": "1:1088465578214:android:3dd46d3935a7ebca493327",
         "android_client_info": {
-          "package_name": "com.techomia.appletips"
+          "package_name": "com.techomia.freshtips"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDjblFl46vJPA_mnO2fGoCQL83RZwsWx7Y"
+          "current_key": "AIzaSyAyJ5z_Gb17tc1Pa0PhT-NrBonR3mKFsOM"
         }
       ],
       "services": {

@@ -1,4 +1,4 @@
-# Apple Tips 
+# Fresh Tips 
 
 A new Flutter project.
 

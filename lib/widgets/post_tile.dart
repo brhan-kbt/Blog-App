@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:appletips/core/config/api_config.dart';
-import 'package:appletips/widgets/post_options_sheet.dart';
+import 'package:freshtips/core/config/api_config.dart';
+import 'package:freshtips/widgets/post_options_sheet.dart';
 import '../core/theme/app_palette.dart';
 import '../models/post.dart';
 
@@ -113,7 +113,7 @@ class PostTile extends StatelessWidget {
                                         0.15,
                                       ),
                                   child: Text(
-                                    'AT',
+                                    'FT',
                                     style: TextStyle(
                                       fontSize: 10,
                                       fontWeight: FontWeight.w600,
@@ -127,7 +127,7 @@ class PostTile extends StatelessWidget {
                                 // Author name and date combined
                                 Expanded(
                                   child: Text(
-                                    '${'Apple Tips'} • ${post.prettyDate}',
+                                    '${'Fresh Tips'} • ${post.prettyDate}',
                                     style: metaStyle,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,

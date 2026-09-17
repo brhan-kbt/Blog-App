@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:appletips/core/config/api_config.dart';
-import 'package:appletips/widgets/post_options_sheet.dart';
+import 'package:freshtips/core/config/api_config.dart';
+import 'package:freshtips/widgets/post_options_sheet.dart';
 import '../core/theme/app_palette.dart';
 import '../models/post.dart';
 
@@ -151,7 +151,7 @@ class HeroCard extends StatelessWidget {
                     //         crossAxisAlignment: CrossAxisAlignment.start,
                     //         children: [
                     //           Text(
-                    //             'Apple Tips',
+                    //             'Fresh Tips',
                     //             style: theme.textTheme.bodySmall?.copyWith(
                     //               fontWeight: FontWeight.w600,
                     //             ),

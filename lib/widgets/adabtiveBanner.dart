@@ -1,7 +1,7 @@
-import 'package:appletips/core/services/reward_service.dart';
+import 'package:freshtips/core/services/reward_service.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:appletips/core/consent/consent_service.dart';
+import 'package:freshtips/core/consent/consent_service.dart';
 import '../core/ads/ad_service.dart';
 
 class AdaptiveBannerAdWidget extends StatefulWidget {
@@ -23,7 +23,7 @@ class _AdaptiveBannerAdWidgetState extends State<AdaptiveBannerAdWidget> {
   }
 
   Future<void> _loadAd() async {
-     // Check if user has ad-free status
+    // Check if user has ad-free status
     if (RewardService().isAdFree()) {
       debugPrint(
         "🔒 AdaptiveBannerAdWidget - User has ad-free status, skipping ad",
