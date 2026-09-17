@@ -1,4 +1,4 @@
-# Apple Tips 
+# Ormi Tech 
 
 A new Flutter project.
 

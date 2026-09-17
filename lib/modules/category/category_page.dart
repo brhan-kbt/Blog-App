@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:appletips/core/config/api_config.dart';
-import 'package:appletips/core/theme/app_palette.dart';
-import 'package:appletips/models/category.dart';
-import 'package:appletips/widgets/shimmer_widgets.dart';
+import 'package:ormitech/core/config/api_config.dart';
+import 'package:ormitech/core/theme/app_palette.dart';
+import 'package:ormitech/models/category.dart';
+import 'package:ormitech/widgets/shimmer_widgets.dart';
 import '../../core/state/blog_store.dart';
 import 'category_listing_page.dart';
 

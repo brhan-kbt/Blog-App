@@ -41,46 +41,47 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCer5LgPg60IilJ5XVEgooGoMfMyuxS39M',
-    appId: '1:1084692163536:web:5ecb01dad615bdff60e7d5',
-    messagingSenderId: '1084692163536',
-    projectId: 'apple-tips-01',
-    authDomain: 'apple-tips-01.firebaseapp.com',
-    storageBucket: 'apple-tips-01.firebasestorage.app',
+    apiKey: 'AIzaSyBPf_qYvrrX4gOfCHCHl36JNHuNUFU1ULI',
+    appId: '1:417402633803:web:7b8c7d992a67db5f6457ce',
+    messagingSenderId: '417402633803',
+    projectId: 'ormi-tech-01',
+    authDomain: 'ormi-tech-01.firebaseapp.com',
+    storageBucket: 'ormi-tech-01.firebasestorage.app',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDjblFl46vJPA_mnO2fGoCQL83RZwsWx7Y',
-    appId: '1:1084692163536:android:a11b817d6530607e60e7d5',
-    messagingSenderId: '1084692163536',
-    projectId: 'apple-tips-01',
-    storageBucket: 'apple-tips-01.firebasestorage.app',
+    apiKey: 'AIzaSyA2Yl_G3N2X_iDC9yN_OVgcwuPwZX2iUbk',
+    appId: '1:417402633803:android:52abbcf32b2dbb896457ce',
+    messagingSenderId: '417402633803',
+    projectId: 'ormi-tech-01',
+    storageBucket: 'ormi-tech-01.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBZJJbCGmBMO9bbs_62ADZkLjNrt-pyyvA',
-    appId: '1:1084692163536:ios:624260a402b3f43a60e7d5',
-    messagingSenderId: '1084692163536',
-    projectId: 'apple-tips-01',
-    storageBucket: 'apple-tips-01.firebasestorage.app',
-    iosBundleId: 'com.techomia.appletips',
+    apiKey: 'AIzaSyB-CKqXLhJslQX6tCmXvNpXoGIN3Chl4xM',
+    appId: '1:417402633803:ios:7b9d0e2762b1e1df6457ce',
+    messagingSenderId: '417402633803',
+    projectId: 'ormi-tech-01',
+    storageBucket: 'ormi-tech-01.firebasestorage.app',
+    iosBundleId: 'com.techomia.ormitech',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyBZJJbCGmBMO9bbs_62ADZkLjNrt-pyyvA',
-    appId: '1:1084692163536:ios:624260a402b3f43a60e7d5',
-    messagingSenderId: '1084692163536',
-    projectId: 'apple-tips-01',
-    storageBucket: 'apple-tips-01.firebasestorage.app',
-    iosBundleId: 'com.techomia.appletips',
+    apiKey: 'AIzaSyB-CKqXLhJslQX6tCmXvNpXoGIN3Chl4xM',
+    appId: '1:417402633803:ios:7b9d0e2762b1e1df6457ce',
+    messagingSenderId: '417402633803',
+    projectId: 'ormi-tech-01',
+    storageBucket: 'ormi-tech-01.firebasestorage.app',
+    iosBundleId: 'com.techomia.ormitech',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyCer5LgPg60IilJ5XVEgooGoMfMyuxS39M',
-    appId: '1:1084692163536:web:3bfe5fd3f346f0c960e7d5',
-    messagingSenderId: '1084692163536',
-    projectId: 'apple-tips-01',
-    authDomain: 'apple-tips-01.firebaseapp.com',
-    storageBucket: 'apple-tips-01.firebasestorage.app',
+    apiKey: 'AIzaSyBPf_qYvrrX4gOfCHCHl36JNHuNUFU1ULI',
+    appId: '1:417402633803:web:918153634c2ee3686457ce',
+    messagingSenderId: '417402633803',
+    projectId: 'ormi-tech-01',
+    authDomain: 'ormi-tech-01.firebaseapp.com',
+    storageBucket: 'ormi-tech-01.firebasestorage.app',
   );
+
 }
