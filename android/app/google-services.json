@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "1084692163536",
-    "project_id": "apple-tips-01",
-    "storage_bucket": "apple-tips-01.firebasestorage.app"
+    "project_number": "995720411756",
+    "project_id": "tena-tech-01",
+    "storage_bucket": "tena-tech-01.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1084692163536:android:a11b817d6530607e60e7d5",
+        "mobilesdk_app_id": "1:995720411756:android:d6bfa3bb957c833bb87649",
         "android_client_info": {
-          "package_name": "com.techomia.appletips"
+          "package_name": "com.techomia.tenatech"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDjblFl46vJPA_mnO2fGoCQL83RZwsWx7Y"
+          "current_key": "AIzaSyBmWor1slkmIfdemWwQvt4ei-KNcwHDVCE"
         }
       ],
       "services": {

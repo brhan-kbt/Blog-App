@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:get/get.dart';
-import 'package:appletips/core/services/fcm_service.dart';
+import 'package:tenatech/core/services/fcm_service.dart';
 
 class PushNotificationPage extends StatefulWidget {
   const PushNotificationPage({super.key});
@@ -197,7 +197,7 @@ class _PushNotificationPageState extends State<PushNotificationPage> {
             ),
             const SizedBox(height: 12),
             const Text(
-              "To enable or disable push notifications for appletips App, "
+              "To enable or disable push notifications for tenatech App, "
               "please use your phone's system settings or the buttons below.",
             ),
             const SizedBox(height: 24),

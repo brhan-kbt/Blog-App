@@ -41,46 +41,46 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCer5LgPg60IilJ5XVEgooGoMfMyuxS39M',
-    appId: '1:1084692163536:web:5ecb01dad615bdff60e7d5',
-    messagingSenderId: '1084692163536',
-    projectId: 'apple-tips-01',
-    authDomain: 'apple-tips-01.firebaseapp.com',
-    storageBucket: 'apple-tips-01.firebasestorage.app',
+    apiKey: 'AIzaSyDn933ie1mi4_da4EKlpLGPBN4qNx1gjT0',
+    appId: '1:995720411756:web:15cf397cdbfd4666b87649',
+    messagingSenderId: '995720411756',
+    projectId: 'tena-tech-01',
+    authDomain: 'tena-tech-01.firebaseapp.com',
+    storageBucket: 'tena-tech-01.firebasestorage.app',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDjblFl46vJPA_mnO2fGoCQL83RZwsWx7Y',
-    appId: '1:1084692163536:android:a11b817d6530607e60e7d5',
-    messagingSenderId: '1084692163536',
-    projectId: 'apple-tips-01',
-    storageBucket: 'apple-tips-01.firebasestorage.app',
+    apiKey: 'AIzaSyBmWor1slkmIfdemWwQvt4ei-KNcwHDVCE',
+    appId: '1:995720411756:android:d6bfa3bb957c833bb87649',
+    messagingSenderId: '995720411756',
+    projectId: 'tena-tech-01',
+    storageBucket: 'tena-tech-01.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBZJJbCGmBMO9bbs_62ADZkLjNrt-pyyvA',
-    appId: '1:1084692163536:ios:624260a402b3f43a60e7d5',
-    messagingSenderId: '1084692163536',
-    projectId: 'apple-tips-01',
-    storageBucket: 'apple-tips-01.firebasestorage.app',
-    iosBundleId: 'com.techomia.appletips',
+    apiKey: 'AIzaSyD99e_ulRmqE9ftswQP232vpQWRJfkhfCY',
+    appId: '1:995720411756:ios:7affd1085a4fe6edb87649',
+    messagingSenderId: '995720411756',
+    projectId: 'tena-tech-01',
+    storageBucket: 'tena-tech-01.firebasestorage.app',
+    iosBundleId: 'com.techomia.tenatech',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyBZJJbCGmBMO9bbs_62ADZkLjNrt-pyyvA',
-    appId: '1:1084692163536:ios:624260a402b3f43a60e7d5',
-    messagingSenderId: '1084692163536',
-    projectId: 'apple-tips-01',
-    storageBucket: 'apple-tips-01.firebasestorage.app',
-    iosBundleId: 'com.techomia.appletips',
+    apiKey: 'AIzaSyD99e_ulRmqE9ftswQP232vpQWRJfkhfCY',
+    appId: '1:995720411756:ios:7affd1085a4fe6edb87649',
+    messagingSenderId: '995720411756',
+    projectId: 'tena-tech-01',
+    storageBucket: 'tena-tech-01.firebasestorage.app',
+    iosBundleId: 'com.techomia.tenatech',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyCer5LgPg60IilJ5XVEgooGoMfMyuxS39M',
-    appId: '1:1084692163536:web:3bfe5fd3f346f0c960e7d5',
-    messagingSenderId: '1084692163536',
-    projectId: 'apple-tips-01',
-    authDomain: 'apple-tips-01.firebaseapp.com',
-    storageBucket: 'apple-tips-01.firebasestorage.app',
+    apiKey: 'AIzaSyDn933ie1mi4_da4EKlpLGPBN4qNx1gjT0',
+    appId: '1:995720411756:web:385da762aeee0fa6b87649',
+    messagingSenderId: '995720411756',
+    projectId: 'tena-tech-01',
+    authDomain: 'tena-tech-01.firebaseapp.com',
+    storageBucket: 'tena-tech-01.firebasestorage.app',
   );
 }

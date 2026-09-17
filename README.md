@@ -1,4 +1,4 @@
-# Apple Tips 
+# Tena Tech 
 
 A new Flutter project.
 

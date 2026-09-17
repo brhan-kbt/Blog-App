@@ -1,5 +1,5 @@
 import 'package:intl/intl.dart';
-import 'package:appletips/models/user_ref.dart';
+import 'package:tenatech/models/user_ref.dart';
 import 'category.dart';
 
 class Post {

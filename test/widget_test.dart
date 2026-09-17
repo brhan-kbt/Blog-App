@@ -8,14 +8,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:appletips/main.dart';
+import 'package:tenatech/main.dart';
 
 void main() {
   testWidgets('App loads successfully', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const appletipsApp());
+    await tester.pumpWidget(const tenatechApp());
 
     // Verify that the app loads without crashing
-    expect(find.byType(appletipsApp), findsOneWidget);
+    expect(find.byType(tenatechApp), findsOneWidget);
   });
 }

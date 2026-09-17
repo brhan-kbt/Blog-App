@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:appletips/widgets/adabtiveBanner.dart';
-import 'package:appletips/widgets/shimmer_widgets.dart';
+import 'package:tenatech/widgets/adabtiveBanner.dart';
+import 'package:tenatech/widgets/shimmer_widgets.dart';
 import '../../core/state/blog_store.dart';
 import '../../models/post.dart';
 import '../../widgets/post_tile.dart';
