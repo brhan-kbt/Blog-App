@@ -352,6 +352,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
+  gma_mediation_meta:
+    dependency: "direct main"
+    description:
+      name: gma_mediation_meta
+      sha256: "765367719c81043ee9cde12c854fae9c8de00c619bb0811fd8ce63541d962710"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.5.0"
+  gma_mediation_unity:
+    dependency: "direct main"
+    description:
+      name: gma_mediation_unity
+      sha256: "8dac2daf66a4024ccf65ba63efc1dd1623406e53e79d5f086a14767c3bde587e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.6.3"
   google_fonts:
     dependency: "direct main"
     description:

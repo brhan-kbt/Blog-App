@@ -14,7 +14,7 @@ import '../services/reward_service.dart';
 class AdService {
   static final AdService instance = AdService._internal();
   AdService._internal();
-
+  
   bool get policy {
     try {
       if (Get.isRegistered<BlogStore>()) {
@@ -64,6 +64,15 @@ class AdService {
     return AdConfig.androidRewardedInterstitial;
   }
 
+  /// Logs which ad network actually served a loaded ad (AdMob, Unity Ads, etc.).
+  /// Reads the mediation response info populated once an ad finishes loading.
+  static void logAdSource(String label, ResponseInfo? responseInfo) {
+    final loaded = responseInfo?.loadedAdapterResponseInfo;
+    final source = loaded?.adSourceName ?? 'Unknown';
+    debugPrint('AdSource[$label] served by: $source '
+        '(adapter: ${loaded?.adapterClassName ?? 'n/a'})');
+  }
+
   AppOpenAd? _appOpenAd;
 
   void loadAppOpenAd() {
@@ -74,6 +83,7 @@ class AdService {
         onAdLoaded: (ad) {
           _appOpenAd = ad;
           debugPrint("OPen : ✅ AppOpenAd loaded");
+          logAdSource('AppOpen', ad.responseInfo);
         },
         onAdFailedToLoad: (error) {
           debugPrint("OPen : ❌ Failed to load AppOpenAd: $error");
@@ -126,7 +136,10 @@ class AdService {
       adUnitId: interstitialId,
       request: const AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
-        onAdLoaded: (ad) => _interstitialAd = ad,
+        onAdLoaded: (ad) {
+          _interstitialAd = ad;
+          logAdSource('Interstitial', ad.responseInfo);
+        },
         onAdFailedToLoad: (_) => _interstitialAd = null,
       ),
     );
@@ -137,7 +150,10 @@ class AdService {
       adUnitId: rewardedId,
       request: const AdRequest(),
       rewardedAdLoadCallback: RewardedAdLoadCallback(
-        onAdLoaded: (ad) => _rewardedAd = ad,
+        onAdLoaded: (ad) {
+          _rewardedAd = ad;
+          logAdSource('Rewarded', ad.responseInfo);
+        },
         onAdFailedToLoad: (_) => _rewardedAd = null,
       ),
     );
@@ -148,7 +164,10 @@ class AdService {
       adUnitId: rewardedInterstitialId,
       request: const AdRequest(),
       rewardedInterstitialAdLoadCallback: RewardedInterstitialAdLoadCallback(
-        onAdLoaded: (ad) => _rewardedInterstitialAd = ad,
+        onAdLoaded: (ad) {
+          _rewardedInterstitialAd = ad;
+          logAdSource('RewardedInterstitial', ad.responseInfo);
+        },
         onAdFailedToLoad: (_) => _rewardedInterstitialAd = null,
       ),
     );

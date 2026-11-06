@@ -49,7 +49,11 @@ class _AdaptiveBannerAdWidgetState extends State<AdaptiveBannerAdWidget> {
       size: size,
       adUnitId: AdService.bannerId, // your AdMob unit id
       listener: BannerAdListener(
-        onAdLoaded: (ad) => setState(() => _loaded = true),
+        // onAdLoaded: (ad) => setState(() => _loaded = true),
+        onAdLoaded: (ad) {
+          setState(() => _loaded = true);
+          AdService.logAdSource('Banner', ad.responseInfo);
+        },
         onAdFailedToLoad: (ad, error) {
           debugPrint("❌ Failed to load adaptive banner: $error");
           ad.dispose();

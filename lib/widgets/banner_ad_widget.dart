@@ -56,7 +56,11 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
       size: widget.size,
       adUnitId: AdService.bannerId,
       listener: BannerAdListener(
-        onAdLoaded: (ad) => setState(() => _loaded = true),
+        // onAdLoaded: (ad) => setState(() => _loaded = true),
+        onAdLoaded: (ad) {
+          setState(() => _loaded = true);
+          AdService.logAdSource('served by Banner', ad.responseInfo);
+        },
         onAdFailedToLoad: (ad, error) {
           ad.dispose();
           setState(() => _loaded = false);

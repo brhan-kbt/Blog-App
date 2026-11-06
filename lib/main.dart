@@ -4,6 +4,7 @@ import 'package:smart_tips/modules/post_detail/post_detail_page.dart';
 import 'package:app_links/app_links.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -149,13 +150,31 @@ Future<void> _initializeConsentService() async {
 Future<void> _initializeAds() async {
   try {
     await MobileAds.instance.initialize();
+
+    // Register this device as a test device (required for Ad Inspector).
+    await MobileAds.instance.updateRequestConfiguration(
+      RequestConfiguration(
+        testDeviceIds: ['7C05752ED3C3F5F899943B195760F4EB'],
+      ),
+    );
+
     await AdService.instance.initialize();
     AdService.instance.loadAppOpenAd();
+
+    if (kDebugMode) {
+      Future.delayed(const Duration(seconds: 5), () {
+        MobileAds.instance.openAdInspector((error) {
+          if (error != null) {
+            debugPrint('Ad Inspector error: ${error.message}');
+          }
+        });
+      });
+    }
   } catch (e) {
     debugPrint('Error initializing ads: $e');
-    // Continue app initialization even if ads fail
   }
 }
+
 
 Future<void> _initializePerformanceService() async {
   Get.put(PerformanceService(), permanent: true);
