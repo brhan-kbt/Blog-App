@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:smart_tips/core/config/api_config.dart';
-import 'package:smart_tips/widgets/post_options_sheet.dart';
+import 'package:selam_tips/core/config/api_config.dart';
+import 'package:selam_tips/widgets/post_options_sheet.dart';
 import '../core/theme/app_palette.dart';
 import '../models/post.dart';
 
@@ -127,7 +127,7 @@ class PostTile extends StatelessWidget {
                                 // Author name and date combined
                                 Expanded(
                                   child: Text(
-                                    '${'Smart Tips'} • ${post.prettyDate}',
+                                    '${'Selam Tips'} • ${post.prettyDate}',
                                     style: metaStyle,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,

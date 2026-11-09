@@ -1,4 +1,4 @@
-package com.tekopia.smarttips
+package com.tekopia.selamtips
 
 import io.flutter.embedding.android.FlutterActivity
 

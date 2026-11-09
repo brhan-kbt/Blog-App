@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:smart_tips/modules/post_detail/post_detail_page.dart';
+import 'package:selam_tips/modules/post_detail/post_detail_page.dart';
 import 'package:app_links/app_links.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -9,19 +9,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:smart_tips/core/consent/consent_service.dart';
-import 'package:smart_tips/core/services/fcm_service.dart';
-import 'package:smart_tips/firebase_options.dart';
-import 'package:smart_tips/widgets/adabtiveBanner.dart';
+import 'package:selam_tips/core/consent/consent_service.dart';
+import 'package:selam_tips/core/services/fcm_service.dart';
+import 'package:selam_tips/firebase_options.dart';
+import 'package:selam_tips/widgets/adabtiveBanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import 'package:smart_tips/core/theme/app_palette.dart';
-import 'package:smart_tips/core/theme/theme_service.dart';
-import 'package:smart_tips/core/services/connectivity_service.dart';
-import 'package:smart_tips/core/services/performance_service.dart';
-import 'package:smart_tips/core/services/version_check_service.dart';
-import 'package:smart_tips/core/services/version_check_controller.dart';
-import 'package:smart_tips/routes/app_pages.dart';
+import 'package:selam_tips/core/theme/app_palette.dart';
+import 'package:selam_tips/core/theme/theme_service.dart';
+import 'package:selam_tips/core/services/connectivity_service.dart';
+import 'package:selam_tips/core/services/performance_service.dart';
+import 'package:selam_tips/core/services/version_check_service.dart';
+import 'package:selam_tips/core/services/version_check_controller.dart';
+import 'package:selam_tips/routes/app_pages.dart';
 import 'core/state/blog_store.dart';
 import 'core/theme/app_theme.dart';
 import 'modules/category/category_page.dart';
@@ -64,7 +64,7 @@ Future<void> main() async {
   // Initialize other services in background to speed up startup
   _initializeBackgroundServices();
 
-  runApp(const smart_tipsApp());
+  runApp(const SelamTipsApp());
 }
 
 void _handleDeepLink(Uri uri, BlogStore store) {
@@ -152,29 +152,26 @@ Future<void> _initializeAds() async {
     await MobileAds.instance.initialize();
 
     // Register this device as a test device (required for Ad Inspector).
-    await MobileAds.instance.updateRequestConfiguration(
-      RequestConfiguration(
-        testDeviceIds: ['7C05752ED3C3F5F899943B195760F4EB'],
-      ),
-    );
+    // await MobileAds.instance.updateRequestConfiguration(
+    //   RequestConfiguration(testDeviceIds: ['7C05752ED3C3F5F899943B195760F4EB']),
+    // );
 
     await AdService.instance.initialize();
     AdService.instance.loadAppOpenAd();
 
-    if (kDebugMode) {
-      Future.delayed(const Duration(seconds: 5), () {
-        MobileAds.instance.openAdInspector((error) {
-          if (error != null) {
-            debugPrint('Ad Inspector error: ${error.message}');
-          }
-        });
-      });
-    }
+    // if (kDebugMode) {
+    //   Future.delayed(const Duration(seconds: 5), () {
+    //     MobileAds.instance.openAdInspector((error) {
+    //       if (error != null) {
+    //         debugPrint('Ad Inspector error: ${error.message}');
+    //       }
+    //     });
+    //   });
+    // }
   } catch (e) {
     debugPrint('Error initializing ads: $e');
   }
 }
-
 
 Future<void> _initializePerformanceService() async {
   Get.put(PerformanceService(), permanent: true);
@@ -239,8 +236,8 @@ void _initializeBackgroundServices() {
   });
 }
 
-class smart_tipsApp extends StatelessWidget {
-  const smart_tipsApp({super.key});
+class SelamTipsApp extends StatelessWidget {
+  const SelamTipsApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -248,12 +245,12 @@ class smart_tipsApp extends StatelessWidget {
 
     return Obx(() {
       debugPrint(
-        "🎨 smart_tipsApp - Building with theme mode: ${themeSvc.mode.value}",
+        "🎨 SelamTipsApp - Building with theme mode: ${themeSvc.mode.value}",
       );
-      debugPrint("🎨 smart_tipsApp - IsDark: ${themeSvc.isDark}");
+      debugPrint("🎨 SelamTipsApp - IsDark: ${themeSvc.isDark}");
 
       return GetMaterialApp(
-        title: 'Smart Tips',
+        title: 'Selam Tips',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.light,
         darkTheme: AppTheme.dark,
