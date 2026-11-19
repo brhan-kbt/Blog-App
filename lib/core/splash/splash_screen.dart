@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:selam_tips/core/services/connectivity_service.dart';
-import 'package:selam_tips/core/services/fcm_service.dart';
-import 'package:selam_tips/core/state/blog_store.dart';
-import 'package:selam_tips/core/theme/theme_service.dart';
+import 'package:selam_pro/core/services/connectivity_service.dart';
+import 'package:selam_pro/core/services/fcm_service.dart';
+import 'package:selam_pro/core/state/blog_store.dart';
+import 'package:selam_pro/core/theme/theme_service.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -14,70 +14,111 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
-  // Primary brand color
-  static const Color primaryColor = Color(0xFF25736A);
+  // Deep teal palette with warm lantern glow
+  static const Color primaryColor = Color(0xFF04888F);
+  static const Color brightTeal = Color(0xFF06B0B9);
+  static const Color softTeal = Color(0xFF6FD4DB);
+  static const Color paleTeal = Color(0xFFD4F3F5);
+  static const Color deepTeal = Color(0xFF025A5F);
+  static const Color abyssTeal = Color(0xFF012E31);
+  static const Color warmGlow = Color(0xFFFFE9B8);
 
-  late AnimationController _fadeController;
-  late AnimationController _slideController;
-  late AnimationController _pulseController;
+  late AnimationController _entryController;
+  late AnimationController _glowController;
+  late AnimationController _rayController;
+  late AnimationController _shimmerController;
+  late AnimationController _driftController;
+  late AnimationController _sparkleController;
 
-  late Animation<double> _fadeAnimation;
-  late Animation<Offset> _slideAnimation;
-  late Animation<double> _pulseAnimation;
-  late Animation<double> _scaleAnimation;
+  late Animation<double> _fadeIn;
+  late Animation<Offset> _slideUp;
+  late Animation<double> _scaleIn;
+  late Animation<double> _glow;
+  late Animation<double> _rayRotation;
+  late Animation<double> _shimmer;
+  late Animation<double> _drift;
+  late Animation<double> _sparkle;
 
   @override
   void initState() {
     super.initState();
 
-    // Fade animation
-    _fadeController = AnimationController(
+    _entryController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1200),
+      duration: const Duration(milliseconds: 1500),
     );
-    _fadeAnimation = CurvedAnimation(
-      parent: _fadeController,
-      curve: Curves.easeInOut,
+    _fadeIn = CurvedAnimation(
+      parent: _entryController,
+      curve: const Interval(0.0, 0.7, curve: Curves.easeIn),
     );
-
-    // Slide animation
-    _slideController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1000),
-    );
-    _slideAnimation = Tween<Offset>(
-      begin: const Offset(0, 0.3),
+    _slideUp = Tween<Offset>(
+      begin: const Offset(0, 0.28),
       end: Offset.zero,
     ).animate(
-      CurvedAnimation(parent: _slideController, curve: Curves.easeOutCubic),
+      CurvedAnimation(
+        parent: _entryController,
+        curve: const Interval(0.0, 0.9, curve: Curves.easeOutCubic),
+      ),
+    );
+    _scaleIn = Tween<double>(begin: 0.5, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _entryController,
+        curve: const Interval(0.2, 1.0, curve: Curves.easeOutBack),
+      ),
     );
 
-    // Pulse animation for logo
-    _pulseController = AnimationController(
+    _glowController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 2000),
+      duration: const Duration(milliseconds: 2400),
     )..repeat(reverse: true);
-    _pulseAnimation = Tween<double>(begin: 1.0, end: 1.08).animate(
-      CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
+    _glow = Tween<double>(begin: 0.5, end: 1.0).animate(
+      CurvedAnimation(parent: _glowController, curve: Curves.easeInOut),
     );
 
-    // Scale animation for loader
-    _scaleAnimation = Tween<double>(begin: 0.8, end: 1.0).animate(
-      CurvedAnimation(parent: _fadeController, curve: Curves.easeOutBack),
+    _rayController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 30000),
+    )..repeat();
+    _rayRotation = Tween<double>(begin: 0.0, end: 6.28318).animate(
+      CurvedAnimation(parent: _rayController, curve: Curves.linear),
     );
 
-    // Start animations
-    _fadeController.forward();
-    _slideController.forward();
+    _shimmerController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 2500),
+    )..repeat();
+    _shimmer = Tween<double>(begin: -1.5, end: 2.5).animate(
+      CurvedAnimation(parent: _shimmerController, curve: Curves.easeInOut),
+    );
 
+    _driftController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 5000),
+    )..repeat();
+    _drift = Tween<double>(begin: 0.0, end: 6.28318).animate(
+      CurvedAnimation(parent: _driftController, curve: Curves.linear),
+    );
+
+    _sparkleController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1600),
+    )..repeat(reverse: true);
+    _sparkle = Tween<double>(begin: 0.3, end: 1.0).animate(
+      CurvedAnimation(parent: _sparkleController, curve: Curves.easeInOut),
+    );
+
+    _entryController.forward();
     _initApp();
   }
 
   @override
   void dispose() {
-    _fadeController.dispose();
-    _slideController.dispose();
-    _pulseController.dispose();
+    _entryController.dispose();
+    _glowController.dispose();
+    _rayController.dispose();
+    _shimmerController.dispose();
+    _driftController.dispose();
+    _sparkleController.dispose();
     super.dispose();
   }
 
@@ -137,6 +178,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     final themeService = Get.find<ThemeService>();
+    final size = MediaQuery.of(context).size;
 
     return Obx(() {
       final isDark = themeService.isDark;
@@ -145,114 +187,133 @@ class _SplashScreenState extends State<SplashScreen>
         body: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
               colors: isDark
                   ? [
-                      const Color(0xFF0A1F1D),
-                      const Color(0xFF122E2B),
-                      const Color(0xFF1A3C38),
+                      const Color(0xFF001416),
+                      abyssTeal,
+                      const Color(0xFF024347),
                     ]
                   : [
-                      primaryColor,
-                      const Color(0xFF2E8B80),
-                      const Color(0xFF3DA89B),
+                      const Color(0xFFF2FCFD),
+                      paleTeal,
+                      const Color(0xFFA8E4E9),
                     ],
-              stops: const [0.0, 0.5, 1.0],
+              stops: const [0.0, 0.55, 1.0],
             ),
           ),
           child: Stack(
             children: [
-              // Decorative circles
-              Positioned(
-                top: -80,
-                right: -80,
-                child: _buildDecorativeCircle(
-                  200,
-                  isDark
-                      ? primaryColor.withOpacity(0.15)
-                      : Colors.white.withOpacity(0.08),
+              // Warm inner glow (lantern effect)
+              Positioned.fill(
+                child: AnimatedBuilder(
+                  animation: _glow,
+                  builder: (context, _) {
+                    return Container(
+                      decoration: BoxDecoration(
+                        gradient: RadialGradient(
+                          center: const Alignment(0, -0.15),
+                          radius: 0.75,
+                          colors: [
+                            (isDark ? warmGlow : brightTeal)
+                                .withOpacity(0.18 * _glow.value),
+                            (isDark ? primaryColor : brightTeal)
+                                .withOpacity(0.08 * _glow.value),
+                            Colors.transparent,
+                          ],
+                          stops: const [0.0, 0.4, 1.0],
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ),
+
+              // Rotating light rays behind logo
               Positioned(
-                bottom: -100,
-                left: -100,
-                child: _buildDecorativeCircle(
-                  250,
-                  isDark
-                      ? primaryColor.withOpacity(0.1)
-                      : Colors.white.withOpacity(0.06),
+                top: size.height * 0.5 - 250,
+                left: size.width * 0.5 - 250,
+                child: AnimatedBuilder(
+                  animation: _rayRotation,
+                  builder: (context, child) {
+                    return Transform.rotate(
+                      angle: _rayRotation.value,
+                      child: child,
+                    );
+                  },
+                  child: SizedBox(
+                    width: 500,
+                    height: 500,
+                    child: CustomPaint(
+                      painter: _LightRayPainter(
+                        color: (isDark ? warmGlow : softTeal)
+                            .withOpacity(isDark ? 0.06 : 0.08),
+                      ),
+                    ),
+                  ),
                 ),
               ),
+
+              // Drifting concentric arcs
               Positioned(
-                top: MediaQuery.of(context).size.height * 0.15,
-                left: -50,
-                child: _buildDecorativeCircle(
-                  120,
-                  isDark
-                      ? Colors.teal.withOpacity(0.08)
-                      : Colors.white.withOpacity(0.05),
+                top: size.height * 0.5 - 230,
+                left: size.width * 0.5 - 230,
+                child: AnimatedBuilder(
+                  animation: _drift,
+                  builder: (context, _) {
+                    return SizedBox(
+                      width: 460,
+                      height: 460,
+                      child: CustomPaint(
+                        painter: _DriftArcPainter(
+                          progress: _drift.value,
+                          color: (isDark ? softTeal : primaryColor)
+                              .withOpacity(isDark ? 0.14 : 0.08),
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ),
+
+              // Floating sparkle particles
+              ..._buildSparkleParticles(isDark, size),
 
               // Main content
               Center(
                 child: FadeTransition(
-                  opacity: _fadeAnimation,
+                  opacity: _fadeIn,
                   child: SlideTransition(
-                    position: _slideAnimation,
+                    position: _slideUp,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // Animated logo
-                        _buildAnimatedLogo(isDark),
-
-                        const SizedBox(height: 40),
-
-                        // App name with fade
-                        FadeTransition(
-                          opacity: _fadeAnimation,
-                          child: _buildAppName(isDark),
+                        // Lantern-style logo with glow
+                        ScaleTransition(
+                          scale: _scaleIn,
+                          child: _buildLanternLogo(isDark),
                         ),
 
-                        const SizedBox(height: 12),
+                        const SizedBox(height: 48),
+
+                        // Shimmering title
+                        _buildShimmerTitle(isDark),
+
+                        const SizedBox(height: 14),
+
+                        // Ornamental divider
+                        _buildOrnamentalDivider(isDark),
+
+                        const SizedBox(height: 14),
 
                         // Tagline
-                        FadeTransition(
-                          opacity: _fadeAnimation,
-                          child: _buildTagline(isDark),
-                        ),
+                        _buildTagline(isDark),
 
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 62),
 
-                        // Decorative line
-                        _buildDecorativeLine(isDark),
-
-                        const SizedBox(height: 60),
-
-                        // Custom loader
-                        ScaleTransition(
-                          scale: _scaleAnimation,
-                          child: _buildCustomLoader(isDark),
-                        ),
-
-                        const SizedBox(height: 24),
-
-                        // Loading text
-                        FadeTransition(
-                          opacity: _fadeAnimation,
-                          child: Text(
-                            "Loading...",
-                            style: TextStyle(
-                              fontSize: 13,
-                              color: isDark
-                                  ? Colors.grey[500]
-                                  : Colors.white.withOpacity(0.7),
-                              letterSpacing: 3,
-                              fontWeight: FontWeight.w300,
-                            ),
-                          ),
-                        ),
+                        // Lantern loader
+                        _buildLanternLoader(isDark),
                       ],
                     ),
                   ),
@@ -261,22 +322,42 @@ class _SplashScreenState extends State<SplashScreen>
 
               // Bottom branding
               Positioned(
-                bottom: 40,
+                bottom: 36,
                 left: 0,
                 right: 0,
                 child: FadeTransition(
-                  opacity: _fadeAnimation,
-                  child: Text(
-                    "SELAM TIPS",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 11,
-                      color: isDark
-                          ? Colors.grey[700]
-                          : Colors.white.withOpacity(0.35),
-                      letterSpacing: 4,
-                      fontWeight: FontWeight.w500,
-                    ),
+                  opacity: _fadeIn,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.nights_stay,
+                        size: 11,
+                        color: isDark
+                            ? softTeal.withOpacity(0.5)
+                            : primaryColor.withOpacity(0.45),
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        "SELAM PRO",
+                        style: TextStyle(
+                          fontSize: 10,
+                          color: isDark
+                              ? Colors.white.withOpacity(0.3)
+                              : primaryColor.withOpacity(0.55),
+                          letterSpacing: 6,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Icon(
+                        Icons.nights_stay,
+                        size: 11,
+                        color: isDark
+                            ? softTeal.withOpacity(0.5)
+                            : primaryColor.withOpacity(0.45),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -287,98 +368,313 @@ class _SplashScreenState extends State<SplashScreen>
     });
   }
 
-  Widget _buildAnimatedLogo(bool isDark) {
+  List<Widget> _buildSparkleParticles(bool isDark, Size size) {
+    final particles = [
+      _Sparkle(size.width * 0.10, size.height * 0.18, 3.0, 0.0),
+      _Sparkle(size.width * 0.88, size.height * 0.26, 4.0, 1.2),
+      _Sparkle(size.width * 0.06, size.height * 0.68, 2.5, 0.5),
+      _Sparkle(size.width * 0.93, size.height * 0.62, 3.5, 1.8),
+      _Sparkle(size.width * 0.22, size.height * 0.88, 2.0, 0.9),
+      _Sparkle(size.width * 0.78, size.height * 0.12, 3.0, 2.2),
+      _Sparkle(size.width * 0.46, size.height * 0.08, 2.5, 1.5),
+      _Sparkle(size.width * 0.66, size.height * 0.94, 3.0, 0.3),
+    ];
+
+    return particles.map((p) {
+      return Positioned(
+        left: p.x - p.size / 2,
+        top: p.y - p.size / 2,
+        child: AnimatedBuilder(
+          animation: _sparkleController,
+          builder: (context, _) {
+            final sparkleValue =
+                (0.3 + 0.7 * ((_sparkle.value + p.phase) % 1.0)).clamp(0.0, 1.0);
+            return Container(
+              width: p.size,
+              height: p.size,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: (isDark ? warmGlow : primaryColor)
+                    .withOpacity(0.7 * sparkleValue),
+                boxShadow: [
+                  BoxShadow(
+                    color: (isDark ? warmGlow : brightTeal)
+                        .withOpacity(0.6 * sparkleValue),
+                    blurRadius: p.size * 3,
+                    spreadRadius: p.size,
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      );
+    }).toList();
+  }
+
+  Widget _buildLanternLogo(bool isDark) {
     return AnimatedBuilder(
-      animation: _pulseAnimation,
+      animation: _glow,
       builder: (context, child) {
-        return Transform.scale(
-          scale: _pulseAnimation.value,
+        return Container(
+          width: 172,
+          height: 172,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            boxShadow: [
+              // Warm inner glow
+              BoxShadow(
+                color: (isDark ? warmGlow : brightTeal)
+                    .withOpacity(0.45 * _glow.value),
+                blurRadius: 60,
+                spreadRadius: 18,
+              ),
+              // Cool outer shadow
+              BoxShadow(
+                color: Colors.black.withOpacity(isDark ? 0.5 : 0.1),
+                blurRadius: 25,
+                offset: const Offset(0, 12),
+              ),
+            ],
+          ),
           child: child,
         );
       },
-      child: Container(
-        width: 140,
-        height: 140,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: isDark
-                ? [
-                    primaryColor.withOpacity(0.9),
-                    const Color(0xFF1A3C38),
-                  ]
-                : [
-                    Colors.white,
-                    Colors.white.withOpacity(0.9),
-                  ],
-          ),
-          boxShadow: [
-            // Outer glow
-            BoxShadow(
-              color: isDark
-                  ? primaryColor.withOpacity(0.4)
-                  : Colors.black.withOpacity(0.15),
-              blurRadius: 40,
-              spreadRadius: 10,
-            ),
-            // Inner shadow
-            BoxShadow(
-              color: isDark
-                  ? Colors.black.withOpacity(0.3)
-                  : Colors.black.withOpacity(0.08),
-              blurRadius: 20,
-              spreadRadius: -5,
-              offset: const Offset(0, 8),
-            ),
-          ],
-        ),
-        child: ClipOval(
-          child: Container(
-            padding: const EdgeInsets.all(16),
-            color: isDark ? const Color(0xFF0A1F1D) : Colors.white,
-            child: Image.asset(
-              'assets/selam_tips_logo.png',
-              fit: BoxFit.contain,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          // Outer glow ring with warm gradient
+          Container(
+            width: 172,
+            height: 172,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              gradient: SweepGradient(
+                colors: isDark
+                    ? [
+                        primaryColor,
+                        warmGlow,
+                        brightTeal,
+                        warmGlow,
+                        primaryColor,
+                      ]
+                    : [
+                        deepTeal,
+                        primaryColor,
+                        brightTeal,
+                        primaryColor,
+                        deepTeal,
+                      ],
+                stops: const [0.0, 0.25, 0.5, 0.75, 1.0],
+              ),
             ),
           ),
-        ),
+
+          // Middle ring
+          Container(
+            width: 158,
+            height: 158,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: isDark ? abyssTeal : Colors.white,
+            ),
+          ),
+
+          // Inner radial gradient (warm light)
+          Container(
+            width: 148,
+            height: 148,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              gradient: RadialGradient(
+                colors: isDark
+                    ? [
+                        warmGlow.withOpacity(0.25),
+                        primaryColor.withOpacity(0.4),
+                        abyssTeal,
+                      ]
+                    : [
+                        Colors.white,
+                        paleTeal,
+                      ],
+                stops: const [0.0, 0.6, 1.0],
+              ),
+            ),
+          ),
+
+          // Logo image
+          ClipOval(
+            child: Container(
+              width: 128,
+              height: 128,
+              padding: const EdgeInsets.all(14),
+              color: isDark ? abyssTeal : Colors.white,
+              child: Image.asset(
+                'assets/selam_pro_logo.png',
+                fit: BoxFit.contain,
+              ),
+            ),
+          ),
+
+          // Ornamental accents at cardinal points
+          ..._buildLanternOrnaments(isDark),
+        ],
       ),
     );
   }
 
-  Widget _buildAppName(bool isDark) {
-    return Column(
-      children: [
-        // "Selam" in lighter weight
-        Text(
-          "Selam",
-          style: TextStyle(
-            fontSize: 28,
-            fontWeight: FontWeight.w300,
-            letterSpacing: 8,
-            color: isDark ? Colors.white70 : Colors.white.withOpacity(0.9),
+  List<Widget> _buildLanternOrnaments(bool isDark) {
+    final angles = [0.0, 1.5708, 3.14159, 4.71239];
+    return angles.map((angle) {
+      return Transform.rotate(
+        angle: angle,
+        child: Align(
+          alignment: Alignment.topCenter,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 0),
+            child: CustomPaint(
+              size: const Size(14, 14),
+              painter: _DiamondOrnamentPainter(
+                color: isDark ? warmGlow : Colors.white,
+                glowColor: isDark ? warmGlow : brightTeal,
+              ),
+            ),
           ),
         ),
-        const SizedBox(height: 4),
-        // "Tips" in bold
-        Text(
-          "TIPS",
-          style: TextStyle(
-            fontSize: 42,
-            fontWeight: FontWeight.w800,
-            letterSpacing: 12,
-            color: isDark ? Colors.white : Colors.white,
-            shadows: [
-              Shadow(
-                blurRadius: 20,
-                color: isDark
-                    ? primaryColor.withOpacity(0.5)
-                    : Colors.black.withOpacity(0.15),
-                offset: const Offset(0, 4),
+      );
+    }).toList();
+  }
+
+  Widget _buildShimmerTitle(bool isDark) {
+    return AnimatedBuilder(
+      animation: _shimmer,
+      builder: (context, _) {
+        return ShaderMask(
+          blendMode: BlendMode.srcATop,
+          shaderCallback: (bounds) {
+            return LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: isDark
+                  ? [
+                      Colors.white,
+                      warmGlow,
+                      Colors.white,
+                      softTeal,
+                      Colors.white,
+                    ]
+                  : [
+                      deepTeal,
+                      primaryColor,
+                      deepTeal,
+                      primaryColor,
+                      deepTeal,
+                    ],
+              stops: [
+                (_shimmer.value - 0.3).clamp(0.0, 1.0),
+                (_shimmer.value).clamp(0.0, 1.0),
+                (_shimmer.value + 0.3).clamp(0.0, 1.0),
+                (_shimmer.value + 0.6).clamp(0.0, 1.0),
+                1.0,
+              ],
+            ).createShader(bounds);
+          },
+          child: Column(
+            children: [
+              Text(
+                "SELAM",
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w300,
+                  letterSpacing: 14,
+                  color: isDark
+                      ? Colors.white.withOpacity(0.85)
+                      : deepTeal,
+                ),
+              ),
+              const SizedBox(height: 2),
+              Text(
+                "PRO",
+                style: TextStyle(
+                  fontSize: 46,
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: 24,
+                  color: isDark ? Colors.white : deepTeal,
+                ),
               ),
             ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildOrnamentalDivider(bool isDark) {
+    final color = isDark ? warmGlow : primaryColor;
+    final accentColor = isDark ? softTeal : primaryColor;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          width: 30,
+          height: 1.2,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.transparent, accentColor.withOpacity(0.6)],
+            ),
+          ),
+        ),
+        const SizedBox(width: 8),
+        Transform.rotate(
+          angle: 0.785398,
+          child: Container(
+            width: 5,
+            height: 5,
+            decoration: BoxDecoration(
+              color: accentColor.withOpacity(0.7),
+              borderRadius: BorderRadius.circular(0.5),
+            ),
+          ),
+        ),
+        const SizedBox(width: 6),
+        Transform.rotate(
+          angle: 0.785398,
+          child: Container(
+            width: 8,
+            height: 8,
+            decoration: BoxDecoration(
+              color: color,
+              borderRadius: BorderRadius.circular(1),
+              boxShadow: [
+                BoxShadow(
+                  color: color.withOpacity(0.5),
+                  blurRadius: 6,
+                  spreadRadius: 1,
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(width: 6),
+        Transform.rotate(
+          angle: 0.785398,
+          child: Container(
+            width: 5,
+            height: 5,
+            decoration: BoxDecoration(
+              color: accentColor.withOpacity(0.7),
+              borderRadius: BorderRadius.circular(0.5),
+            ),
+          ),
+        ),
+        const SizedBox(width: 8),
+        Container(
+          width: 30,
+          height: 1.2,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [accentColor.withOpacity(0.6), Colors.transparent],
+            ),
           ),
         ),
       ],
@@ -387,106 +683,245 @@ class _SplashScreenState extends State<SplashScreen>
 
   Widget _buildTagline(bool isDark) {
     return Text(
-      "Discover. Learn. Grow.",
+      "Illuminate  ·  Discover  ·  Rise",
       style: TextStyle(
-        fontSize: 14,
-        fontWeight: FontWeight.w400,
-        letterSpacing: 2,
+        fontSize: 13,
+        fontWeight: FontWeight.w500,
+        letterSpacing: 1.5,
         color: isDark
-            ? Colors.teal[300]?.withOpacity(0.8)
-            : Colors.white.withOpacity(0.75),
+            ? paleTeal.withOpacity(0.6)
+            : deepTeal.withOpacity(0.6),
       ),
     );
   }
 
-  Widget _buildDecorativeLine(bool isDark) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        _buildLineDot(isDark),
-        const SizedBox(width: 8),
-        Container(
-          width: 60,
-          height: 2,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: isDark
-                  ? [primaryColor.withOpacity(0.3), primaryColor]
-                  : [Colors.white.withOpacity(0.2), Colors.white],
-            ),
-            borderRadius: BorderRadius.circular(1),
-          ),
-        ),
-        const SizedBox(width: 8),
-        _buildLineDot(isDark),
-      ],
-    );
-  }
-
-  Widget _buildLineDot(bool isDark) {
-    return Container(
-      width: 6,
-      height: 6,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: isDark ? primaryColor : Colors.white.withOpacity(0.8),
-      ),
-    );
-  }
-
-  Widget _buildCustomLoader(bool isDark) {
+  Widget _buildLanternLoader(bool isDark) {
     return SizedBox(
-      width: 48,
-      height: 48,
+      width: 52,
+      height: 52,
       child: Stack(
         alignment: Alignment.center,
         children: [
-          // Outer ring
-          SizedBox(
-            width: 48,
-            height: 48,
-            child: CircularProgressIndicator(
-              strokeWidth: 2,
-              valueColor: AlwaysStoppedAnimation<Color>(
-                isDark
-                    ? primaryColor.withOpacity(0.3)
-                    : Colors.white.withOpacity(0.3),
-              ),
-            ),
+          // Outer glowing ring
+          AnimatedBuilder(
+            animation: _glow,
+            builder: (context, _) {
+              return Container(
+                width: 52,
+                height: 52,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: (isDark ? warmGlow : brightTeal)
+                        .withOpacity(0.15 + 0.25 * _glow.value),
+                    width: 1.5,
+                  ),
+                ),
+              );
+            },
           ),
-          // Inner spinner
+          // Spinning arc
           SizedBox(
-            width: 32,
-            height: 32,
+            width: 40,
+            height: 40,
             child: CircularProgressIndicator(
               strokeWidth: 2.5,
               valueColor: AlwaysStoppedAnimation<Color>(
-                isDark ? primaryColor : Colors.white,
+                isDark ? softTeal : primaryColor,
               ),
             ),
           ),
-          // Center dot
-          Container(
-            width: 6,
-            height: 6,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: isDark ? primaryColor : Colors.white,
+          // Center diamond
+          Transform.rotate(
+            angle: 0.785398,
+            child: Container(
+              width: 9,
+              height: 9,
+              decoration: BoxDecoration(
+                color: isDark ? warmGlow : primaryColor,
+                borderRadius: BorderRadius.circular(1.5),
+                boxShadow: [
+                  BoxShadow(
+                    color: (isDark ? warmGlow : brightTeal)
+                        .withOpacity(0.7),
+                    blurRadius: 8,
+                    spreadRadius: 2,
+                  ),
+                ],
+              ),
             ),
           ),
         ],
       ),
     );
   }
+}
 
-  Widget _buildDecorativeCircle(double size, Color color) {
-    return Container(
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: color,
-      ),
-    );
+/// Data holder for sparkle particles
+class _Sparkle {
+  final double x;
+  final double y;
+  final double size;
+  final double phase;
+
+  const _Sparkle(this.x, this.y, this.size, this.phase);
+}
+
+/// Painter for rotating light rays behind the logo
+class _LightRayPainter extends CustomPainter {
+  final Color color;
+
+  _LightRayPainter({required this.color});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final center = Offset(size.width / 2, size.height / 2);
+    final paint = Paint()
+      ..color = color
+      ..style = PaintingStyle.fill;
+
+    const rayCount = 16;
+    for (int i = 0; i < rayCount; i++) {
+      final angle = (2 * 3.14159 / rayCount) * i;
+      final rayLength = size.width * 0.48;
+      final rayWidth = 0.05;
+
+      final path = Path();
+      path.moveTo(
+        center.dx + size.width * 0.18 * _cos(angle - rayWidth),
+        center.dy + size.width * 0.18 * _sin(angle - rayWidth),
+      );
+      path.lineTo(
+        center.dx + rayLength * _cos(angle),
+        center.dy + rayLength * _sin(angle),
+      );
+      path.lineTo(
+        center.dx + size.width * 0.18 * _cos(angle + rayWidth),
+        center.dy + size.width * 0.18 * _sin(angle + rayWidth),
+      );
+      path.close();
+
+      canvas.drawPath(path, paint);
+    }
   }
+
+  double _sin(double x) => _taylorSin(x);
+  double _cos(double x) => _taylorSin(x + 1.5708);
+
+  double _taylorSin(double x) {
+    x = x % (2 * 3.14159265);
+    if (x > 3.14159265) x -= 2 * 3.14159265;
+    if (x < -3.14159265) x += 2 * 3.14159265;
+    final x2 = x * x;
+    return x * (1 - x2 / 6 * (1 - x2 / 20 * (1 - x2 / 42)));
+  }
+
+  @override
+  bool shouldRepaint(covariant _LightRayPainter oldDelegate) =>
+      oldDelegate.color != color;
+}
+
+/// Painter for drifting concentric arcs
+class _DriftArcPainter extends CustomPainter {
+  final double progress;
+  final Color color;
+
+  _DriftArcPainter({required this.progress, required this.color});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final center = Offset(size.width / 2, size.height / 2);
+    final paint = Paint()
+      ..color = color
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.2;
+
+    // Three rotating arc segments at different radii
+    for (int i = 0; i < 3; i++) {
+      final baseRadius = size.width * (0.28 + i * 0.09);
+      final opacity = 0.6 - i * 0.15;
+      paint.color = color.withOpacity(opacity);
+
+      final startAngle = progress + i * 1.5;
+      final sweepAngle = 1.2 + i * 0.4;
+
+      canvas.drawArc(
+        Rect.fromCircle(center: center, radius: baseRadius),
+        startAngle,
+        sweepAngle,
+        false,
+        paint,
+      );
+    }
+
+    // Outer dashed ring
+    paint.strokeWidth = 0.6;
+    paint.color = color.withOpacity(0.3);
+    _drawDashedCircle(canvas, center, size.width * 0.44, paint);
+  }
+
+  void _drawDashedCircle(
+    Canvas canvas,
+    Offset center,
+    double radius,
+    Paint paint,
+  ) {
+    const dashLength = 6.0;
+    const gapLength = 14.0;
+    final circumference = 2 * 3.14159 * radius;
+    final totalSegments = circumference / (dashLength + gapLength);
+    final anglePerSegment = 2 * 3.14159 / totalSegments;
+
+    for (int i = 0; i < totalSegments; i++) {
+      final startAngle = i * anglePerSegment;
+      final endAngle = startAngle + anglePerSegment * 0.5;
+      canvas.drawArc(
+        Rect.fromCircle(center: center, radius: radius),
+        startAngle,
+        endAngle - startAngle,
+        false,
+        paint,
+      );
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _DriftArcPainter oldDelegate) =>
+      oldDelegate.progress != progress || oldDelegate.color != color;
+}
+
+/// Painter for diamond ornaments at the ring edges
+class _DiamondOrnamentPainter extends CustomPainter {
+  final Color color;
+  final Color glowColor;
+
+  _DiamondOrnamentPainter({required this.color, required this.glowColor});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final center = Offset(size.width / 2, size.height / 2);
+
+    // Outer glow
+    final glowPaint = Paint()
+      ..color = glowColor.withOpacity(0.5)
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 3);
+    canvas.drawCircle(center, 4, glowPaint);
+
+    // Diamond shape
+    final path = Path()
+      ..moveTo(center.dx, center.dy - 5)
+      ..lineTo(center.dx + 4, center.dy)
+      ..lineTo(center.dx, center.dy + 5)
+      ..lineTo(center.dx - 4, center.dy)
+      ..close();
+
+    final paint = Paint()
+      ..color = color
+      ..style = PaintingStyle.fill;
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant _DiamondOrnamentPainter oldDelegate) =>
+      oldDelegate.color != color || oldDelegate.glowColor != glowColor;
 }

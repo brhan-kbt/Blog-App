@@ -1,7 +1,7 @@
 class ApiConfig {
-  static const String baseUrl1 = "https://selamtips.melkamtech.com";
-  static const String baseUrl = "https://selamtips.melkamtech.com/api/v1";
-  static const String imageUrl = "https://selamtips.melkamtech.com/storage/";
+  static const String baseUrl1 = "https://selampro.melkamtech.com";
+  static const String baseUrl = "https://selampro.melkamtech.com/api/v1";
+  static const String imageUrl = "https://selampro.melkamtech.com/storage/";
 
   // Endpoints
   static String posts = "$baseUrl/posts";
