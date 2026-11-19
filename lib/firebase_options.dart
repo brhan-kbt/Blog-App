@@ -41,49 +41,47 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAOrZh_Xh6-z6V8iEuVL_XVWmgtuU5I7TA',
-    appId: '1:871460715194:web:d21c53b08d4d2740a9e083',
-    messagingSenderId: '871460715194',
-    projectId: 'selam-tips-01',
-    authDomain: 'selam-tips-01.firebaseapp.com',
-    storageBucket: 'selam-tips-01.firebasestorage.app',
-    measurementId: 'G-M5M6FQNL23',
+    apiKey: 'AIzaSyCR6F0DsrsU4pI-ZdKFLsPqsTebSW-J3-8',
+    appId: '1:56357429110:web:2d7f8043f133ac5702a457',
+    messagingSenderId: '56357429110',
+    projectId: 'mega-tips-001',
+    authDomain: 'mega-tips-001.firebaseapp.com',
+    storageBucket: 'mega-tips-001.firebasestorage.app',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyD9iKAwz9eTcOLur3P0IcyWxv9JL3IWpv4',
-    appId: '1:871460715194:android:bc27b662c300e2bea9e083',
-    messagingSenderId: '871460715194',
-    projectId: 'selam-tips-01',
-    storageBucket: 'selam-tips-01.firebasestorage.app',
+    apiKey: 'AIzaSyBPSP2tp69rgaBJmLsvKNs-x49ZKxUFJP4',
+    appId: '1:56357429110:android:7333ffcbe125c19702a457',
+    messagingSenderId: '56357429110',
+    projectId: 'mega-tips-001',
+    storageBucket: 'mega-tips-001.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyB6X_LIyWRD3drgG_Ikx9vjWfxE4DYTRS8',
-    appId: '1:871460715194:ios:999a2802232bc33da9e083',
-    messagingSenderId: '871460715194',
-    projectId: 'selam-tips-01',
-    storageBucket: 'selam-tips-01.firebasestorage.app',
-    iosBundleId: 'com.tekopia.selamtips',
+    apiKey: 'AIzaSyDlFarlJPqy3C44qrnuzx_SwFbOpp86KcM',
+    appId: '1:56357429110:ios:13aa8d2dc405d8fa02a457',
+    messagingSenderId: '56357429110',
+    projectId: 'mega-tips-001',
+    storageBucket: 'mega-tips-001.firebasestorage.app',
+    iosBundleId: 'com.melkamtech.megatips',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyB6X_LIyWRD3drgG_Ikx9vjWfxE4DYTRS8',
-    appId: '1:871460715194:ios:999a2802232bc33da9e083',
-    messagingSenderId: '871460715194',
-    projectId: 'selam-tips-01',
-    storageBucket: 'selam-tips-01.firebasestorage.app',
-    iosBundleId: 'com.tekopia.selamtips',
+    apiKey: 'AIzaSyDlFarlJPqy3C44qrnuzx_SwFbOpp86KcM',
+    appId: '1:56357429110:ios:13aa8d2dc405d8fa02a457',
+    messagingSenderId: '56357429110',
+    projectId: 'mega-tips-001',
+    storageBucket: 'mega-tips-001.firebasestorage.app',
+    iosBundleId: 'com.melkamtech.megatips',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyAOrZh_Xh6-z6V8iEuVL_XVWmgtuU5I7TA',
-    appId: '1:871460715194:web:58975766cb712a9ca9e083',
-    messagingSenderId: '871460715194',
-    projectId: 'selam-tips-01',
-    authDomain: 'selam-tips-01.firebaseapp.com',
-    storageBucket: 'selam-tips-01.firebasestorage.app',
-    measurementId: 'G-QG8CWFSV4M',
+    apiKey: 'AIzaSyCR6F0DsrsU4pI-ZdKFLsPqsTebSW-J3-8',
+    appId: '1:56357429110:web:2d1eea157da4595a02a457',
+    messagingSenderId: '56357429110',
+    projectId: 'mega-tips-001',
+    authDomain: 'mega-tips-001.firebaseapp.com',
+    storageBucket: 'mega-tips-001.firebasestorage.app',
   );
 
 }

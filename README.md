@@ -1,4 +1,4 @@
-# Selam Tips 
+# Mega Tips 
 
 A new Flutter project.
 

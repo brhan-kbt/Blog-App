@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:selam_tips/core/services/connectivity_service.dart';
-import 'package:selam_tips/core/services/fcm_service.dart';
-import 'package:selam_tips/core/state/blog_store.dart';
-import 'package:selam_tips/core/theme/theme_service.dart';
+import 'package:mega_tips/core/services/connectivity_service.dart';
+import 'package:mega_tips/core/services/fcm_service.dart';
+import 'package:mega_tips/core/state/blog_store.dart';
+import 'package:mega_tips/core/theme/theme_service.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -14,70 +14,98 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
-  // Primary brand color
-  static const Color primaryColor = Color(0xFF25736A);
+  // Deep royal blue palette
+  static const Color primaryColor = Color(0xFF03559A);
+  static const Color royalBlue = Color(0xFF0A6BBF);
+  static const Color brightBlue = Color(0xFF1E8DE0);
+  static const Color skyBlue = Color(0xFF6BBEF0);
+  static const Color paleBlue = Color(0xFFC9E8FA);
+  static const Color midnightBlue = Color(0xFF011F38);
 
-  late AnimationController _fadeController;
-  late AnimationController _slideController;
-  late AnimationController _pulseController;
+  late AnimationController _entryController;
+  late AnimationController _starController;
+  late AnimationController _orbitController;
+  late AnimationController _shimmerController;
+  late AnimationController _twinkleController;
 
-  late Animation<double> _fadeAnimation;
-  late Animation<Offset> _slideAnimation;
-  late Animation<double> _pulseAnimation;
-  late Animation<double> _scaleAnimation;
+  late Animation<double> _fadeIn;
+  late Animation<Offset> _slideUp;
+  late Animation<double> _scaleIn;
+  late Animation<double> _starTwinkle;
+  late Animation<double> _orbit;
+  late Animation<double> _shimmer;
+  late Animation<double> _twinkle;
 
   @override
   void initState() {
     super.initState();
 
-    // Fade animation
-    _fadeController = AnimationController(
+    _entryController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1200),
+      duration: const Duration(milliseconds: 1500),
     );
-    _fadeAnimation = CurvedAnimation(
-      parent: _fadeController,
-      curve: Curves.easeInOut,
+    _fadeIn = CurvedAnimation(
+      parent: _entryController,
+      curve: const Interval(0.0, 0.7, curve: Curves.easeIn),
+    );
+    _slideUp = Tween<Offset>(begin: const Offset(0, 0.28), end: Offset.zero)
+        .animate(
+          CurvedAnimation(
+            parent: _entryController,
+            curve: const Interval(0.0, 0.9, curve: Curves.easeOutCubic),
+          ),
+        );
+    _scaleIn = Tween<double>(begin: 0.5, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _entryController,
+        curve: const Interval(0.2, 1.0, curve: Curves.easeOutBack),
+      ),
     );
 
-    // Slide animation
-    _slideController = AnimationController(
+    _starController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1000),
-    );
-    _slideAnimation = Tween<Offset>(
-      begin: const Offset(0, 0.3),
-      end: Offset.zero,
-    ).animate(
-      CurvedAnimation(parent: _slideController, curve: Curves.easeOutCubic),
-    );
-
-    // Pulse animation for logo
-    _pulseController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 2000),
+      duration: const Duration(milliseconds: 3000),
     )..repeat(reverse: true);
-    _pulseAnimation = Tween<double>(begin: 1.0, end: 1.08).animate(
-      CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
+    _starTwinkle = Tween<double>(begin: 0.3, end: 1.0).animate(
+      CurvedAnimation(parent: _starController, curve: Curves.easeInOut),
     );
 
-    // Scale animation for loader
-    _scaleAnimation = Tween<double>(begin: 0.8, end: 1.0).animate(
-      CurvedAnimation(parent: _fadeController, curve: Curves.easeOutBack),
+    _orbitController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 12000),
+    )..repeat();
+    _orbit = Tween<double>(
+      begin: 0.0,
+      end: 6.28318,
+    ).animate(CurvedAnimation(parent: _orbitController, curve: Curves.linear));
+
+    _shimmerController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 2500),
+    )..repeat();
+    _shimmer = Tween<double>(begin: -1.5, end: 2.5).animate(
+      CurvedAnimation(parent: _shimmerController, curve: Curves.easeInOut),
     );
 
-    // Start animations
-    _fadeController.forward();
-    _slideController.forward();
+    _twinkleController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1800),
+    )..repeat(reverse: true);
+    _twinkle = Tween<double>(begin: 0.4, end: 1.0).animate(
+      CurvedAnimation(parent: _twinkleController, curve: Curves.easeInOut),
+    );
 
+    _entryController.forward();
     _initApp();
   }
 
   @override
   void dispose() {
-    _fadeController.dispose();
-    _slideController.dispose();
-    _pulseController.dispose();
+    _entryController.dispose();
+    _starController.dispose();
+    _orbitController.dispose();
+    _shimmerController.dispose();
+    _twinkleController.dispose();
     super.dispose();
   }
 
@@ -137,6 +165,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     final themeService = Get.find<ThemeService>();
+    final size = MediaQuery.of(context).size;
 
     return Obx(() {
       final isDark = themeService.isDark;
@@ -145,114 +174,124 @@ class _SplashScreenState extends State<SplashScreen>
         body: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
               colors: isDark
                   ? [
-                      const Color(0xFF0A1F1D),
-                      const Color(0xFF122E2B),
-                      const Color(0xFF1A3C38),
+                      const Color(0xFF000C18),
+                      midnightBlue,
+                      const Color(0xFF022A4A),
                     ]
                   : [
-                      primaryColor,
-                      const Color(0xFF2E8B80),
-                      const Color(0xFF3DA89B),
+                      const Color(0xFFF0F8FE),
+                      paleBlue,
+                      const Color(0xFF9BD5F5),
                     ],
-              stops: const [0.0, 0.5, 1.0],
+              stops: const [0.0, 0.55, 1.0],
             ),
           ),
           child: Stack(
             children: [
-              // Decorative circles
-              Positioned(
-                top: -80,
-                right: -80,
-                child: _buildDecorativeCircle(
-                  200,
-                  isDark
-                      ? primaryColor.withOpacity(0.15)
-                      : Colors.white.withOpacity(0.08),
+              // Star field background
+              Positioned.fill(
+                child: AnimatedBuilder(
+                  animation: _starTwinkle,
+                  builder: (context, _) {
+                    return CustomPaint(
+                      painter: _StarFieldPainter(
+                        color: (isDark ? Colors.white : primaryColor)
+                            .withOpacity(isDark ? 0.5 : 0.25),
+                        twinkle: _starTwinkle.value,
+                      ),
+                    );
+                  },
                 ),
               ),
-              Positioned(
-                bottom: -100,
-                left: -100,
-                child: _buildDecorativeCircle(
-                  250,
-                  isDark
-                      ? primaryColor.withOpacity(0.1)
-                      : Colors.white.withOpacity(0.06),
+
+              // Ambient radial glow
+              Positioned.fill(
+                child: AnimatedBuilder(
+                  animation: _twinkle,
+                  builder: (context, _) {
+                    return Container(
+                      decoration: BoxDecoration(
+                        gradient: RadialGradient(
+                          center: const Alignment(0, -0.2),
+                          radius: 0.9,
+                          colors: [
+                            (isDark ? primaryColor : brightBlue).withOpacity(
+                              0.28 * _twinkle.value,
+                            ),
+                            Colors.transparent,
+                          ],
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ),
+
+              // Rotating orbit rings with planets
               Positioned(
-                top: MediaQuery.of(context).size.height * 0.15,
-                left: -50,
-                child: _buildDecorativeCircle(
-                  120,
-                  isDark
-                      ? Colors.teal.withOpacity(0.08)
-                      : Colors.white.withOpacity(0.05),
+                top: size.height * 0.5 - 220,
+                left: size.width * 0.5 - 220,
+                child: AnimatedBuilder(
+                  animation: _orbit,
+                  builder: (context, child) {
+                    return Transform.rotate(angle: _orbit.value, child: child);
+                  },
+                  child: SizedBox(
+                    width: 440,
+                    height: 440,
+                    child: CustomPaint(
+                      painter: _OrbitPlanetPainter(
+                        color: (isDark ? skyBlue : primaryColor).withOpacity(
+                          isDark ? 0.20 : 0.12,
+                        ),
+                        isDark: isDark,
+                      ),
+                    ),
+                  ),
                 ),
               ),
+
+              // Floating star particles
+              ..._buildStarParticles(isDark, size),
 
               // Main content
               Center(
                 child: FadeTransition(
-                  opacity: _fadeAnimation,
+                  opacity: _fadeIn,
                   child: SlideTransition(
-                    position: _slideAnimation,
+                    position: _slideUp,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // Animated logo
-                        _buildAnimatedLogo(isDark),
-
-                        const SizedBox(height: 40),
-
-                        // App name with fade
-                        FadeTransition(
-                          opacity: _fadeAnimation,
-                          child: _buildAppName(isDark),
+                        // Celestial logo
+                        ScaleTransition(
+                          scale: _scaleIn,
+                          child: _buildCelestialLogo(isDark),
                         ),
 
-                        const SizedBox(height: 12),
+                        const SizedBox(height: 44),
+
+                        // Shimmering title
+                        _buildShimmerTitle(isDark),
+
+                        const SizedBox(height: 14),
+
+                        // Star divider
+                        _buildStarDivider(isDark),
+
+                        const SizedBox(height: 14),
 
                         // Tagline
-                        FadeTransition(
-                          opacity: _fadeAnimation,
-                          child: _buildTagline(isDark),
-                        ),
-
-                        const SizedBox(height: 20),
-
-                        // Decorative line
-                        _buildDecorativeLine(isDark),
+                        _buildTagline(isDark),
 
                         const SizedBox(height: 60),
 
-                        // Custom loader
-                        ScaleTransition(
-                          scale: _scaleAnimation,
-                          child: _buildCustomLoader(isDark),
-                        ),
-
-                        const SizedBox(height: 24),
-
-                        // Loading text
-                        FadeTransition(
-                          opacity: _fadeAnimation,
-                          child: Text(
-                            "Loading...",
-                            style: TextStyle(
-                              fontSize: 13,
-                              color: isDark
-                                  ? Colors.grey[500]
-                                  : Colors.white.withOpacity(0.7),
-                              letterSpacing: 3,
-                              fontWeight: FontWeight.w300,
-                            ),
-                          ),
-                        ),
+                        // Orbit loader
+                        _buildOrbitLoader(isDark),
                       ],
                     ),
                   ),
@@ -261,22 +300,42 @@ class _SplashScreenState extends State<SplashScreen>
 
               // Bottom branding
               Positioned(
-                bottom: 40,
+                bottom: 36,
                 left: 0,
                 right: 0,
                 child: FadeTransition(
-                  opacity: _fadeAnimation,
-                  child: Text(
-                    "SELAM TIPS",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 11,
-                      color: isDark
-                          ? Colors.grey[700]
-                          : Colors.white.withOpacity(0.35),
-                      letterSpacing: 4,
-                      fontWeight: FontWeight.w500,
-                    ),
+                  opacity: _fadeIn,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.auto_awesome,
+                        size: 11,
+                        color: isDark
+                            ? skyBlue.withOpacity(0.5)
+                            : primaryColor.withOpacity(0.45),
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        "MEGA TIPS",
+                        style: TextStyle(
+                          fontSize: 10,
+                          color: isDark
+                              ? Colors.white.withOpacity(0.3)
+                              : primaryColor.withOpacity(0.55),
+                          letterSpacing: 5,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Icon(
+                        Icons.auto_awesome,
+                        size: 11,
+                        color: isDark
+                            ? skyBlue.withOpacity(0.5)
+                            : primaryColor.withOpacity(0.45),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -287,98 +346,261 @@ class _SplashScreenState extends State<SplashScreen>
     });
   }
 
-  Widget _buildAnimatedLogo(bool isDark) {
+  List<Widget> _buildStarParticles(bool isDark, Size size) {
+    final particles = [
+      _StarParticle(size.width * 0.08, size.height * 0.18, 3.0, 0.0),
+      _StarParticle(size.width * 0.90, size.height * 0.25, 4.0, 1.2),
+      _StarParticle(size.width * 0.05, size.height * 0.70, 2.5, 0.5),
+      _StarParticle(size.width * 0.94, size.height * 0.65, 3.5, 1.8),
+      _StarParticle(size.width * 0.20, size.height * 0.88, 2.0, 0.9),
+      _StarParticle(size.width * 0.80, size.height * 0.12, 3.0, 2.2),
+      _StarParticle(size.width * 0.45, size.height * 0.08, 2.5, 1.5),
+      _StarParticle(size.width * 0.68, size.height * 0.94, 3.0, 0.3),
+    ];
+
+    return particles.map((p) {
+      return Positioned(
+        left: p.x - p.size / 2,
+        top: p.y - p.size / 2,
+        child: AnimatedBuilder(
+          animation: _starController,
+          builder: (context, _) {
+            final twinkleValue =
+                (0.3 + 0.7 * ((_starTwinkle.value + p.phase) % 1.0)).clamp(
+                  0.0,
+                  1.0,
+                );
+            return Container(
+              width: p.size,
+              height: p.size,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: (isDark ? Colors.white : primaryColor).withOpacity(
+                  0.6 * twinkleValue,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: (isDark ? skyBlue : brightBlue).withOpacity(
+                      0.6 * twinkleValue,
+                    ),
+                    blurRadius: p.size * 3,
+                    spreadRadius: p.size,
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      );
+    }).toList();
+  }
+
+  Widget _buildCelestialLogo(bool isDark) {
     return AnimatedBuilder(
-      animation: _pulseAnimation,
+      animation: _twinkle,
       builder: (context, child) {
-        return Transform.scale(
-          scale: _pulseAnimation.value,
+        return Container(
+          width: 170,
+          height: 170,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            boxShadow: [
+              BoxShadow(
+                color: (isDark ? primaryColor : brightBlue).withOpacity(
+                  0.4 * _twinkle.value,
+                ),
+                blurRadius: 60,
+                spreadRadius: 15,
+              ),
+              BoxShadow(
+                color: Colors.black.withOpacity(isDark ? 0.5 : 0.1),
+                blurRadius: 25,
+                offset: const Offset(0, 12),
+              ),
+            ],
+          ),
           child: child,
         );
       },
-      child: Container(
-        width: 140,
-        height: 140,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: isDark
-                ? [
-                    primaryColor.withOpacity(0.9),
-                    const Color(0xFF1A3C38),
-                  ]
-                : [
-                    Colors.white,
-                    Colors.white.withOpacity(0.9),
-                  ],
-          ),
-          boxShadow: [
-            // Outer glow
-            BoxShadow(
-              color: isDark
-                  ? primaryColor.withOpacity(0.4)
-                  : Colors.black.withOpacity(0.15),
-              blurRadius: 40,
-              spreadRadius: 10,
-            ),
-            // Inner shadow
-            BoxShadow(
-              color: isDark
-                  ? Colors.black.withOpacity(0.3)
-                  : Colors.black.withOpacity(0.08),
-              blurRadius: 20,
-              spreadRadius: -5,
-              offset: const Offset(0, 8),
-            ),
-          ],
-        ),
-        child: ClipOval(
-          child: Container(
-            padding: const EdgeInsets.all(16),
-            color: isDark ? const Color(0xFF0A1F1D) : Colors.white,
-            child: Image.asset(
-              'assets/selam_tips_logo.png',
-              fit: BoxFit.contain,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          // Outer gradient ring
+          Container(
+            width: 170,
+            height: 170,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              gradient: SweepGradient(
+                colors: isDark
+                    ? [
+                        primaryColor,
+                        brightBlue,
+                        skyBlue,
+                        brightBlue,
+                        primaryColor,
+                      ]
+                    : [
+                        primaryColor,
+                        royalBlue,
+                        brightBlue,
+                        royalBlue,
+                        primaryColor,
+                      ],
+                stops: const [0.0, 0.25, 0.5, 0.75, 1.0],
+              ),
             ),
           ),
-        ),
+
+          // Middle ring
+          Container(
+            width: 158,
+            height: 158,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: isDark ? midnightBlue : Colors.white,
+            ),
+          ),
+
+          // Inner radial gradient
+          Container(
+            width: 148,
+            height: 148,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              gradient: RadialGradient(
+                colors: isDark
+                    ? [primaryColor.withOpacity(0.5), midnightBlue]
+                    : [Colors.white, paleBlue],
+              ),
+            ),
+          ),
+
+          // Logo image
+          ClipOval(
+            child: Container(
+              width: 128,
+              height: 128,
+              padding: const EdgeInsets.all(14),
+              color: isDark ? midnightBlue : Colors.white,
+              child: Image.asset(
+                'assets/mega_tips_logo.png',
+                fit: BoxFit.contain,
+              ),
+            ),
+          ),
+
+          // Sparkle accents around the ring
+          ..._buildSparkleAccents(isDark),
+        ],
       ),
     );
   }
 
-  Widget _buildAppName(bool isDark) {
-    return Column(
-      children: [
-        // "Selam" in lighter weight
-        Text(
-          "Selam",
-          style: TextStyle(
-            fontSize: 28,
-            fontWeight: FontWeight.w300,
-            letterSpacing: 8,
-            color: isDark ? Colors.white70 : Colors.white.withOpacity(0.9),
+  List<Widget> _buildSparkleAccents(bool isDark) {
+    final angles = [0.0, 1.5708, 3.14159, 4.71239];
+    return angles.map((angle) {
+      return Transform.rotate(
+        angle: angle,
+        child: Align(
+          alignment: Alignment.topCenter,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 1),
+            child: Icon(
+              Icons.star,
+              size: 13,
+              color: isDark ? skyBlue : Colors.white,
+            ),
           ),
         ),
-        const SizedBox(height: 4),
-        // "Tips" in bold
-        Text(
-          "TIPS",
-          style: TextStyle(
-            fontSize: 42,
-            fontWeight: FontWeight.w800,
-            letterSpacing: 12,
-            color: isDark ? Colors.white : Colors.white,
-            shadows: [
-              Shadow(
-                blurRadius: 20,
-                color: isDark
-                    ? primaryColor.withOpacity(0.5)
-                    : Colors.black.withOpacity(0.15),
-                offset: const Offset(0, 4),
+      );
+    }).toList();
+  }
+
+  Widget _buildShimmerTitle(bool isDark) {
+    return AnimatedBuilder(
+      animation: _shimmer,
+      builder: (context, _) {
+        return ShaderMask(
+          blendMode: BlendMode.srcATop,
+          shaderCallback: (bounds) {
+            return LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: isDark
+                  ? [Colors.white, skyBlue, Colors.white, skyBlue, Colors.white]
+                  : [
+                      primaryColor,
+                      brightBlue,
+                      primaryColor,
+                      brightBlue,
+                      primaryColor,
+                    ],
+              stops: [
+                (_shimmer.value - 0.3).clamp(0.0, 1.0),
+                (_shimmer.value).clamp(0.0, 1.0),
+                (_shimmer.value + 0.3).clamp(0.0, 1.0),
+                (_shimmer.value + 0.6).clamp(0.0, 1.0),
+                1.0,
+              ],
+            ).createShader(bounds);
+          },
+          child: Column(
+            children: [
+              Text(
+                "MEGA",
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w300,
+                  letterSpacing: 14,
+                  color: isDark ? Colors.white.withOpacity(0.85) : primaryColor,
+                ),
+              ),
+              const SizedBox(height: 2),
+              Text(
+                "TIPS",
+                style: TextStyle(
+                  fontSize: 46,
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: 20,
+                  color: isDark ? Colors.white : primaryColor,
+                ),
               ),
             ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildStarDivider(bool isDark) {
+    final color = isDark ? skyBlue : primaryColor;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          width: 36,
+          height: 1.2,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.transparent, color.withOpacity(0.6)],
+            ),
+          ),
+        ),
+        const SizedBox(width: 8),
+        Icon(Icons.star, size: 10, color: color.withOpacity(0.7)),
+        const SizedBox(width: 6),
+        Icon(Icons.auto_awesome, size: 14, color: color),
+        const SizedBox(width: 6),
+        Icon(Icons.star, size: 10, color: color.withOpacity(0.7)),
+        const SizedBox(width: 8),
+        Container(
+          width: 36,
+          height: 1.2,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [color.withOpacity(0.6), Colors.transparent],
+            ),
           ),
         ),
       ],
@@ -387,106 +609,221 @@ class _SplashScreenState extends State<SplashScreen>
 
   Widget _buildTagline(bool isDark) {
     return Text(
-      "Discover. Learn. Grow.",
+      "Explore  ·  Learn  ·  Shine",
       style: TextStyle(
-        fontSize: 14,
-        fontWeight: FontWeight.w400,
-        letterSpacing: 2,
+        fontSize: 13,
+        fontWeight: FontWeight.w500,
+        letterSpacing: 1.5,
         color: isDark
-            ? Colors.teal[300]?.withOpacity(0.8)
-            : Colors.white.withOpacity(0.75),
+            ? paleBlue.withOpacity(0.6)
+            : primaryColor.withOpacity(0.6),
       ),
     );
   }
 
-  Widget _buildDecorativeLine(bool isDark) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        _buildLineDot(isDark),
-        const SizedBox(width: 8),
-        Container(
-          width: 60,
-          height: 2,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: isDark
-                  ? [primaryColor.withOpacity(0.3), primaryColor]
-                  : [Colors.white.withOpacity(0.2), Colors.white],
-            ),
-            borderRadius: BorderRadius.circular(1),
-          ),
-        ),
-        const SizedBox(width: 8),
-        _buildLineDot(isDark),
-      ],
-    );
-  }
-
-  Widget _buildLineDot(bool isDark) {
-    return Container(
-      width: 6,
-      height: 6,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: isDark ? primaryColor : Colors.white.withOpacity(0.8),
-      ),
-    );
-  }
-
-  Widget _buildCustomLoader(bool isDark) {
+  Widget _buildOrbitLoader(bool isDark) {
     return SizedBox(
-      width: 48,
-      height: 48,
+      width: 52,
+      height: 52,
       child: Stack(
         alignment: Alignment.center,
         children: [
-          // Outer ring
-          SizedBox(
-            width: 48,
-            height: 48,
-            child: CircularProgressIndicator(
-              strokeWidth: 2,
-              valueColor: AlwaysStoppedAnimation<Color>(
-                isDark
-                    ? primaryColor.withOpacity(0.3)
-                    : Colors.white.withOpacity(0.3),
-              ),
-            ),
+          // Outer twinkling ring
+          AnimatedBuilder(
+            animation: _twinkle,
+            builder: (context, _) {
+              return Container(
+                width: 52,
+                height: 52,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: (isDark ? primaryColor : brightBlue).withOpacity(
+                      0.15 + 0.2 * _twinkle.value,
+                    ),
+                    width: 1.5,
+                  ),
+                ),
+              );
+            },
           ),
-          // Inner spinner
+          // Spinning arc
           SizedBox(
-            width: 32,
-            height: 32,
+            width: 40,
+            height: 40,
             child: CircularProgressIndicator(
               strokeWidth: 2.5,
               valueColor: AlwaysStoppedAnimation<Color>(
-                isDark ? primaryColor : Colors.white,
+                isDark ? skyBlue : primaryColor,
               ),
             ),
           ),
-          // Center dot
-          Container(
-            width: 6,
-            height: 6,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: isDark ? primaryColor : Colors.white,
-            ),
-          ),
+          // Center star
+          Icon(Icons.star, size: 16, color: isDark ? skyBlue : primaryColor),
         ],
       ),
     );
   }
+}
 
-  Widget _buildDecorativeCircle(double size, Color color) {
-    return Container(
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: color,
-      ),
-    );
+/// Data holder for star particles
+class _StarParticle {
+  final double x;
+  final double y;
+  final double size;
+  final double phase;
+
+  const _StarParticle(this.x, this.y, this.size, this.phase);
+}
+
+/// Painter for the twinkling star field background
+class _StarFieldPainter extends CustomPainter {
+  final Color color;
+  final double twinkle;
+
+  _StarFieldPainter({required this.color, required this.twinkle});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    // Generate deterministic star positions
+    final random = _SimpleRandom(42);
+
+    for (int i = 0; i < 60; i++) {
+      final x = random.nextDouble() * size.width;
+      final y = random.nextDouble() * size.height;
+      final starSize = 0.5 + random.nextDouble() * 1.5;
+
+      // Each star twinkles at a slightly different phase
+      final phase = random.nextDouble() * 3.14159 * 2;
+      final starTwinkle =
+          (0.3 +
+                  0.7 *
+                      ((twinkle * 3.14159 + phase) % (3.14159 * 2)) /
+                      (3.14159 * 2))
+              .clamp(0.0, 1.0);
+
+      final paint = Paint()
+        ..color = color.withOpacity(starTwinkle)
+        ..style = PaintingStyle.fill;
+
+      canvas.drawCircle(Offset(x, y), starSize, paint);
+    }
   }
+
+  @override
+  bool shouldRepaint(covariant _StarFieldPainter oldDelegate) =>
+      oldDelegate.twinkle != twinkle || oldDelegate.color != color;
+}
+
+/// Simple deterministic pseudo-random generator for stars
+class _SimpleRandom {
+  int _seed;
+  _SimpleRandom(this._seed);
+
+  double nextDouble() {
+    _seed = (_seed * 9301 + 49297) % 233280;
+    return _seed / 233280.0;
+  }
+}
+
+/// Painter for the rotating orbit ring with planet dots
+class _OrbitPlanetPainter extends CustomPainter {
+  final Color color;
+  final bool isDark;
+
+  _OrbitPlanetPainter({required this.color, required this.isDark});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final center = Offset(size.width / 2, size.height / 2);
+    final paint = Paint()
+      ..color = color
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.0;
+
+    // Outer orbit ring
+    canvas.drawCircle(center, size.width * 0.46, paint);
+
+    // Middle dashed ring
+    paint.strokeWidth = 0.7;
+    _drawDashedCircle(canvas, center, size.width * 0.39, paint);
+
+    // Inner faint ring
+    paint.strokeWidth = 1.2;
+    canvas.drawCircle(center, size.width * 0.32, paint);
+
+    // Planet dots on outer ring
+    const planetCount = 5;
+    for (int i = 0; i < planetCount; i++) {
+      final angle = (2 * 3.14159 / planetCount) * i;
+      final planetX = center.dx + size.width * 0.46 * _cos(angle);
+      final planetY = center.dy + size.width * 0.46 * _sin(angle);
+
+      // Alternate planet sizes and styles
+      if (i == 0) {
+        // Larger glowing planet
+        final glowPaint = Paint()
+          ..color = color.withOpacity(isDark ? 0.5 : 0.35)
+          ..style = PaintingStyle.fill;
+        canvas.drawCircle(Offset(planetX, planetY), 5.0, glowPaint);
+      } else if (i % 2 == 0) {
+        canvas.drawCircle(
+          Offset(planetX, planetY),
+          3.5,
+          Paint()
+            ..color = color.withOpacity(isDark ? 0.6 : 0.4)
+            ..style = PaintingStyle.fill,
+        );
+      } else {
+        canvas.drawCircle(
+          Offset(planetX, planetY),
+          2.5,
+          Paint()
+            ..color = color.withOpacity(isDark ? 0.4 : 0.3)
+            ..style = PaintingStyle.stroke
+            ..strokeWidth = 1.0,
+        );
+      }
+    }
+  }
+
+  void _drawDashedCircle(
+    Canvas canvas,
+    Offset center,
+    double radius,
+    Paint paint,
+  ) {
+    const dashLength = 12.0;
+    const gapLength = 16.0;
+    final circumference = 2 * 3.14159 * radius;
+    final totalSegments = circumference / (dashLength + gapLength);
+    final anglePerSegment = 2 * 3.14159 / totalSegments;
+
+    for (int i = 0; i < totalSegments; i++) {
+      final startAngle = i * anglePerSegment;
+      final endAngle = startAngle + anglePerSegment * 0.5;
+      canvas.drawArc(
+        Rect.fromCircle(center: center, radius: radius),
+        startAngle,
+        endAngle - startAngle,
+        false,
+        paint,
+      );
+    }
+  }
+
+  double _sin(double x) => _taylorSin(x);
+  double _cos(double x) => _taylorSin(x + 1.5708);
+
+  double _taylorSin(double x) {
+    x = x % (2 * 3.14159265);
+    if (x > 3.14159265) x -= 2 * 3.14159265;
+    if (x < -3.14159265) x += 2 * 3.14159265;
+    final x2 = x * x;
+    return x * (1 - x2 / 6 * (1 - x2 / 20 * (1 - x2 / 42)));
+  }
+
+  @override
+  bool shouldRepaint(covariant _OrbitPlanetPainter oldDelegate) =>
+      oldDelegate.color != color || oldDelegate.isDark != isDark;
 }
