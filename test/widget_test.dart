@@ -8,14 +8,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:selam_tips/main.dart';
+import 'package:fana_pro/main.dart';
 
 void main() {
   testWidgets('App loads successfully', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const SelamTipsApp());
+    await tester.pumpWidget(const FanaProApp());
 
     // Verify that the app loads without crashing
-    expect(find.byType(SelamTipsApp), findsOneWidget);
+    expect(find.byType(FanaProApp), findsOneWidget);
   });
 }
