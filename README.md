@@ -1,4 +1,4 @@
-# Selam Tips 
+# Addis Tips 
 
 A new Flutter project.
 
