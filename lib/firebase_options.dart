@@ -41,49 +41,47 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAOrZh_Xh6-z6V8iEuVL_XVWmgtuU5I7TA',
-    appId: '1:871460715194:web:d21c53b08d4d2740a9e083',
-    messagingSenderId: '871460715194',
-    projectId: 'selam-tips-01',
-    authDomain: 'selam-tips-01.firebaseapp.com',
-    storageBucket: 'selam-tips-01.firebasestorage.app',
-    measurementId: 'G-M5M6FQNL23',
+    apiKey: 'AIzaSyCiZT887paDgCdNwsmvadZrE_K7DlcDTpM',
+    appId: '1:845273874783:web:f330a448e08c647da5b6ea',
+    messagingSenderId: '845273874783',
+    projectId: 'kiya-tech-01',
+    authDomain: 'kiya-tech-01.firebaseapp.com',
+    storageBucket: 'kiya-tech-01.firebasestorage.app',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyD9iKAwz9eTcOLur3P0IcyWxv9JL3IWpv4',
-    appId: '1:871460715194:android:bc27b662c300e2bea9e083',
-    messagingSenderId: '871460715194',
-    projectId: 'selam-tips-01',
-    storageBucket: 'selam-tips-01.firebasestorage.app',
+    apiKey: 'AIzaSyDMQdfVUR3xyE0LSGKDXQ9DHsJ_etMacG4',
+    appId: '1:845273874783:android:83c6cbba4e8d6ba2a5b6ea',
+    messagingSenderId: '845273874783',
+    projectId: 'kiya-tech-01',
+    storageBucket: 'kiya-tech-01.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyB6X_LIyWRD3drgG_Ikx9vjWfxE4DYTRS8',
-    appId: '1:871460715194:ios:999a2802232bc33da9e083',
-    messagingSenderId: '871460715194',
-    projectId: 'selam-tips-01',
-    storageBucket: 'selam-tips-01.firebasestorage.app',
-    iosBundleId: 'com.tekopia.selamtips',
+    apiKey: 'AIzaSyCdLnkyalRsm8UjxfCgXyWErqqh2LkY6ns',
+    appId: '1:845273874783:ios:9c14f7a0815b882ca5b6ea',
+    messagingSenderId: '845273874783',
+    projectId: 'kiya-tech-01',
+    storageBucket: 'kiya-tech-01.firebasestorage.app',
+    iosBundleId: 'com.melkamtech.kiyatech',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyB6X_LIyWRD3drgG_Ikx9vjWfxE4DYTRS8',
-    appId: '1:871460715194:ios:999a2802232bc33da9e083',
-    messagingSenderId: '871460715194',
-    projectId: 'selam-tips-01',
-    storageBucket: 'selam-tips-01.firebasestorage.app',
-    iosBundleId: 'com.tekopia.selamtips',
+    apiKey: 'AIzaSyCdLnkyalRsm8UjxfCgXyWErqqh2LkY6ns',
+    appId: '1:845273874783:ios:9c14f7a0815b882ca5b6ea',
+    messagingSenderId: '845273874783',
+    projectId: 'kiya-tech-01',
+    storageBucket: 'kiya-tech-01.firebasestorage.app',
+    iosBundleId: 'com.melkamtech.kiyatech',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyAOrZh_Xh6-z6V8iEuVL_XVWmgtuU5I7TA',
-    appId: '1:871460715194:web:58975766cb712a9ca9e083',
-    messagingSenderId: '871460715194',
-    projectId: 'selam-tips-01',
-    authDomain: 'selam-tips-01.firebaseapp.com',
-    storageBucket: 'selam-tips-01.firebasestorage.app',
-    measurementId: 'G-QG8CWFSV4M',
+    apiKey: 'AIzaSyCiZT887paDgCdNwsmvadZrE_K7DlcDTpM',
+    appId: '1:845273874783:web:a5c9cbb5d652f78ca5b6ea',
+    messagingSenderId: '845273874783',
+    projectId: 'kiya-tech-01',
+    authDomain: 'kiya-tech-01.firebaseapp.com',
+    storageBucket: 'kiya-tech-01.firebasestorage.app',
   );
 
 }

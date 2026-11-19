@@ -1,4 +1,4 @@
-package com.tekopia.selamtips
+package com.melkamtech.kiyatech
 
 import io.flutter.embedding.android.FlutterActivity
 

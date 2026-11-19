@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:selam_tips/modules/post_detail/post_detail_page.dart';
+import 'package:kiya_tech/modules/post_detail/post_detail_page.dart';
 import 'package:app_links/app_links.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -9,19 +9,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:selam_tips/core/consent/consent_service.dart';
-import 'package:selam_tips/core/services/fcm_service.dart';
-import 'package:selam_tips/firebase_options.dart';
-import 'package:selam_tips/widgets/adabtiveBanner.dart';
+import 'package:kiya_tech/core/consent/consent_service.dart';
+import 'package:kiya_tech/core/services/fcm_service.dart';
+import 'package:kiya_tech/firebase_options.dart';
+import 'package:kiya_tech/widgets/adabtiveBanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import 'package:selam_tips/core/theme/app_palette.dart';
-import 'package:selam_tips/core/theme/theme_service.dart';
-import 'package:selam_tips/core/services/connectivity_service.dart';
-import 'package:selam_tips/core/services/performance_service.dart';
-import 'package:selam_tips/core/services/version_check_service.dart';
-import 'package:selam_tips/core/services/version_check_controller.dart';
-import 'package:selam_tips/routes/app_pages.dart';
+import 'package:kiya_tech/core/theme/app_palette.dart';
+import 'package:kiya_tech/core/theme/theme_service.dart';
+import 'package:kiya_tech/core/services/connectivity_service.dart';
+import 'package:kiya_tech/core/services/performance_service.dart';
+import 'package:kiya_tech/core/services/version_check_service.dart';
+import 'package:kiya_tech/core/services/version_check_controller.dart';
+import 'package:kiya_tech/routes/app_pages.dart';
 import 'core/state/blog_store.dart';
 import 'core/theme/app_theme.dart';
 import 'modules/category/category_page.dart';
@@ -64,7 +64,7 @@ Future<void> main() async {
   // Initialize other services in background to speed up startup
   _initializeBackgroundServices();
 
-  runApp(const SelamTipsApp());
+  runApp(const KiyaTechApp());
 }
 
 void _handleDeepLink(Uri uri, BlogStore store) {
@@ -236,8 +236,8 @@ void _initializeBackgroundServices() {
   });
 }
 
-class SelamTipsApp extends StatelessWidget {
-  const SelamTipsApp({super.key});
+class KiyaTechApp extends StatelessWidget {
+  const KiyaTechApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -245,12 +245,12 @@ class SelamTipsApp extends StatelessWidget {
 
     return Obx(() {
       debugPrint(
-        "🎨 SelamTipsApp - Building with theme mode: ${themeSvc.mode.value}",
+        "🎨 KiyaTechApp - Building with theme mode: ${themeSvc.mode.value}",
       );
-      debugPrint("🎨 SelamTipsApp - IsDark: ${themeSvc.isDark}");
+      debugPrint("🎨 KiyaTechApp - IsDark: ${themeSvc.isDark}");
 
       return GetMaterialApp(
-        title: 'Selam Tips',
+        title: 'Kiya Tech',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.light,
         darkTheme: AppTheme.dark,
