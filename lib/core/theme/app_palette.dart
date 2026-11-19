@@ -22,13 +22,13 @@ class AppPalette extends ThemeExtension<AppPalette> {
 
   /// Explicit LIGHT palette (tweak to taste)
   static const AppPalette light = AppPalette(
-    primary: Color(0xFF25736A), // e94873
+    primary: Color(0xFF0D6277), // e94873
     searchBg: Color.fromARGB(255, 252, 254, 255), // soft blue-tint chip
     searchOutline: Color.fromARGB(255, 147, 147, 147), // slate-300-ish hairline
-    searchIcon: Color(0xFF25736A), // e94873
+    searchIcon: Color(0xFF0D6277), // e94873
     chipBg: Color.fromARGB(255, 168, 168, 168), // slate-50/100
     cardBg: Colors.white, // cards, tiles
-    favoriteActive: Color.fromARGB(255, 157, 221, 213), // matches your seed
+    favoriteActive: Color.fromARGB(255, 202, 238, 247), // matches your seed
   );
 
   /// Explicit DARK palette

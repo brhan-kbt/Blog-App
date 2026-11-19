@@ -41,49 +41,47 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAOrZh_Xh6-z6V8iEuVL_XVWmgtuU5I7TA',
-    appId: '1:871460715194:web:d21c53b08d4d2740a9e083',
-    messagingSenderId: '871460715194',
-    projectId: 'selam-tips-01',
-    authDomain: 'selam-tips-01.firebaseapp.com',
-    storageBucket: 'selam-tips-01.firebasestorage.app',
-    measurementId: 'G-M5M6FQNL23',
+    apiKey: 'AIzaSyBQRdxCUFM8pz0neX-JpzOYZs8f5tmVoRw',
+    appId: '1:1043665271434:web:e0ff91838e65517d758b73',
+    messagingSenderId: '1043665271434',
+    projectId: 'hagere-tech-001',
+    authDomain: 'hagere-tech-001.firebaseapp.com',
+    storageBucket: 'hagere-tech-001.firebasestorage.app',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyD9iKAwz9eTcOLur3P0IcyWxv9JL3IWpv4',
-    appId: '1:871460715194:android:bc27b662c300e2bea9e083',
-    messagingSenderId: '871460715194',
-    projectId: 'selam-tips-01',
-    storageBucket: 'selam-tips-01.firebasestorage.app',
+    apiKey: 'AIzaSyB0UV8JICxFFPr0LeJ5WEca4jiZFVk6Ccc',
+    appId: '1:1043665271434:android:2191f3e705729426758b73',
+    messagingSenderId: '1043665271434',
+    projectId: 'hagere-tech-001',
+    storageBucket: 'hagere-tech-001.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyB6X_LIyWRD3drgG_Ikx9vjWfxE4DYTRS8',
-    appId: '1:871460715194:ios:999a2802232bc33da9e083',
-    messagingSenderId: '871460715194',
-    projectId: 'selam-tips-01',
-    storageBucket: 'selam-tips-01.firebasestorage.app',
-    iosBundleId: 'com.tekopia.selamtips',
+    apiKey: 'AIzaSyBA7A-dAzGu0SNq3z659M09-vTKwJnm8ek',
+    appId: '1:1043665271434:ios:d69e92b64bf1414c758b73',
+    messagingSenderId: '1043665271434',
+    projectId: 'hagere-tech-001',
+    storageBucket: 'hagere-tech-001.firebasestorage.app',
+    iosBundleId: 'com.melkamtech.hageretech',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyB6X_LIyWRD3drgG_Ikx9vjWfxE4DYTRS8',
-    appId: '1:871460715194:ios:999a2802232bc33da9e083',
-    messagingSenderId: '871460715194',
-    projectId: 'selam-tips-01',
-    storageBucket: 'selam-tips-01.firebasestorage.app',
-    iosBundleId: 'com.tekopia.selamtips',
+    apiKey: 'AIzaSyBA7A-dAzGu0SNq3z659M09-vTKwJnm8ek',
+    appId: '1:1043665271434:ios:d69e92b64bf1414c758b73',
+    messagingSenderId: '1043665271434',
+    projectId: 'hagere-tech-001',
+    storageBucket: 'hagere-tech-001.firebasestorage.app',
+    iosBundleId: 'com.melkamtech.hageretech',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyAOrZh_Xh6-z6V8iEuVL_XVWmgtuU5I7TA',
-    appId: '1:871460715194:web:58975766cb712a9ca9e083',
-    messagingSenderId: '871460715194',
-    projectId: 'selam-tips-01',
-    authDomain: 'selam-tips-01.firebaseapp.com',
-    storageBucket: 'selam-tips-01.firebasestorage.app',
-    measurementId: 'G-QG8CWFSV4M',
+    apiKey: 'AIzaSyBQRdxCUFM8pz0neX-JpzOYZs8f5tmVoRw',
+    appId: '1:1043665271434:web:6966657ebfedeec9758b73',
+    messagingSenderId: '1043665271434',
+    projectId: 'hagere-tech-001',
+    authDomain: 'hagere-tech-001.firebaseapp.com',
+    storageBucket: 'hagere-tech-001.firebasestorage.app',
   );
 
 }

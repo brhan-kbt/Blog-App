@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:selam_tips/core/services/connectivity_service.dart';
-import 'package:selam_tips/core/services/fcm_service.dart';
-import 'package:selam_tips/core/state/blog_store.dart';
-import 'package:selam_tips/core/theme/theme_service.dart';
+import 'package:hagere_tech/core/services/connectivity_service.dart';
+import 'package:hagere_tech/core/services/fcm_service.dart';
+import 'package:hagere_tech/core/state/blog_store.dart';
+import 'package:hagere_tech/core/theme/theme_service.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -267,7 +267,7 @@ class _SplashScreenState extends State<SplashScreen>
                 child: FadeTransition(
                   opacity: _fadeAnimation,
                   child: Text(
-                    "SELAM TIPS",
+                    "Hagere Tech",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 11,
@@ -339,7 +339,7 @@ class _SplashScreenState extends State<SplashScreen>
             padding: const EdgeInsets.all(16),
             color: isDark ? const Color(0xFF0A1F1D) : Colors.white,
             child: Image.asset(
-              'assets/selam_tips_logo.png',
+              'assets/hagere_tech_logo.png',
               fit: BoxFit.contain,
             ),
           ),
@@ -351,9 +351,8 @@ class _SplashScreenState extends State<SplashScreen>
   Widget _buildAppName(bool isDark) {
     return Column(
       children: [
-        // "Selam" in lighter weight
         Text(
-          "Selam",
+          "Hagere",
           style: TextStyle(
             fontSize: 28,
             fontWeight: FontWeight.w300,
@@ -364,7 +363,7 @@ class _SplashScreenState extends State<SplashScreen>
         const SizedBox(height: 4),
         // "Tips" in bold
         Text(
-          "TIPS",
+          "Tech",
           style: TextStyle(
             fontSize: 42,
             fontWeight: FontWeight.w800,
