@@ -1,5 +1,5 @@
 import 'package:intl/intl.dart';
-import 'package:selam_tips/models/user_ref.dart';
+import 'package:siket_tech/models/user_ref.dart';
 import 'category.dart';
 
 class Post {
