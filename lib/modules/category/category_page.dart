@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:selam_tips/core/config/api_config.dart';
-import 'package:selam_tips/core/theme/app_palette.dart';
-import 'package:selam_tips/models/category.dart';
-import 'package:selam_tips/widgets/shimmer_widgets.dart';
+import 'package:zena_tips/core/config/api_config.dart';
+import 'package:zena_tips/core/theme/app_palette.dart';
+import 'package:zena_tips/models/category.dart';
+import 'package:zena_tips/widgets/shimmer_widgets.dart';
 import '../../core/state/blog_store.dart';
 import 'category_listing_page.dart';
 

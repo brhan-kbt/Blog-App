@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "871460715194",
-    "project_id": "selam-tips-01",
-    "storage_bucket": "selam-tips-01.firebasestorage.app"
+    "project_number": "904746781626",
+    "project_id": "zena-tips-001",
+    "storage_bucket": "zena-tips-001.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:871460715194:android:bc27b662c300e2bea9e083",
+        "mobilesdk_app_id": "1:904746781626:android:dc2270602cc6ddaaddab83",
         "android_client_info": {
-          "package_name": "com.tekopia.selamtips"
+          "package_name": "com.melkamtech.zenatips"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyD9iKAwz9eTcOLur3P0IcyWxv9JL3IWpv4"
+          "current_key": "AIzaSyCvu1a_4cxzSM7q_lY1CarVW7S_RlwjbCI"
         }
       ],
       "services": {
