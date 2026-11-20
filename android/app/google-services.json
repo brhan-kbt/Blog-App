@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "871460715194",
-    "project_id": "selam-tips-01",
-    "storage_bucket": "selam-tips-01.firebasestorage.app"
+    "project_number": "431924421395",
+    "project_id": "selam-tech",
+    "storage_bucket": "selam-tech.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:871460715194:android:bc27b662c300e2bea9e083",
+        "mobilesdk_app_id": "1:431924421395:android:e3c950b5b28e6bfd4af0e6",
         "android_client_info": {
-          "package_name": "com.tekopia.selamtips"
+          "package_name": "com.melkamtech.selamtech"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyD9iKAwz9eTcOLur3P0IcyWxv9JL3IWpv4"
+          "current_key": "AIzaSyA_KzW_Pb3PHEwlbSnwHtzEB4mFs9YlMLM"
         }
       ],
       "services": {

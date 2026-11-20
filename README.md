@@ -1,4 +1,4 @@
-# Selam Tips 
+# Selam Tech 
 
 A new Flutter project.
 
