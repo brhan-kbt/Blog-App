@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:selam_tips/core/services/connectivity_service.dart';
-import 'package:selam_tips/core/services/fcm_service.dart';
-import 'package:selam_tips/core/state/blog_store.dart';
-import 'package:selam_tips/core/theme/theme_service.dart';
+import 'package:yene_tips/core/services/connectivity_service.dart';
+import 'package:yene_tips/core/services/fcm_service.dart';
+import 'package:yene_tips/core/state/blog_store.dart';
+import 'package:yene_tips/core/theme/theme_service.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -14,70 +14,87 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
-  // Primary brand color
-  static const Color primaryColor = Color(0xFF25736A);
+  // Deep forest green palette
+  static const Color primaryColor = Color(0xFF2B553C);
+  static const Color brightGreen = Color(0xFF4A7A5B);
+  static const Color softGreen = Color(0xFF8FB89C);
+  static const Color paleGreen = Color(0xFFE8F3EC);
+  static const Color deepGreen = Color(0xFF1A3325);
+  static const Color darkForest = Color(0xFF0D1A12);
 
-  late AnimationController _fadeController;
-  late AnimationController _slideController;
+  late AnimationController _entryController;
   late AnimationController _pulseController;
+  late AnimationController _leafController;
+  late AnimationController _dotController;
 
-  late Animation<double> _fadeAnimation;
-  late Animation<Offset> _slideAnimation;
-  late Animation<double> _pulseAnimation;
-  late Animation<double> _scaleAnimation;
+  late Animation<double> _fadeIn;
+  late Animation<Offset> _slideUp;
+  late Animation<double> _scaleIn;
+  late Animation<double> _pulse;
+  late Animation<double> _leafSway;
+  late Animation<double> _dotPulse;
 
   @override
   void initState() {
     super.initState();
 
-    // Fade animation
-    _fadeController = AnimationController(
+    _entryController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1200),
+      duration: const Duration(milliseconds: 1400),
     );
-    _fadeAnimation = CurvedAnimation(
-      parent: _fadeController,
-      curve: Curves.easeInOut,
+    _fadeIn = CurvedAnimation(
+      parent: _entryController,
+      curve: const Interval(0.0, 0.7, curve: Curves.easeIn),
+    );
+    _slideUp = Tween<Offset>(begin: const Offset(0, 0.2), end: Offset.zero)
+        .animate(
+          CurvedAnimation(
+            parent: _entryController,
+            curve: const Interval(0.0, 0.9, curve: Curves.easeOutCubic),
+          ),
+        );
+    _scaleIn = Tween<double>(begin: 0.6, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _entryController,
+        curve: const Interval(0.2, 1.0, curve: Curves.easeOutBack),
+      ),
     );
 
-    // Slide animation
-    _slideController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1000),
-    );
-    _slideAnimation = Tween<Offset>(
-      begin: const Offset(0, 0.3),
-      end: Offset.zero,
-    ).animate(
-      CurvedAnimation(parent: _slideController, curve: Curves.easeOutCubic),
-    );
-
-    // Pulse animation for logo
     _pulseController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 2000),
+      duration: const Duration(milliseconds: 2200),
     )..repeat(reverse: true);
-    _pulseAnimation = Tween<double>(begin: 1.0, end: 1.08).animate(
+    _pulse = Tween<double>(begin: 0.6, end: 1.0).animate(
       CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
     );
 
-    // Scale animation for loader
-    _scaleAnimation = Tween<double>(begin: 0.8, end: 1.0).animate(
-      CurvedAnimation(parent: _fadeController, curve: Curves.easeOutBack),
+    _leafController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 3500),
+    )..repeat(reverse: true);
+    _leafSway = Tween<double>(begin: -0.12, end: 0.12).animate(
+      CurvedAnimation(parent: _leafController, curve: Curves.easeInOut),
     );
 
-    // Start animations
-    _fadeController.forward();
-    _slideController.forward();
+    _dotController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1500),
+    )..repeat(reverse: true);
+    _dotPulse = Tween<double>(
+      begin: 0.4,
+      end: 1.0,
+    ).animate(CurvedAnimation(parent: _dotController, curve: Curves.easeInOut));
 
+    _entryController.forward();
     _initApp();
   }
 
   @override
   void dispose() {
-    _fadeController.dispose();
-    _slideController.dispose();
+    _entryController.dispose();
     _pulseController.dispose();
+    _leafController.dispose();
+    _dotController.dispose();
     super.dispose();
   }
 
@@ -145,114 +162,77 @@ class _SplashScreenState extends State<SplashScreen>
         body: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
               colors: isDark
                   ? [
-                      const Color(0xFF0A1F1D),
-                      const Color(0xFF122E2B),
-                      const Color(0xFF1A3C38),
+                      const Color(0xFF06120B),
+                      darkForest,
+                      const Color(0xFF163323),
                     ]
                   : [
-                      primaryColor,
-                      const Color(0xFF2E8B80),
-                      const Color(0xFF3DA89B),
+                      const Color(0xFFF6FBF8),
+                      paleGreen,
+                      const Color(0xFFBFDDC8),
                     ],
-              stops: const [0.0, 0.5, 1.0],
+              stops: const [0.0, 0.55, 1.0],
             ),
           ),
           child: Stack(
             children: [
-              // Decorative circles
-              Positioned(
-                top: -80,
-                right: -80,
-                child: _buildDecorativeCircle(
-                  200,
-                  isDark
-                      ? primaryColor.withOpacity(0.15)
-                      : Colors.white.withOpacity(0.08),
+              // Soft organic curved arcs in background
+              Positioned.fill(
+                child: AnimatedBuilder(
+                  animation: _leafController,
+                  builder: (context, _) {
+                    return CustomPaint(
+                      painter: _OrganicArcPainter(
+                        sway: _leafSway.value,
+                        color: (isDark ? brightGreen : primaryColor)
+                            .withOpacity(isDark ? 0.08 : 0.05),
+                      ),
+                    );
+                  },
                 ),
               ),
-              Positioned(
-                bottom: -100,
-                left: -100,
-                child: _buildDecorativeCircle(
-                  250,
-                  isDark
-                      ? primaryColor.withOpacity(0.1)
-                      : Colors.white.withOpacity(0.06),
-                ),
-              ),
-              Positioned(
-                top: MediaQuery.of(context).size.height * 0.15,
-                left: -50,
-                child: _buildDecorativeCircle(
-                  120,
-                  isDark
-                      ? Colors.teal.withOpacity(0.08)
-                      : Colors.white.withOpacity(0.05),
-                ),
-              ),
+
+              // Floating leaf particles
+              ..._buildLeafParticles(isDark),
 
               // Main content
               Center(
                 child: FadeTransition(
-                  opacity: _fadeAnimation,
+                  opacity: _fadeIn,
                   child: SlideTransition(
-                    position: _slideAnimation,
+                    position: _slideUp,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // Animated logo
-                        _buildAnimatedLogo(isDark),
-
-                        const SizedBox(height: 40),
-
-                        // App name with fade
-                        FadeTransition(
-                          opacity: _fadeAnimation,
-                          child: _buildAppName(isDark),
+                        // Leaf-framed logo
+                        ScaleTransition(
+                          scale: _scaleIn,
+                          child: _buildLeafLogo(isDark),
                         ),
 
-                        const SizedBox(height: 12),
+                        const SizedBox(height: 48),
+
+                        // Clean title
+                        _buildCleanTitle(isDark),
+
+                        const SizedBox(height: 16),
+
+                        // Minimal divider
+                        _buildMinimalDivider(isDark),
+
+                        const SizedBox(height: 16),
 
                         // Tagline
-                        FadeTransition(
-                          opacity: _fadeAnimation,
-                          child: _buildTagline(isDark),
-                        ),
+                        _buildTagline(isDark),
 
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 70),
 
-                        // Decorative line
-                        _buildDecorativeLine(isDark),
-
-                        const SizedBox(height: 60),
-
-                        // Custom loader
-                        ScaleTransition(
-                          scale: _scaleAnimation,
-                          child: _buildCustomLoader(isDark),
-                        ),
-
-                        const SizedBox(height: 24),
-
-                        // Loading text
-                        FadeTransition(
-                          opacity: _fadeAnimation,
-                          child: Text(
-                            "Loading...",
-                            style: TextStyle(
-                              fontSize: 13,
-                              color: isDark
-                                  ? Colors.grey[500]
-                                  : Colors.white.withOpacity(0.7),
-                              letterSpacing: 3,
-                              fontWeight: FontWeight.w300,
-                            ),
-                          ),
-                        ),
+                        // Minimal loader
+                        _buildMinimalLoader(isDark),
                       ],
                     ),
                   ),
@@ -265,18 +245,38 @@ class _SplashScreenState extends State<SplashScreen>
                 left: 0,
                 right: 0,
                 child: FadeTransition(
-                  opacity: _fadeAnimation,
-                  child: Text(
-                    "SELAM TIPS",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 11,
-                      color: isDark
-                          ? Colors.grey[700]
-                          : Colors.white.withOpacity(0.35),
-                      letterSpacing: 4,
-                      fontWeight: FontWeight.w500,
-                    ),
+                  opacity: _fadeIn,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.spa_outlined,
+                        size: 11,
+                        color: isDark
+                            ? softGreen.withOpacity(0.4)
+                            : deepGreen.withOpacity(0.4),
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        "YENE TIPS",
+                        style: TextStyle(
+                          fontSize: 10,
+                          color: isDark
+                              ? Colors.white.withOpacity(0.25)
+                              : deepGreen.withOpacity(0.45),
+                          letterSpacing: 6,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Icon(
+                        Icons.spa_outlined,
+                        size: 11,
+                        color: isDark
+                            ? softGreen.withOpacity(0.4)
+                            : deepGreen.withOpacity(0.4),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -287,206 +287,290 @@ class _SplashScreenState extends State<SplashScreen>
     });
   }
 
-  Widget _buildAnimatedLogo(bool isDark) {
+  List<Widget> _buildLeafParticles(bool isDark) {
+    final size = MediaQuery.of(context).size;
+    final particles = [
+      _Leaf(size.width * 0.10, size.height * 0.22, 14.0, 0.0, 0.4),
+      _Leaf(size.width * 0.88, size.height * 0.30, 16.0, 1.5, -0.6),
+      _Leaf(size.width * 0.06, size.height * 0.72, 12.0, 0.8, 0.9),
+      _Leaf(size.width * 0.92, size.height * 0.68, 15.0, 2.2, -0.4),
+      _Leaf(size.width * 0.25, size.height * 0.85, 11.0, 1.1, 0.5),
+      _Leaf(size.width * 0.75, size.height * 0.15, 13.0, 0.5, -0.8),
+    ];
+
+    return particles.map((p) {
+      return Positioned(
+        left: p.x,
+        top: p.y,
+        child: AnimatedBuilder(
+          animation: _dotController,
+          builder: (context, _) {
+            final value = (0.3 + 0.7 * ((_dotPulse.value + p.phase) % 1.0))
+                .clamp(0.0, 1.0);
+            return Transform.rotate(
+              angle: p.rotation + _leafSway.value * 0.6,
+              child: Icon(
+                Icons.spa,
+                size: p.size,
+                color: (isDark ? softGreen : primaryColor).withOpacity(
+                  0.4 * value,
+                ),
+              ),
+            );
+          },
+        ),
+      );
+    }).toList();
+  }
+
+  Widget _buildLeafLogo(bool isDark) {
     return AnimatedBuilder(
-      animation: _pulseAnimation,
+      animation: _pulse,
       builder: (context, child) {
-        return Transform.scale(
-          scale: _pulseAnimation.value,
+        return Container(
+          width: 152,
+          height: 152,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            boxShadow: [
+              BoxShadow(
+                color: (isDark ? primaryColor : deepGreen).withOpacity(
+                  0.28 * _pulse.value,
+                ),
+                blurRadius: 48,
+                spreadRadius: 12,
+              ),
+            ],
+          ),
           child: child,
         );
       },
-      child: Container(
-        width: 140,
-        height: 140,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: isDark
-                ? [
-                    primaryColor.withOpacity(0.9),
-                    const Color(0xFF1A3C38),
-                  ]
-                : [
-                    Colors.white,
-                    Colors.white.withOpacity(0.9),
-                  ],
-          ),
-          boxShadow: [
-            // Outer glow
-            BoxShadow(
-              color: isDark
-                  ? primaryColor.withOpacity(0.4)
-                  : Colors.black.withOpacity(0.15),
-              blurRadius: 40,
-              spreadRadius: 10,
-            ),
-            // Inner shadow
-            BoxShadow(
-              color: isDark
-                  ? Colors.black.withOpacity(0.3)
-                  : Colors.black.withOpacity(0.08),
-              blurRadius: 20,
-              spreadRadius: -5,
-              offset: const Offset(0, 8),
-            ),
-          ],
-        ),
-        child: ClipOval(
-          child: Container(
-            padding: const EdgeInsets.all(16),
-            color: isDark ? const Color(0xFF0A1F1D) : Colors.white,
-            child: Image.asset(
-              'assets/selam_tips_logo.png',
-              fit: BoxFit.contain,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          // Outer ring
+          Container(
+            width: 152,
+            height: 152,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: isDark ? primaryColor.withOpacity(0.15) : Colors.white,
             ),
           ),
-        ),
+
+          // Gradient ring
+          Container(
+            width: 138,
+            height: 138,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [primaryColor, brightGreen],
+              ),
+            ),
+          ),
+
+          // Inner circle
+          Container(
+            width: 124,
+            height: 124,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: isDark ? darkForest : Colors.white,
+            ),
+          ),
+
+          // Logo image
+          ClipOval(
+            child: Container(
+              width: 108,
+              height: 108,
+              padding: const EdgeInsets.all(12),
+              color: isDark ? darkForest : Colors.white,
+              child: Image.asset(
+                'assets/yene_tips_logo.png',
+                fit: BoxFit.contain,
+              ),
+            ),
+          ),
+
+          // Small leaf accents
+          ..._buildLogoLeafAccents(isDark),
+        ],
       ),
     );
   }
 
-  Widget _buildAppName(bool isDark) {
-    return Column(
-      children: [
-        // "Selam" in lighter weight
-        Text(
-          "Selam",
-          style: TextStyle(
-            fontSize: 28,
-            fontWeight: FontWeight.w300,
-            letterSpacing: 8,
-            color: isDark ? Colors.white70 : Colors.white.withOpacity(0.9),
+  List<Widget> _buildLogoLeafAccents(bool isDark) {
+    final angles = [0.0, 1.5708, 3.14159, 4.71239];
+    return angles.map((angle) {
+      return Transform.rotate(
+        angle: angle,
+        child: Align(
+          alignment: Alignment.topCenter,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 1),
+            child: Icon(
+              Icons.spa,
+              size: 12,
+              color: isDark ? softGreen : Colors.white,
+            ),
           ),
         ),
-        const SizedBox(height: 4),
-        // "Tips" in bold
+      );
+    }).toList();
+  }
+
+  Widget _buildCleanTitle(bool isDark) {
+    return Column(
+      children: [
+        Text(
+          "YENE",
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w300,
+            letterSpacing: 14,
+            color: isDark ? Colors.white.withOpacity(0.85) : deepGreen,
+          ),
+        ),
+        const SizedBox(height: 2),
         Text(
           "TIPS",
           style: TextStyle(
-            fontSize: 42,
+            fontSize: 44,
             fontWeight: FontWeight.w800,
-            letterSpacing: 12,
-            color: isDark ? Colors.white : Colors.white,
-            shadows: [
-              Shadow(
-                blurRadius: 20,
-                color: isDark
-                    ? primaryColor.withOpacity(0.5)
-                    : Colors.black.withOpacity(0.15),
-                offset: const Offset(0, 4),
-              ),
-            ],
+            letterSpacing: 20,
+            color: isDark ? Colors.white : deepGreen,
           ),
         ),
+      ],
+    );
+  }
+
+  Widget _buildMinimalDivider(bool isDark) {
+    final color = isDark ? softGreen : primaryColor;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(width: 36, height: 1, color: color.withOpacity(0.35)),
+        const SizedBox(width: 10),
+        Icon(Icons.spa, size: 12, color: color.withOpacity(0.7)),
+        const SizedBox(width: 10),
+        Container(width: 36, height: 1, color: color.withOpacity(0.35)),
       ],
     );
   }
 
   Widget _buildTagline(bool isDark) {
     return Text(
-      "Discover. Learn. Grow.",
+      "Discover  ·  Learn  ·  Grow",
       style: TextStyle(
-        fontSize: 14,
+        fontSize: 12,
         fontWeight: FontWeight.w400,
-        letterSpacing: 2,
-        color: isDark
-            ? Colors.teal[300]?.withOpacity(0.8)
-            : Colors.white.withOpacity(0.75),
+        letterSpacing: 1.2,
+        color: isDark ? paleGreen.withOpacity(0.6) : deepGreen.withOpacity(0.6),
       ),
     );
   }
 
-  Widget _buildDecorativeLine(bool isDark) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        _buildLineDot(isDark),
-        const SizedBox(width: 8),
-        Container(
-          width: 60,
-          height: 2,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: isDark
-                  ? [primaryColor.withOpacity(0.3), primaryColor]
-                  : [Colors.white.withOpacity(0.2), Colors.white],
-            ),
-            borderRadius: BorderRadius.circular(1),
-          ),
-        ),
-        const SizedBox(width: 8),
-        _buildLineDot(isDark),
-      ],
-    );
-  }
-
-  Widget _buildLineDot(bool isDark) {
-    return Container(
-      width: 6,
-      height: 6,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: isDark ? primaryColor : Colors.white.withOpacity(0.8),
-      ),
-    );
-  }
-
-  Widget _buildCustomLoader(bool isDark) {
+  Widget _buildMinimalLoader(bool isDark) {
     return SizedBox(
-      width: 48,
-      height: 48,
+      width: 44,
+      height: 44,
       child: Stack(
         alignment: Alignment.center,
         children: [
-          // Outer ring
-          SizedBox(
-            width: 48,
-            height: 48,
-            child: CircularProgressIndicator(
-              strokeWidth: 2,
-              valueColor: AlwaysStoppedAnimation<Color>(
-                isDark
-                    ? primaryColor.withOpacity(0.3)
-                    : Colors.white.withOpacity(0.3),
-              ),
-            ),
+          // Breathing ring
+          AnimatedBuilder(
+            animation: _pulse,
+            builder: (context, _) {
+              return Container(
+                width: 44,
+                height: 44,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: (isDark ? primaryColor : deepGreen).withOpacity(
+                      0.15 + 0.2 * _pulse.value,
+                    ),
+                    width: 1.5,
+                  ),
+                ),
+              );
+            },
           ),
-          // Inner spinner
+          // Spinning arc
           SizedBox(
-            width: 32,
-            height: 32,
+            width: 34,
+            height: 34,
             child: CircularProgressIndicator(
               strokeWidth: 2.5,
               valueColor: AlwaysStoppedAnimation<Color>(
-                isDark ? primaryColor : Colors.white,
+                isDark ? softGreen : primaryColor,
               ),
             ),
           ),
-          // Center dot
-          Container(
-            width: 6,
-            height: 6,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: isDark ? primaryColor : Colors.white,
-            ),
-          ),
+          // Center leaf icon
+          Icon(Icons.spa, size: 14, color: isDark ? softGreen : primaryColor),
         ],
       ),
     );
   }
+}
 
-  Widget _buildDecorativeCircle(double size, Color color) {
-    return Container(
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: color,
-      ),
+/// Data holder for floating leaf particles
+class _Leaf {
+  final double x;
+  final double y;
+  final double size;
+  final double phase;
+  final double rotation;
+
+  const _Leaf(this.x, this.y, this.size, this.phase, this.rotation);
+}
+
+/// Painter for the soft organic arcs in background
+class _OrganicArcPainter extends CustomPainter {
+  final double sway;
+  final Color color;
+
+  _OrganicArcPainter({required this.sway, required this.color});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = color
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.0
+      ..strokeCap = StrokeCap.round;
+
+    // Top-left large arc
+    final rect1 = Rect.fromCircle(
+      center: Offset(size.width * 0.1 + sway * 10, size.height * 0.15),
+      radius: size.width * 0.55,
     );
+    canvas.drawArc(rect1, 0.2, 1.2, false, paint);
+
+    // Bottom-right large arc
+    paint.strokeWidth = 1.2;
+    final rect2 = Rect.fromCircle(
+      center: Offset(size.width * 0.9 + sway * 8, size.height * 0.85),
+      radius: size.width * 0.45,
+    );
+    canvas.drawArc(rect2, 3.3, 1.4, false, paint);
+
+    // Small accent arc
+    paint.strokeWidth = 0.8;
+    final rect3 = Rect.fromCircle(
+      center: Offset(size.width * 0.5 + sway * 6, size.height * 0.5),
+      radius: size.width * 0.38,
+    );
+    canvas.drawArc(rect3, 1.5, 0.8, false, paint);
   }
+
+  @override
+  bool shouldRepaint(covariant _OrganicArcPainter oldDelegate) =>
+      oldDelegate.sway != sway || oldDelegate.color != color;
 }

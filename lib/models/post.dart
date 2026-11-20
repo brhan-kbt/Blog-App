@@ -1,5 +1,5 @@
 import 'package:intl/intl.dart';
-import 'package:selam_tips/models/user_ref.dart';
+import 'package:yene_tips/models/user_ref.dart';
 import 'category.dart';
 
 class Post {
