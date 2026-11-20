@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-    <application android:label="Selam Tips" android:name="${applicationName}" android:icon="@mipmap/launcher_icon">
+    <application android:label="Siket Tips" android:name="${applicationName}" android:icon="@mipmap/launcher_icon">
         <activity android:name=".MainActivity" android:exported="true" android:launchMode="singleTop"
             android:taskAffinity="" android:theme="@style/LaunchTheme"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
@@ -24,14 +24,14 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="https" android:host="selam_tips.birhanu.et" />
+                <data android:scheme="https" android:host="sikettips.melkamtech.com" />
             </intent-filter>
 
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="http" android:host="selam_tips.birhanu.et" />
+                <data android:scheme="http" android:host="sikettips.melkamtech.com" />
             </intent-filter>
 
 

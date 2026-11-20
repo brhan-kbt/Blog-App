@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:selam_tips/core/services/fcm_service.dart';
+import 'package:siket_tips/core/services/fcm_service.dart';
 
 /// Helper class for testing FCM functionality
 class FCMTestHelper {
