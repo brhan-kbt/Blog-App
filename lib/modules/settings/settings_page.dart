@@ -245,13 +245,13 @@ class SettingsPage extends StatelessWidget {
     if (await inAppReview.isAvailable()) {
       inAppReview.requestReview();
     } else {
-      inAppReview.openStoreListing(appStoreId: "com.tekopia.selamtips");
+      inAppReview.openStoreListing(appStoreId: "com.melkamtech.selamtips");
     }
   }
 
   void _shareApp() {
     Share.share(
-      "Check out Selam Tips App - Your ultimate tech companion! https://play.google.com/store/apps/details?id=com.tekopia.selamtips",
+      "Check out Selam Tips App - Your ultimate tech companion! https://play.google.com/store/apps/details?id=com.melkamtech.selamtips",
     );
   }
 
